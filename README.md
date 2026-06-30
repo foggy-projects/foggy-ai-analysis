@@ -35,7 +35,12 @@ Download the Skill zip, verify `SHA256SUMS`, then install or unpack it into your
 Use $foggy-ai-analysis to install or start Foggy Runtime, connect a datasource, build TM/QM semantic models, and run an optional sales-drop example.
 ```
 
+## Issue 7 Status
+
+The `v0.1.0` package has a known documentation/package defect: it references the internal `foggy-runtime-cli-workflow` Skill without bundling or declaring that dependency. The fix is included in the `v0.1.1` patch release by bundling runtime CLI command rules inside `foggy-ai-analysis` and keeping `skillDependencies` empty in the package manifest.
+
+Do not overwrite the `v0.1.0` release assets; use the corrected `v0.1.1` assets for new installs.
+
 ## Boundary
 
 The current public onboarding path is dev/test-oriented. Production permission, RBAC, audit, and governance are deferred to a later production-readiness phase.
-
