@@ -14,15 +14,17 @@ Patch release for issue #9.
 
 Do not overwrite the existing `v0.1.1` assets. Publish the corrected package as `v0.1.2`.
 
+The `v0.1.2` assets were replaced before handoff to align package documentation and manifest boundaries with Java launcher `runtime-api-launcher-v0.1.2`.
+
 Workspace source commit:
 
 ```text
-5cebfad6da992bc4ee30faf4bfaab3037d2be5a0
+c84a8b4d4efc88537244d869b2f46ca135f0e00f
 ```
 
 ## Checksums
 
 ```text
-ab04551bb4c613e0dab6967646ce09a40e73a258cdbf5f51c0d07cce986d5543  foggy-ai-analysis-skill-0.1.2.zip
-e29dc8ba84d86823b9859864ef6cc57e8e863a17b662cec1d3a9374d7b615dba  foggy-ai-analysis-skill-0.1.2-manifest.json
+edd3446e22537dae6acd9410be86a30ec2feee3e0653da11440434c2ea2fe2f1  foggy-ai-analysis-skill-0.1.2.zip
+fddbc75d836e642225fae8d7f3a911f3897e95fd40135a6ea1e6adad41b6004a  foggy-ai-analysis-skill-0.1.2-manifest.json
 ```
