@@ -19,10 +19,10 @@ The bundled sales-drop data is an optional example, not the main Skill identity.
 ## Current Release
 
 ```text
-Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.1
-Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.1/foggy-ai-analysis-skill-0.1.1.zip
-Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.1/foggy-ai-analysis-skill-0.1.1-manifest.json
-Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.1/foggy-ai-analysis-skill-0.1.1-SHA256SUMS
+Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.2
+Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.2/foggy-ai-analysis-skill-0.1.2.zip
+Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.2/foggy-ai-analysis-skill-0.1.2-manifest.json
+Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.2/foggy-ai-analysis-skill-0.1.2-SHA256SUMS
 CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.6
 Java launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/runtime-api-launcher-v0.1.1
 ```
@@ -56,7 +56,7 @@ Do not overwrite the `v0.1.0` release assets; use the corrected `v0.1.1` assets 
 
 ## Issue 9 Status
 
-The main branch now documents issue routing for Skill, CLI, Java runtime/launcher, MCP endpoint, model catalog, and query execution issues. Package the corrected Skill source as `v0.1.2`; do not overwrite the existing `v0.1.1` assets.
+The `v0.1.2` package documents issue routing for Skill, CLI, Java runtime/launcher, MCP endpoint, model catalog, and query execution issues. Do not overwrite the existing `v0.1.1` assets.
 
 ## Boundary
 

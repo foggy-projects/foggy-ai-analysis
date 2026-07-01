@@ -22,4 +22,7 @@ Workspace source commit:
 
 ## Checksums
 
-Generate after packaging `v0.1.2`.
+```text
+ab04551bb4c613e0dab6967646ce09a40e73a258cdbf5f51c0d07cce986d5543  foggy-ai-analysis-skill-0.1.2.zip
+e29dc8ba84d86823b9859864ef6cc57e8e863a17b662cec1d3a9374d7b615dba  foggy-ai-analysis-skill-0.1.2-manifest.json
+```
