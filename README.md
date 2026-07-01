@@ -24,7 +24,7 @@ Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/
 Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.2/foggy-ai-analysis-skill-0.1.2-manifest.json
 Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.2/foggy-ai-analysis-skill-0.1.2-SHA256SUMS
 CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.6
-Java launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/runtime-api-launcher-v0.1.1
+Java launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/runtime-api-launcher-v0.1.2
 ```
 
 ## Install Shape
