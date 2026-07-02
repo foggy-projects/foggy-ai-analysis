@@ -12,6 +12,7 @@ Build from the workspace:
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\package-foggy-skill.ps1 `
   -SkillName foggy-ai-analysis `
   -Version 0.1.2 `
+  -LauncherTag runtime-api-launcher-v0.1.2 `
   -RepoRoot D:\foggy-projects\foggy-data-mcp `
   -OutDir D:\foggy-projects\foggy-data-mcp\dist\skills
 ```
