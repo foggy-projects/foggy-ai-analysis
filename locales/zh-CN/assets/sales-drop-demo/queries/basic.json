@@ -1,0 +1,16 @@
+{
+  "limit": 5,
+  "columns": [
+    "observationDate",
+    "region",
+    "channel",
+    "productCategory",
+    "severity",
+    "rootCause",
+    "actionOwner",
+    "netSalesAmount",
+    "priorWeekNetSalesAmount",
+    "salesDropAmount",
+    "salesDropRate"
+  ]
+}

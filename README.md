@@ -19,21 +19,70 @@ The bundled sales-drop data is an optional example, not the main Skill identity.
 ## Current Release
 
 ```text
-Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.3
-Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.3/foggy-ai-analysis-skill-0.1.3.zip
-Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.3/foggy-ai-analysis-skill-0.1.3-manifest.json
-Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.3/foggy-ai-analysis-skill-0.1.3-SHA256SUMS
-CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.8
+Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.4
+Analysis Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.4/foggy-ai-analysis-skill-0.1.4.zip
+Analysis Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.4/foggy-ai-analysis-skill-0.1.4-manifest.json
+Analysis Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.4/foggy-ai-analysis-skill-0.1.4-SHA256SUMS
+Semantic Query Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.4/foggy-semantic-query-skill-0.1.4.zip
+Semantic Query Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.4/foggy-semantic-query-skill-0.1.4-manifest.json
+Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.4/foggy-semantic-query-skill-0.1.4-SHA256SUMS
+CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.9
 Java launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/runtime-api-launcher-v0.1.2
+```
+
+## Source Layout
+
+The canonical English Skill source now lives under `locales/en`:
+
+```text
+locales/en/SKILL.md
+locales/en/agents/
+locales/en/assets/
+locales/en/references/
+```
+
+The Chinese Skill source is a complete parallel source tree under `locales/zh-CN`:
+
+```text
+locales/zh-CN/SKILL.md
+locales/zh-CN/agents/
+locales/zh-CN/assets/
+locales/zh-CN/references/
+```
+
+Default release downloads use the English package name:
+
+```text
+foggy-ai-analysis-skill-<version>.zip
+```
+
+Chinese packages use an explicit language suffix when generated:
+
+```text
+foggy-ai-analysis-skill-<version>-zh-CN.zip
 ```
 
 ## Install Shape
 
-Download the Skill zip, verify `SHA256SUMS`, then install or unpack it into your agent's Skill directory. Use the Skill with:
+Download the Skill zip, verify `SHA256SUMS`, then install or unpack it into your agent Skill directory:
+
+```text
+~/.agents/skills/foggy-ai-analysis
+```
+
+The runtime CLI Skill install path intentionally targets `~/.agents/skills` only; it does not write to `~/.codex/skills` or `~/.claude/skills`. Use the Skill with:
 
 ```text
 Use $foggy-ai-analysis to install or start Foggy Runtime, connect a datasource, build TM/QM semantic models, and run an optional sales-drop example.
 ```
+
+When using local workspace sources, the CLI can install the paired analysis/query Skills together:
+
+```powershell
+foggy-runtime skills install foggy-analysis-suite --workspace-root D:\foggy-projects\foggy-data-mcp
+```
+
+This installs `foggy-ai-analysis` for setup/modeling and `foggy-semantic-query` for existing-model DSL, composeScript, and restricted Compose/CTE query work.
 
 ## Where To File Issues
 
@@ -60,7 +109,11 @@ The `v0.1.2` package documents issue routing for Skill, CLI, Java runtime/launch
 
 ## Runtime API v1 CLI Alignment
 
-The `v0.1.3` package updates the formal onboarding path to `foggy-runtime-cli v0.1.8`. This CLI release accepts query payload `groupBy` string-array shorthand, normalizes it to Runtime API v1 object items, and aligns bundle, datasource, table inspection, and capability preflight behavior with the Java Runtime API v1 contract.
+The `v0.1.4` package points public onboarding to `foggy-runtime-cli v0.1.9`. This CLI release keeps Runtime API v1 capability preflight and `groupBy` string-array normalization, adds `-help` compatibility, and installs the paired `foggy-ai-analysis` / `foggy-semantic-query` Skills under `~/.agents/skills`.
+
+## Bilingual Source Status
+
+The repository carries English and Chinese `foggy-ai-analysis` Skill sources. The default published asset is the unsuffixed English package, and the Chinese package uses the `-zh-CN` suffix.
 
 ## Boundary
 

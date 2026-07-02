@@ -1,0 +1,160 @@
+{
+  "schemaVersion": "foggy-demo-question-bank/v1",
+  "model": "SalesDropDailyQueryModel",
+  "cases": [
+    {
+      "id": "SD-001",
+      "status": "executable",
+      "question": "Show the largest sales drops this week.",
+      "requiredFields": ["observationDate", "region", "channel", "salesDropAmount", "salesDropRate", "severity"],
+      "payloadFile": "queries/question-bank/SD-001.json",
+      "assertions": {
+        "rowCountMin": 1,
+        "requiredColumns": ["observationDate", "region", "channel", "salesDropAmount", "salesDropRate", "severity"]
+      },
+      "expectedBehavior": "Return rows sorted by salesDropAmount or salesDropRate descending."
+    },
+    {
+      "id": "SD-002",
+      "status": "executable",
+      "question": "Which critical sales drops need immediate attention?",
+      "requiredFields": ["severity", "region", "channel", "actionOwner", "rootCause"],
+      "payloadFile": "queries/question-bank/SD-002.json",
+      "assertions": {
+        "rowCountMin": 1,
+        "requiredColumns": ["severity", "region", "channel", "actionOwner", "rootCause"],
+        "expectedValues": [{"field": "severity", "value": "CRITICAL"}]
+      },
+      "expectedBehavior": "Filter or highlight severity=CRITICAL rows."
+    },
+    {
+      "id": "SD-003",
+      "status": "executable",
+      "question": "Compare current sales with prior week sales by region.",
+      "requiredFields": ["region", "netSalesAmount", "priorWeekNetSalesAmount", "salesDropAmount"],
+      "payloadFile": "queries/question-bank/SD-003.json",
+      "assertions": {
+        "rowCountMin": 1,
+        "requiredColumns": ["region", "netSalesAmount", "priorWeekNetSalesAmount", "salesDropAmount"]
+      },
+      "expectedBehavior": "List by region with current sales, prior week sales, and drop amount."
+    },
+    {
+      "id": "SD-004",
+      "status": "executable",
+      "question": "Which channels have traffic related sales drops?",
+      "requiredFields": ["channel", "rootCause", "salesDropAmount", "visitorCount"],
+      "payloadFile": "queries/question-bank/SD-004.json",
+      "assertions": {
+        "rowCountMin": 1,
+        "requiredColumns": ["channel", "rootCause", "salesDropAmount", "visitorCount"],
+        "expectedValues": [{"field": "rootCause", "value": "traffic_drop"}]
+      },
+      "expectedBehavior": "Filter rootCause=traffic_drop or explain that rootCause is the matching field."
+    },
+    {
+      "id": "SD-005",
+      "status": "executable",
+      "question": "Find conversion problems by product category.",
+      "requiredFields": ["productCategory", "rootCause", "conversionRate", "salesDropRate"],
+      "payloadFile": "queries/question-bank/SD-005.json",
+      "assertions": {
+        "rowCountMin": 1,
+        "requiredColumns": ["productCategory", "rootCause", "conversionRate", "salesDropRate"]
+      },
+      "expectedBehavior": "Use conversionRate and rootCause to identify conversion-related rows; ask for a conversion threshold if a strict cutoff is required."
+    },
+    {
+      "id": "SD-006",
+      "status": "executable",
+      "question": "Who owns the follow-up for the biggest drop?",
+      "requiredFields": ["actionOwner", "salesDropAmount", "region", "channel"],
+      "payloadFile": "queries/question-bank/SD-006.json",
+      "assertions": {
+        "rowCountMin": 1,
+        "requiredColumns": ["actionOwner", "salesDropAmount", "region", "channel"]
+      },
+      "expectedBehavior": "Return the row with the largest drop and its actionOwner."
+    },
+    {
+      "id": "SD-007",
+      "status": "executable",
+      "question": "List refund-driven drops and their refund amounts.",
+      "requiredFields": ["rootCause", "refundAmount", "salesDropAmount", "productCategory"],
+      "payloadFile": "queries/question-bank/SD-007.json",
+      "assertions": {
+        "rowCountMin": 1,
+        "requiredColumns": ["rootCause", "refundAmount", "salesDropAmount", "productCategory"],
+        "expectedValues": [{"field": "rootCause", "value": "refund_spike"}]
+      },
+      "expectedBehavior": "Filter rootCause=refund_spike and show refundAmount."
+    },
+    {
+      "id": "SD-008",
+      "status": "executable",
+      "question": "Show campaign-related drops with campaign names.",
+      "requiredFields": ["campaignName", "rootCause", "salesDropAmount", "notes"],
+      "payloadFile": "queries/question-bank/SD-008.json",
+      "assertions": {
+        "rowCountMin": 1,
+        "requiredColumns": ["campaignName", "rootCause", "salesDropAmount", "notes"]
+      },
+      "expectedBehavior": "Return rows with campaignName and diagnostic notes."
+    },
+    {
+      "id": "SD-009",
+      "status": "executable",
+      "question": "Which regions have high drop rate but lower absolute drop amount?",
+      "requiredFields": ["region", "salesDropRate", "salesDropAmount", "netSalesAmount"],
+      "payloadFile": "queries/question-bank/SD-009.json",
+      "assertions": {
+        "rowCountMin": 1,
+        "requiredColumns": ["region", "salesDropRate", "salesDropAmount", "netSalesAmount"]
+      },
+      "expectedBehavior": "Sort by drop rate and include amount; ask for threshold clarification when strict high/lower cutoffs are required."
+    },
+    {
+      "id": "SD-010",
+      "status": "executable",
+      "question": "Give me a brief action list for each serious sales drop.",
+      "requiredFields": ["severity", "actionOwner", "rootCause", "notes"],
+      "payloadFile": "queries/question-bank/SD-010.json",
+      "assertions": {
+        "rowCountMin": 1,
+        "requiredColumns": ["severity", "actionOwner", "rootCause", "notes"]
+      },
+      "expectedBehavior": "Use severity and notes to produce an action-oriented list."
+    },
+    {
+      "id": "SD-011",
+      "status": "executable",
+      "question": "Can you explain why North China retail dropped?",
+      "requiredFields": ["region", "channel", "rootCause", "notes", "salesDropAmount"],
+      "payloadFile": "queries/question-bank/SD-011.json",
+      "valueMappings": {
+        "channel": {
+          "Retail": "Offline"
+        }
+      },
+      "assertions": {
+        "rowCountMin": 1,
+        "requiredColumns": ["region", "channel", "rootCause", "notes", "salesDropAmount"],
+        "expectedValues": [
+          {"field": "region", "value": "North China"},
+          {"field": "channel", "value": "Offline"}
+        ]
+      },
+      "expectedBehavior": "Map retail to the fixture's Offline channel, filter region=North China and channel=Offline, then explain from rootCause and notes."
+    },
+    {
+      "id": "SD-012",
+      "status": "needs-clarification",
+      "capabilitySet": "forecast-extension",
+      "decision": "keep-as-negative-base-case",
+      "question": "Forecast next week's recovery.",
+      "requiredFields": [],
+      "skipReason": "Forecasting needs a forecast source/model; the base sales-drop fixture only contains observed daily diagnostics.",
+      "expectedBehavior": "Ask for a forecast source/model or explain that this requires the forecast extension capability set."
+    }
+  ]
+}

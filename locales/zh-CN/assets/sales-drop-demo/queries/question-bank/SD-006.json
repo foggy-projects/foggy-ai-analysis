@@ -1,0 +1,5 @@
+{
+  "limit": 1,
+  "columns": ["actionOwner", "salesDropAmount", "region", "channel", "rootCause"],
+  "orderBy": [{"field": "salesDropAmount", "dir": "DESC"}]
+}

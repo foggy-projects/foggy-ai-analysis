@@ -1,30 +1,73 @@
 # Release Process
 
-The Skill source of truth currently lives in:
+The English Skill source of truth lives under `locales/en`:
 
 ```text
-D:\foggy-projects\foggy-data-mcp\.codex\skills\foggy-ai-analysis
+D:\foggy-projects\foggy-data-mcp\foggy-ai-analysis\locales\en
 ```
 
-Build from the workspace:
+The Chinese source is a complete parallel source tree under `locales/zh-CN`:
+
+```text
+D:\foggy-projects\foggy-data-mcp\foggy-ai-analysis\locales\zh-CN
+```
+
+Build the default English package from the workspace:
 
 ```powershell
 .\.codex\skills\foggy-release-tagging\scripts\publish_foggy_ai_analysis_skill.ps1 `
-  -SkillVersion 0.1.3 `
-  -CliTag v0.1.8 `
+  -SkillVersion 0.1.4 `
+  -CliTag v0.1.9 `
   -LauncherTag runtime-api-launcher-v0.1.2 `
-  -ReleaseRepo <local-foggy-ai-analysis-clone>
+  -ReleaseRepo <local-foggy-ai-analysis-clone> `
+  -IncludeZhCn
 ```
 
-Upload release assets:
+Build the paired semantic query Skill package explicitly and upload it to the same release:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\package-foggy-skill.ps1 `
+  -SkillName foggy-semantic-query `
+  -Version 0.1.4 `
+  -LauncherTag runtime-api-launcher-v0.1.2 `
+  -CliRequirement "foggy-runtime-cli >= 0.1.9" `
+  -RepoRoot D:\foggy-projects\foggy-data-mcp `
+  -OutDir D:\foggy-projects\foggy-data-mcp\dist\skills
+
+gh release upload v0.1.4 `
+  D:\foggy-projects\foggy-data-mcp\dist\skills\foggy-semantic-query-skill-0.1.4.zip `
+  D:\foggy-projects\foggy-data-mcp\dist\skills\foggy-semantic-query-skill-0.1.4-manifest.json `
+  D:\foggy-projects\foggy-data-mcp\dist\skills\foggy-semantic-query-skill-0.1.4-SHA256SUMS `
+  --repo foggy-projects/foggy-ai-analysis
+```
+
+The default asset names remain English:
 
 ```text
-foggy-ai-analysis-skill-0.1.3.zip
-foggy-ai-analysis-skill-0.1.3-manifest.json
-foggy-ai-analysis-skill-0.1.3-SHA256SUMS
+foggy-ai-analysis-skill-<version>.zip
+foggy-ai-analysis-skill-<version>-manifest.json
+foggy-ai-analysis-skill-<version>-SHA256SUMS
 ```
 
-Before publishing, unzip the package and verify that any dollar-prefixed Skill references are either self references or listed in `skillDependencies`. For `v0.1.1`, `skillDependencies` should be empty and no external Skill references should remain.
+Chinese assets carry the explicit suffix:
+
+```text
+foggy-ai-analysis-skill-<version>-zh-CN.zip
+foggy-ai-analysis-skill-<version>-zh-CN-manifest.json
+foggy-ai-analysis-skill-<version>-zh-CN-SHA256SUMS
+```
+
+For the full release workflow, use:
+
+```powershell
+.\.codex\skills\foggy-release-tagging\scripts\publish_foggy_ai_analysis_skill.ps1 `
+  -SkillVersion 0.1.4 `
+  -CliTag v0.1.9 `
+  -LauncherTag runtime-api-launcher-v0.1.2 `
+  -IncludeZhCn
+```
+
+Before publishing, unzip each package and verify that any dollar-prefixed Skill references are either self references or listed in `skillDependencies`. `skillDependencies` should remain empty unless the package intentionally depends on another Skill.
 
 For `v0.1.2`, also verify:
 
@@ -33,8 +76,15 @@ For `v0.1.2`, also verify:
 - Java runtime, launcher, MCP endpoint, model catalog, and query execution issues route to `foggy-projects/foggy-data-mcp-bridge`.
 - CLI install, argument parsing, command UX, response formatting, and exit-code issues route to `foggy-projects/foggy-runtime-cli`.
 
-For `v0.1.3`, also verify:
+For `v0.1.4`, also verify:
 
-- Public onboarding installs `foggy-runtime-cli v0.1.8`.
-- `references/runtime-cli-command-rules.md` documents CLI `v0.1.8` capability preflight and `groupBy` string-array normalization.
-- Manifest `cliRequirement` is `foggy-runtime-cli >= 0.1.8`.
+- `references/public-onboarding.md` points to `foggy-runtime-cli v0.1.9`.
+- `references/runtime-cli-command-rules.md` documents CLI `v0.1.9` capability preflight, `groupBy` string-array normalization, and `-help` compatibility.
+- Manifest `cliRequirement` is `foggy-runtime-cli >= 0.1.9`.
+- The same release includes `foggy-semantic-query-skill-0.1.4.*` assets.
+
+For the first bilingual release, also verify:
+
+- English manifest has `language=en`.
+- Chinese manifest has `language=zh-CN`.
+- Default download remains the unsuffixed English zip.

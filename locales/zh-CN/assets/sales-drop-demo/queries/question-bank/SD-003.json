@@ -1,0 +1,5 @@
+{
+  "limit": 8,
+  "columns": ["region", "netSalesAmount", "priorWeekNetSalesAmount", "salesDropAmount"],
+  "orderBy": [{"field": "salesDropAmount", "dir": "DESC"}]
+}

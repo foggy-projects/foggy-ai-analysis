@@ -1,0 +1,6 @@
+{
+  "limit": 5,
+  "columns": ["rootCause", "refundAmount", "salesDropAmount", "productCategory"],
+  "slice": [{"field": "rootCause", "op": "=", "value": "refund_spike"}],
+  "orderBy": [{"field": "refundAmount", "dir": "DESC"}]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foggy AI Analysis"
+  short_description: "Guide runtime setup, semantic modeling, and MCP deployment."
+  default_prompt: "Use $foggy-ai-analysis to install or start Foggy Runtime, connect a datasource, inspect and validate TM/QM semantic models, connect MCP clients, and run an optional sales-drop example."

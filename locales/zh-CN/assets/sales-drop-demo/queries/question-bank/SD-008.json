@@ -1,0 +1,5 @@
+{
+  "limit": 5,
+  "columns": ["campaignName", "rootCause", "salesDropAmount", "notes"],
+  "orderBy": [{"field": "salesDropAmount", "dir": "DESC"}]
+}

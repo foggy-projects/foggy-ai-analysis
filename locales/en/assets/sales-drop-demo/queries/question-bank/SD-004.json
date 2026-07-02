@@ -1,0 +1,6 @@
+{
+  "limit": 5,
+  "columns": ["channel", "rootCause", "salesDropAmount", "visitorCount"],
+  "slice": [{"field": "rootCause", "op": "=", "value": "traffic_drop"}],
+  "orderBy": [{"field": "salesDropAmount", "dir": "DESC"}]
+}

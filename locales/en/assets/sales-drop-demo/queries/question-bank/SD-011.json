@@ -1,0 +1,9 @@
+{
+  "limit": 5,
+  "columns": ["region", "channel", "rootCause", "notes", "salesDropAmount"],
+  "slice": [
+    {"field": "region", "op": "=", "value": "North China"},
+    {"field": "channel", "op": "=", "value": "Offline"}
+  ],
+  "orderBy": [{"field": "salesDropAmount", "dir": "DESC"}]
+}

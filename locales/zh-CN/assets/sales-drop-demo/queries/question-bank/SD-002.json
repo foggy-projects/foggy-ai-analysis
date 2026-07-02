@@ -1,0 +1,6 @@
+{
+  "limit": 5,
+  "columns": ["severity", "region", "channel", "actionOwner", "rootCause", "salesDropAmount"],
+  "slice": [{"field": "severity", "op": "=", "value": "CRITICAL"}],
+  "orderBy": [{"field": "salesDropAmount", "dir": "DESC"}]
+}

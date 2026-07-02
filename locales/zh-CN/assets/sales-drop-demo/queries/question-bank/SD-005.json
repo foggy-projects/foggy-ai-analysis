@@ -1,0 +1,5 @@
+{
+  "limit": 5,
+  "columns": ["productCategory", "rootCause", "conversionRate", "salesDropRate"],
+  "orderBy": [{"field": "conversionRate", "dir": "ASC"}]
+}

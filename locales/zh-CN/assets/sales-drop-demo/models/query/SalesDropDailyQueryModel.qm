@@ -1,0 +1,46 @@
+/**
+ * Sales-drop daily diagnostic query model.
+ */
+const salesDrop = loadTableModel('SalesDropDailyModel');
+
+export const queryModel = {
+    name: 'SalesDropDailyQueryModel',
+    caption: 'Sales Drop Diagnostic Query',
+    description: 'Single-table query model for sales-drop diagnostics. It supports analysis by date, region, channel, product category, campaign, severity, root cause, and action owner, with measures for current sales, prior-week sales, drop amount, drop rate, orders, visitors, conversion rate, and refund amount.',
+    loader: 'v2',
+
+    model: salesDrop,
+
+    columnGroups: [
+        {
+            caption: 'Diagnostic Dimensions',
+            items: [
+                { ref: salesDrop.salesDropId },
+                { ref: salesDrop.observationDate },
+                { ref: salesDrop.region },
+                { ref: salesDrop.channel },
+                { ref: salesDrop.productCategory },
+                { ref: salesDrop.campaignName },
+                { ref: salesDrop.severity },
+                { ref: salesDrop.rootCause },
+                { ref: salesDrop.actionOwner },
+                { ref: salesDrop.notes }
+            ]
+        },
+        {
+            caption: 'Sales Metrics',
+            items: [
+                { ref: salesDrop.netSalesAmount },
+                { ref: salesDrop.priorWeekNetSalesAmount },
+                { ref: salesDrop.salesDropAmount },
+                { ref: salesDrop.salesDropRate },
+                { ref: salesDrop.orderCount },
+                { ref: salesDrop.visitorCount },
+                { ref: salesDrop.conversionRate },
+                { ref: salesDrop.refundAmount }
+            ]
+        }
+    ],
+
+    accesses: []
+};
