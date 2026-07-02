@@ -19,11 +19,11 @@ The bundled sales-drop data is an optional example, not the main Skill identity.
 ## Current Release
 
 ```text
-Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.2
-Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.2/foggy-ai-analysis-skill-0.1.2.zip
-Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.2/foggy-ai-analysis-skill-0.1.2-manifest.json
-Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.2/foggy-ai-analysis-skill-0.1.2-SHA256SUMS
-CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.6
+Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.3
+Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.3/foggy-ai-analysis-skill-0.1.3.zip
+Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.3/foggy-ai-analysis-skill-0.1.3-manifest.json
+Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.3/foggy-ai-analysis-skill-0.1.3-SHA256SUMS
+CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.8
 Java launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/runtime-api-launcher-v0.1.2
 ```
 
@@ -57,6 +57,10 @@ Do not overwrite the `v0.1.0` release assets; use the corrected `v0.1.1` assets 
 ## Issue 9 Status
 
 The `v0.1.2` package documents issue routing for Skill, CLI, Java runtime/launcher, MCP endpoint, model catalog, and query execution issues. Do not overwrite the existing `v0.1.1` assets.
+
+## Runtime API v1 CLI Alignment
+
+The `v0.1.3` package updates the formal onboarding path to `foggy-runtime-cli v0.1.8`. This CLI release accepts query payload `groupBy` string-array shorthand, normalizes it to Runtime API v1 object items, and aligns bundle, datasource, table inspection, and capability preflight behavior with the Java Runtime API v1 contract.
 
 ## Boundary
 
