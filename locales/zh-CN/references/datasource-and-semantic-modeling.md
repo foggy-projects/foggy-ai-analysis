@@ -22,11 +22,14 @@
 ```powershell
 foggy-runtime --base-url <url> --namespace <ns> datasources list
 foggy-runtime --base-url <url> --namespace <ns> datasources test <name>
+foggy-runtime --base-url <url> --namespace <ns> datasources diagnostics
 foggy-runtime --base-url <url> --namespace <ns> tables list --data-source <name>
 foggy-runtime --base-url <url> --namespace <ns> tables inspect --data-source <name> --table <table> --include-indexes
 ```
 
 对于 runtime 默认 SQLite 数据源，如果当前 runtime capability 支持默认数据源执行，可以省略 `--data-source`。
+
+用户业务数据和内置 sales-drop demo 数据必须分流。sales-drop replay 会拥有并重新 seed 一个本地 SQLite 文件，不要把该 replay 指向用户数据库。用户数据应注册或选择具名 datasource，绑定到目标 namespace，再对该 namespace 显式 validate 和 query。
 
 只读 SQL 探针：
 
@@ -39,11 +42,12 @@ foggy-runtime --base-url <url> --namespace <ns> sql query --data-source <name> -
 Runtime API-managed datasource 需要跨 runtime restart 保留时，必须从 runtime 启动配置和重启检查采集 datasource 持久化证据：
 
 ```powershell
+foggy-runtime --base-url <url> --namespace <ns> datasources diagnostics
 foggy-runtime --base-url <url> --namespace <ns> datasources list
 foggy-runtime --base-url <url> --namespace <ns> datasources test <name>
 ```
 
-报告 runtime 启动时配置的 registry 和 datasource 文件路径，例如 `runtime-datasources.json` 或 `runtime-datasource-registry.json`。确认文件存在，重启 runtime，并证明 `datasources list` 仍能返回该 datasource。不要猜这些文件在 runtime 工作目录、用户 home，还是配置过的 runtime home 下。
+报告 runtime 启动时配置的 registry 和 datasource 文件路径，例如 `runtime-datasources.json` 或 `runtime-datasource-registry.json`。runtime 支持时优先用 `datasources diagnostics`，因为它会返回解析后的 registry path、namespace binding、持久化 datasource 记录和连接池生命周期状态。确认文件存在，重启 runtime，并证明 `datasources diagnostics` 或 `datasources list` 仍能返回该 datasource。不要猜这些文件在 runtime 工作目录、用户 home，还是配置过的 runtime home 下。
 
 ## 模型文件
 

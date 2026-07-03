@@ -33,7 +33,7 @@ Sales-drop 只是内置示例路径。用户想快速演示或没有数据源时
 3. 执行长流程前，先确定 runtime URL、namespace、datasource mode、SQLite path、model directory 和 evidence directory。
 4. 新启动的 runtime 先跑 `wait-ready`，再跑 `capabilities`，记录 `engine`、`runtimeApiVersion`、`schemaVersion`、`securityMode` 和启用能力。
 5. 如果 runtime 返回 `securityMode=auth-code`，传入 `--auth-code` 或设置 `FOGGY_RUNTIME_API_AUTH_CODE`。当前公开 sales-drop 示例使用 `securityMode=none-dev-test-only`。
-6. 用户提供数据时先 inspect schema；没有数据源时使用内置 sales-drop SQLite 示例。
+6. 用户提供数据时先 inspect schema，并使用绑定到目标 namespace 的具名 datasource；没有数据源时使用内置 sales-drop SQLite 示例。不要把用户数据库和 sales-drop reseed 流程混用。
 7. refresh 前先 validate 模型；查询前先 describe 已 refresh 的模型；除非用户明确要求 seed 示例数据，否则 SQL 探针必须保持只读。
 8. 记录命令、端口、证据路径、失败点和修复动作。
 

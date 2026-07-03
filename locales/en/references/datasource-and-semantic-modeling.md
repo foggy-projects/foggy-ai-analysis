@@ -22,11 +22,14 @@ For a named datasource:
 ```powershell
 foggy-runtime --base-url <url> --namespace <ns> datasources list
 foggy-runtime --base-url <url> --namespace <ns> datasources test <name>
+foggy-runtime --base-url <url> --namespace <ns> datasources diagnostics
 foggy-runtime --base-url <url> --namespace <ns> tables list --data-source <name>
 foggy-runtime --base-url <url> --namespace <ns> tables inspect --data-source <name> --table <table> --include-indexes
 ```
 
 For the runtime default SQLite datasource, omit `--data-source` when the current runtime capability supports default datasource execution.
+
+Keep user business data and the bundled sales-drop demo data separate. The sales-drop replay owns and reseeds a local SQLite file; do not point that replay at a user database. For user data, register or select a named datasource, bind it to the namespace, then validate and query that namespace explicitly.
 
 Read-only SQL probes:
 
@@ -39,11 +42,12 @@ Do not run mutating SQL against user data unless the user explicitly asks for it
 When a Runtime API-managed datasource must survive runtime restarts, capture datasource persistence evidence from the runtime launch configuration and a restart check:
 
 ```powershell
+foggy-runtime --base-url <url> --namespace <ns> datasources diagnostics
 foggy-runtime --base-url <url> --namespace <ns> datasources list
 foggy-runtime --base-url <url> --namespace <ns> datasources test <name>
 ```
 
-Report the registry and datasource file paths configured at runtime startup, such as `runtime-datasources.json` or `runtime-datasource-registry.json`. Verify the files exist, restart the runtime, and prove the datasource is still returned by `datasources list`. Do not guess whether paths live under the runtime working directory, user home, or a configured runtime home.
+Report the registry and datasource file paths configured at runtime startup, such as `runtime-datasources.json` or `runtime-datasource-registry.json`. Prefer `datasources diagnostics` when supported because it returns the resolved registry path, namespace bindings, persisted datasource records, and pool lifecycle state. Verify the files exist, restart the runtime, and prove the datasource is still returned by `datasources diagnostics` or `datasources list`. Do not guess whether paths live under the runtime working directory, user home, or a configured runtime home.
 
 ## Model Files
 

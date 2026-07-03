@@ -33,7 +33,7 @@ Existing-model query-language work is a separate concern. For queryModel DSL pay
 3. Resolve runtime URL, namespace, datasource mode, SQLite path, model directory, and evidence directory before running long operations.
 4. Start newly launched runtimes with `wait-ready`, then run `capabilities` and record `engine`, `runtimeApiVersion`, `schemaVersion`, `securityMode`, and enabled capabilities.
 5. If the runtime reports `securityMode=auth-code`, pass `--auth-code` or set `FOGGY_RUNTIME_API_AUTH_CODE`. The current public sales-drop example uses `securityMode=none-dev-test-only`.
-6. For user data, inspect schema first; for no datasource, use the bundled sales-drop SQLite example.
+6. For user data, inspect schema first and keep it on a named datasource bound to the target namespace; for no datasource, use the bundled sales-drop SQLite example. Do not mix user databases with the sales-drop reseed flow.
 7. Validate models before refresh, describe refreshed models before query execution, and keep all SQL probes read-only unless the user explicitly asks to seed example data.
 8. Record commands, ports, evidence paths, failures, and repairs.
 

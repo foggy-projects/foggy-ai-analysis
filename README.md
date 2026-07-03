@@ -19,15 +19,15 @@ The bundled sales-drop data is an optional example, not the main Skill identity.
 ## Current Release
 
 ```text
-Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.10
-Analysis Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.10/foggy-ai-analysis-skill-0.1.10.zip
-Analysis Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.10/foggy-ai-analysis-skill-0.1.10-manifest.json
-Analysis Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.10/foggy-ai-analysis-skill-0.1.10-SHA256SUMS
-Semantic Query Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.10/foggy-semantic-query-skill-0.1.10.zip
-Semantic Query Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.10/foggy-semantic-query-skill-0.1.10-manifest.json
-Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.10/foggy-semantic-query-skill-0.1.10-SHA256SUMS
-CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.15
-Foggy Runtime Launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/foggy-runtime-launcher-v0.1.3
+Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.11
+Analysis Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.11/foggy-ai-analysis-skill-0.1.11.zip
+Analysis Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.11/foggy-ai-analysis-skill-0.1.11-manifest.json
+Analysis Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.11/foggy-ai-analysis-skill-0.1.11-SHA256SUMS
+Semantic Query Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.11/foggy-semantic-query-skill-0.1.11.zip
+Semantic Query Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.11/foggy-semantic-query-skill-0.1.11-manifest.json
+Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.11/foggy-semantic-query-skill-0.1.11-SHA256SUMS
+CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.16
+Foggy Runtime Launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/foggy-runtime-launcher-v0.1.4
 ```
 
 ## Official Public Docs
@@ -78,8 +78,8 @@ foggy-ai-analysis-skill-<version>-zh-CN.zip
 Download the Skill zip, verify `SHA256SUMS`, then install it with the runtime CLI:
 
 ```powershell
-foggy-runtime skills install foggy-ai-analysis --zip .\foggy-ai-analysis-skill-0.1.10.zip --replace
-foggy-runtime skills install foggy-semantic-query --zip .\foggy-semantic-query-skill-0.1.10.zip --replace
+foggy-runtime skills install foggy-ai-analysis --zip .\foggy-ai-analysis-skill-0.1.11.zip --replace
+foggy-runtime skills install foggy-semantic-query --zip .\foggy-semantic-query-skill-0.1.11.zip --replace
 ```
 
 The target agent Skill directories are:
@@ -128,7 +128,7 @@ The `v0.1.2` package documents issue routing for Skill, CLI, Java runtime/launch
 
 ## Runtime API v1 CLI Alignment
 
-The `v0.1.10` package points public onboarding to `foggy-runtime-cli v0.1.15`. This CLI release keeps Runtime API v1 capability preflight and `groupBy` string-array normalization, adds `-help` compatibility, installs the paired `foggy-ai-analysis` / `foggy-semantic-query` Skills under `~/.agents/skills`, and links the official TM/QM and Query DSL syntax references.
+The `v0.1.11` package points public onboarding to `foggy-runtime-cli v0.1.16` and Foggy Runtime Launcher `foggy-runtime-launcher-v0.1.4`. This release adds the `datasources diagnostics` runtime evidence path, keeps Runtime API v1 capability preflight and `groupBy` string-array normalization, installs the paired `foggy-ai-analysis` / `foggy-semantic-query` Skills under `~/.agents/skills`, and keeps sales-drop default SQLite separate from user-owned Runtime API-managed datasources.
 
 ## Bilingual Source Status
 
