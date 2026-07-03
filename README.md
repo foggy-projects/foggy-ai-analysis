@@ -19,15 +19,15 @@ The bundled sales-drop data is an optional example, not the main Skill identity.
 ## Current Release
 
 ```text
-Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.5
-Analysis Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.5/foggy-ai-analysis-skill-0.1.5.zip
-Analysis Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.5/foggy-ai-analysis-skill-0.1.5-manifest.json
-Analysis Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.5/foggy-ai-analysis-skill-0.1.5-SHA256SUMS
-Semantic Query Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.5/foggy-semantic-query-skill-0.1.5.zip
-Semantic Query Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.5/foggy-semantic-query-skill-0.1.5-manifest.json
-Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.5/foggy-semantic-query-skill-0.1.5-SHA256SUMS
-CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.10
-Java launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/runtime-api-launcher-v0.1.2
+Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.6
+Analysis Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.6/foggy-ai-analysis-skill-0.1.6.zip
+Analysis Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.6/foggy-ai-analysis-skill-0.1.6-manifest.json
+Analysis Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.6/foggy-ai-analysis-skill-0.1.6-SHA256SUMS
+Semantic Query Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.6/foggy-semantic-query-skill-0.1.6.zip
+Semantic Query Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.6/foggy-semantic-query-skill-0.1.6-manifest.json
+Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.6/foggy-semantic-query-skill-0.1.6-SHA256SUMS
+CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.11
+Java launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/runtime-api-launcher-v0.1.3
 ```
 
 ## Source Layout
@@ -67,8 +67,8 @@ foggy-ai-analysis-skill-<version>-zh-CN.zip
 Download the Skill zip, verify `SHA256SUMS`, then install it with the runtime CLI:
 
 ```powershell
-foggy-runtime skills install foggy-ai-analysis --zip .\foggy-ai-analysis-skill-0.1.5.zip --replace
-foggy-runtime skills install foggy-semantic-query --zip .\foggy-semantic-query-skill-0.1.5.zip --replace
+foggy-runtime skills install foggy-ai-analysis --zip .\foggy-ai-analysis-skill-0.1.6.zip --replace
+foggy-runtime skills install foggy-semantic-query --zip .\foggy-semantic-query-skill-0.1.6.zip --replace
 ```
 
 The target agent Skill directories are:
@@ -117,7 +117,7 @@ The `v0.1.2` package documents issue routing for Skill, CLI, Java runtime/launch
 
 ## Runtime API v1 CLI Alignment
 
-The `v0.1.5` package points public onboarding to `foggy-runtime-cli v0.1.10`. This CLI release keeps Runtime API v1 capability preflight and `groupBy` string-array normalization, adds `-help` compatibility, and installs the paired `foggy-ai-analysis` / `foggy-semantic-query` Skills under `~/.agents/skills`.
+The `v0.1.6` package points public onboarding to `foggy-runtime-cli v0.1.11`. This CLI release keeps Runtime API v1 capability preflight and `groupBy` string-array normalization, adds `-help` compatibility, and installs the paired `foggy-ai-analysis` / `foggy-semantic-query` Skills under `~/.agents/skills`.
 
 ## Bilingual Source Status
 

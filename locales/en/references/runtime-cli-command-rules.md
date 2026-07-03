@@ -28,22 +28,26 @@ foggy-runtime --base-url <runtime-url> --namespace <namespace> capabilities
 
 Continue only when `success=true` and the needed capability is supported. Record `engine`, `runtimeApiVersion`, `data.schemaVersion`, `data.securityMode`, and relevant `data.capabilities`. If `securityMode=auth-code`, pass `--auth-code` or set `FOGGY_RUNTIME_API_AUTH_CODE`.
 
-For commands that require Runtime API features, CLI `v0.1.10` performs capability preflight and exits with code `3` when unsupported. This covers models, query, table inspection, SQL probing, bundle/datasource/resource management, compose, and fsscript commands.
+For commands that require Runtime API features, CLI `v0.1.11` performs capability preflight and exits with code `3` when unsupported. This covers models, query, table inspection, SQL probing, bundle/datasource/resource management, compose, and fsscript commands.
 
-CLI `v0.1.10` accepts both `-h`/`--help` and the compatibility alias `-help` on top-level and nested commands.
+CLI `v0.1.11` accepts both `-h`/`--help` and the compatibility alias `-help` on top-level and nested commands.
 
 ## Datasource Exploration
 
-For a runtime-managed SQLite datasource:
+For a Runtime API-managed datasource, use the matching JDBC type and URL. SQLite, MySQL, PostgreSQL, and H2 are valid dev/test examples when the runtime has the driver:
 
 ```powershell
 foggy-runtime --base-url <runtime-url> --namespace <ns> datasources add --name <datasource-name> --type sqlite --jdbc-url jdbc:sqlite:<sqlite-db-path> --replace
+foggy-runtime --base-url <runtime-url> --namespace <ns> datasources add --name <datasource-name> --type mysql --jdbc-url "jdbc:mysql://<host>:<port>/<database>?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC" --username <user> --password-env <PASSWORD_ENV> --replace
 foggy-runtime --base-url <runtime-url> --namespace <ns> datasources test <datasource-name>
 foggy-runtime --base-url <runtime-url> --namespace <ns> datasources bind --namespace <ns> --data-source <datasource-name>
 foggy-runtime --base-url <runtime-url> --namespace <ns> datasources binding --namespace <ns>
+foggy-runtime --base-url <runtime-url> --namespace <ns> datasources diagnostics
 ```
 
-Use `datasources binding` after `datasources bind` when evidence must show the namespace registry entry. Query execution still follows the model and runtime datasource contract unless the runtime explicitly supports query-time datasource integration.
+Use `datasources binding` after `datasources bind` when evidence must show the namespace registry entry. Use `datasources diagnostics` when evidence must show managed datasource persistence, pool lifecycle, or registry path.
+
+With `foggy-runtime-cli v0.1.11` and Java launcher `runtime-api-launcher-v0.1.3`, namespace-bound Runtime API-managed datasources are expected to support table discovery, read-only SQL probing, model validation, model refresh, model describe, and query execution. If an older runtime does not report those capabilities, stop at the capability failure instead of calling private endpoints.
 
 List and inspect tables before editing model files:
 
@@ -133,7 +137,7 @@ foggy-runtime --base-url <runtime-url> --namespace <ns> query validate <QueryMod
 foggy-runtime --base-url <runtime-url> --namespace <ns> query execute <QueryModel> --payload <payload.json>
 ```
 
-CLI `v0.1.10` accepts query payload `groupBy` string-array shorthand and normalizes it to Runtime API v1 object items before sending the request:
+CLI `v0.1.11` accepts query payload `groupBy` string-array shorthand and normalizes it to Runtime API v1 object items before sending the request:
 
 ```json
 {

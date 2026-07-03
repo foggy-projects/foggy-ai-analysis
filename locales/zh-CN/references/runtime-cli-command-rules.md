@@ -28,22 +28,26 @@ foggy-runtime --base-url <runtime-url> --namespace <namespace> capabilities
 
 只有 `success=true` 且所需 capability 为 supported 时继续。记录 `engine`、`runtimeApiVersion`、`data.schemaVersion`、`data.securityMode` 和相关 `data.capabilities`。如果 `securityMode=auth-code`，传入 `--auth-code` 或设置 `FOGGY_RUNTIME_API_AUTH_CODE`。
 
-对于依赖 Runtime API 能力的命令，CLI `v0.1.10` 会先做 capability preflight；不支持时以 exit code `3` 退出。覆盖 models、query、table inspection、SQL probing、bundle/datasource/resource management、compose 和 fsscript 命令。
+对于依赖 Runtime API 能力的命令，CLI `v0.1.11` 会先做 capability preflight；不支持时以 exit code `3` 退出。覆盖 models、query、table inspection、SQL probing、bundle/datasource/resource management、compose 和 fsscript 命令。
 
-CLI `v0.1.10` 在顶层和子命令中都支持 `-h`/`--help`，同时兼容单横线 `-help`。
+CLI `v0.1.11` 在顶层和子命令中都支持 `-h`/`--help`，同时兼容单横线 `-help`。
 
 ## 数据源探索
 
-对于 runtime-managed SQLite 数据源：
+对于 Runtime API-managed 数据源，按实际 JDBC 类型和 URL 注册。Runtime 带有对应 driver 时，SQLite、MySQL、PostgreSQL、H2 都可以作为 dev/test 示例：
 
 ```powershell
 foggy-runtime --base-url <runtime-url> --namespace <ns> datasources add --name <datasource-name> --type sqlite --jdbc-url jdbc:sqlite:<sqlite-db-path> --replace
+foggy-runtime --base-url <runtime-url> --namespace <ns> datasources add --name <datasource-name> --type mysql --jdbc-url "jdbc:mysql://<host>:<port>/<database>?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC" --username <user> --password-env <PASSWORD_ENV> --replace
 foggy-runtime --base-url <runtime-url> --namespace <ns> datasources test <datasource-name>
 foggy-runtime --base-url <runtime-url> --namespace <ns> datasources bind --namespace <ns> --data-source <datasource-name>
 foggy-runtime --base-url <runtime-url> --namespace <ns> datasources binding --namespace <ns>
+foggy-runtime --base-url <runtime-url> --namespace <ns> datasources diagnostics
 ```
 
-当证据需要展示 namespace registry entry 时，在 `datasources bind` 后执行 `datasources binding`。除非 runtime 明确支持 query-time datasource integration，否则查询执行仍遵循模型和 runtime datasource 契约。
+当证据需要展示 namespace registry entry 时，在 `datasources bind` 后执行 `datasources binding`。当证据需要展示 managed datasource persistence、连接池 lifecycle 或 registry path 时，执行 `datasources diagnostics`。
+
+使用 `foggy-runtime-cli v0.1.11` 和 Java launcher `runtime-api-launcher-v0.1.3` 时，namespace-bound Runtime API-managed datasource 预期支持 table discovery、只读 SQL probing、model validation、model refresh、model describe 和 query execution。如果旧 runtime 没有报告这些 capabilities，应停在 capability failure，不要改走私有端点。
 
 编辑模型文件前先 list 和 inspect 表：
 
@@ -133,7 +137,7 @@ foggy-runtime --base-url <runtime-url> --namespace <ns> query validate <QueryMod
 foggy-runtime --base-url <runtime-url> --namespace <ns> query execute <QueryModel> --payload <payload.json>
 ```
 
-CLI `v0.1.10` 接受 query payload 中的 `groupBy` string-array 简写，并在发送请求前规范化为 Runtime API v1 object items：
+CLI `v0.1.11` 接受 query payload 中的 `groupBy` string-array 简写，并在发送请求前规范化为 Runtime API v1 object items：
 
 ```json
 {
