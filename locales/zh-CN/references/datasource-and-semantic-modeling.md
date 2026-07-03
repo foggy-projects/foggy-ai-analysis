@@ -36,13 +36,14 @@ foggy-runtime --base-url <url> --namespace <ns> sql query --data-source <name> -
 
 除非用户明确要求，不要对用户数据执行变更 SQL。
 
-Runtime API-managed datasource 需要跨 runtime restart 保留时，必须采集 datasource 持久化证据：
+Runtime API-managed datasource 需要跨 runtime restart 保留时，必须从 runtime 启动配置和重启检查采集 datasource 持久化证据：
 
 ```powershell
-foggy-runtime --base-url <url> --namespace <ns> datasources diagnostics
+foggy-runtime --base-url <url> --namespace <ns> datasources list
+foggy-runtime --base-url <url> --namespace <ns> datasources test <name>
 ```
 
-报告 diagnostics 返回的 registry 和 datasource 文件路径，例如 `runtime-datasources.json` 或 `runtime-datasource-registry.json`。不要猜这些文件在 runtime 工作目录、用户 home，还是配置过的 runtime home 下。
+报告 runtime 启动时配置的 registry 和 datasource 文件路径，例如 `runtime-datasources.json` 或 `runtime-datasource-registry.json`。确认文件存在，重启 runtime，并证明 `datasources list` 仍能返回该 datasource。不要猜这些文件在 runtime 工作目录、用户 home，还是配置过的 runtime home 下。
 
 ## 模型文件
 

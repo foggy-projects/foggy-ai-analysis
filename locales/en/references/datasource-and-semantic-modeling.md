@@ -36,13 +36,14 @@ foggy-runtime --base-url <url> --namespace <ns> sql query --data-source <name> -
 
 Do not run mutating SQL against user data unless the user explicitly asks for it.
 
-When a Runtime API-managed datasource must survive runtime restarts, capture datasource persistence evidence:
+When a Runtime API-managed datasource must survive runtime restarts, capture datasource persistence evidence from the runtime launch configuration and a restart check:
 
 ```powershell
-foggy-runtime --base-url <url> --namespace <ns> datasources diagnostics
+foggy-runtime --base-url <url> --namespace <ns> datasources list
+foggy-runtime --base-url <url> --namespace <ns> datasources test <name>
 ```
 
-Report the registry and datasource file paths returned by diagnostics for files such as `runtime-datasources.json` or `runtime-datasource-registry.json`. Do not guess whether they live under the runtime working directory, user home, or a configured runtime home.
+Report the registry and datasource file paths configured at runtime startup, such as `runtime-datasources.json` or `runtime-datasource-registry.json`. Verify the files exist, restart the runtime, and prove the datasource is still returned by `datasources list`. Do not guess whether paths live under the runtime working directory, user home, or a configured runtime home.
 
 ## Model Files
 
