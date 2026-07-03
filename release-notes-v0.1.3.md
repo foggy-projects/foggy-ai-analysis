@@ -7,7 +7,7 @@ Patch release for the formal Foggy AI analysis onboarding package.
 - Updates the formal public onboarding path to `foggy-runtime-cli v0.1.8`.
 - Documents CLI `v0.1.8` Runtime API v1 capability preflight behavior.
 - Documents CLI `v0.1.8` support for query payload `groupBy` string-array shorthand, including date-grain fields such as `observationDate$month`.
-- Keeps Java launcher alignment at `runtime-api-launcher-v0.1.2`.
+- Keeps Java launcher alignment at `foggy-runtime-launcher-v0.1.2`.
 
 ## Release Rule
 

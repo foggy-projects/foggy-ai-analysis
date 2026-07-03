@@ -6,7 +6,7 @@
 
 ## 边界
 
-- 公开 dev/test onboarding 优先使用已验证的 Java Runtime API launcher JAR 路径。
+- 公开 dev/test onboarding 优先使用已验证的 Foggy Runtime Launcher JAR 路径。
 - Docker image 名称、tag、端口和环境变量都按具体 release 文档确认；未确认前只给模板，不声称具体镜像可用。
 - 生产 auth、RBAC、审计、治理和租户级 datasource ownership 不在本 Skill 实现范围。
 - 每次启动后都运行 `wait-ready` 和 `capabilities`；不要假设某个 profile 一定暴露 Runtime API 或 MCP。

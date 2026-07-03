@@ -14,7 +14,7 @@ Patch release for issue #9.
 
 Do not overwrite the existing `v0.1.1` assets. Publish the corrected package as `v0.1.2`.
 
-The `v0.1.2` assets were replaced before handoff to align package documentation and manifest boundaries with Java launcher `runtime-api-launcher-v0.1.2`.
+The `v0.1.2` assets were replaced before handoff to align package documentation and manifest boundaries with Java launcher `foggy-runtime-launcher-v0.1.2`.
 
 Workspace source commit:
 

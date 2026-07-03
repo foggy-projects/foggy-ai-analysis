@@ -6,7 +6,7 @@ For first local onboarding, read `public-onboarding.md` first. For IDE/client co
 
 ## Boundaries
 
-- Prefer the validated Java Runtime API launcher JAR path for public dev/test onboarding.
+- Prefer the validated Foggy Runtime Launcher JAR path for public dev/test onboarding.
 - Treat Docker image names, tags, ports, and environment variables as release-specific until verified from the selected release notes.
 - Keep production auth, RBAC, audit, governance, and tenant datasource ownership out of this skill's implementation scope.
 - After every startup, run `wait-ready` and `capabilities`; do not assume a profile exposes Runtime API or MCP.

@@ -6,7 +6,7 @@ Initial formal Skill-facing release.
 
 - Formal `foggy-ai-analysis` Skill entrypoint.
 - Runtime install/start guidance for public CLI `v0.1.6`.
-- Java launcher boundary for `runtime-api-launcher-v0.1.1`.
+- Java launcher boundary for `foggy-runtime-launcher-v0.1.1`.
 - Datasource inspection and semantic TM/QM modeling workflow.
 - Question-bank tuning workflow.
 - MCP IDE connection reference.
@@ -23,4 +23,3 @@ adfc67b44e05981136daa2d615e68c06a7b89b8fb327dd2b3afea0439709539f  foggy-ai-analy
 ## Boundary
 
 The sales-drop data is an example path. Production permission, RBAC, audit, and governance are not implemented in this release.
-

@@ -3,7 +3,7 @@
 ## Runtime Alignment
 
 - Points public onboarding to `foggy-runtime-cli v0.1.10`.
-- Keeps Java launcher alignment at `runtime-api-launcher-v0.1.2`.
+- Keeps Java launcher alignment at `foggy-runtime-launcher-v0.1.2`.
 - Uses the formal `foggy-ai-analysis` Skill as the sales-drop demo asset source.
 
 ## Skill Install
