@@ -25,6 +25,19 @@ Default runtime URL=http://127.0.0.1:18066
 Default namespace=salesdrop
 ```
 
+## Official Public Docs
+
+The Skill is self-contained for install, demo replay, datasource onboarding, and basic TM/QM modeling. Use the public docs as the deeper contract reference when a user asks for full syntax, compatibility, or advanced modeling details:
+
+```text
+Foggy docs=https://foggy-projects.github.io/foggy-data-mcp-docs/en/
+Whitepaper v1.0=https://foggy-projects.github.io/foggy-data-mcp-docs/en/whitepaper/v1.0/
+TM/QM syntax reference=https://foggy-projects.github.io/foggy-data-mcp-docs/en/whitepaper/v1.0/semantic-layer-syntax-reference.html
+Query DSL syntax reference=https://foggy-projects.github.io/foggy-data-mcp-docs/en/whitepaper/v1.0/query-dsl-syntax-reference.html
+```
+
+Do not block onboarding on those pages. Runtime behavior must still be verified with `capabilities`, `models validate`, `models describe`, and query validation.
+
 ## Install CLI
 
 Windows PowerShell:

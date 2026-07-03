@@ -9,7 +9,9 @@ For command order, readiness checks, bundle registration, refresh, and query exe
 - A TM describes the physical table contract: model name, table name, primary key, fields, physical columns, data types, aggregations, units, and field semantics.
 - A QM describes the analysis surface exposed to Runtime API, MCP, and agents: query model name, loaded table model, visible fields, column groups, joins or relations when supported, and access rules.
 - Datasource credentials do not belong in TM/QM files. Runtime API datasource configuration, namespace, or bundle configuration decides which database the model runs against.
-- This file is the public onboarding and delivery checklist. For attributes not covered here, rely on the target runtime's `models validate`/`models describe` output and any project documentation the user provides; do not require a local whitepaper checkout that is not bundled with the Skill.
+- This file is the public onboarding and delivery checklist. For attributes not covered here, use the official public syntax reference at `https://foggy-projects.github.io/foggy-data-mcp-docs/en/whitepaper/v1.0/semantic-layer-syntax-reference.html`, then verify against the target runtime's `models validate`/`models describe` output and any project documentation the user provides.
+- For query payload syntax after a model is loaded, use the official Query DSL reference at `https://foggy-projects.github.io/foggy-data-mcp-docs/en/whitepaper/v1.0/query-dsl-syntax-reference.html`; keep detailed query-language work in the paired semantic-query workflow when available.
+- Do not require a local whitepaper checkout that is not bundled with the Skill.
 - Do not invent columns, joins, date grain fields, enums, or business definitions. Confirm them with `tables inspect`, read-only SQL probes, user input, or existing project model conventions.
 - Keep TM and QM changes together unless the user explicitly asks for `tm-only` or `qm-only`; otherwise the two files drift.
 

@@ -9,7 +9,9 @@
 - TM 描述物理表契约：模型名、表名、主键、字段、物理列、类型、聚合、单位和字段语义。
 - QM 描述暴露给 Runtime API、MCP 和 agent 的分析面：查询模型名、加载的表模型、可见字段、字段分组、支持时的 join/relation，以及访问控制。
 - 数据库凭证不写进 TM/QM。实际连接哪个数据库，由 Runtime API datasource 配置、namespace 或 bundle 配置决定。
-- 本文件是公开 onboarding 和交付检查清单。未覆盖的属性必须以目标 runtime 的 `models validate`/`models describe` 输出，以及用户提供的项目文档为准；不要要求公开 Skill 用户拥有未随包分发的本地白皮书 checkout。
+- 本文件是公开 onboarding 和交付检查清单。未覆盖的属性先参考官方公开 TM/QM 语法文档 `https://foggy-projects.github.io/foggy-data-mcp-docs/zh/whitepaper/v1.0/semantic-layer-syntax-reference.html`，再以目标 runtime 的 `models validate`/`models describe` 输出，以及用户提供的项目文档验证。
+- 模型加载后的 query payload 语法参考官方 Query DSL 文档 `https://foggy-projects.github.io/foggy-data-mcp-docs/zh/whitepaper/v1.0/query-dsl-syntax-reference.html`；如果可用，详细查询语言工作继续交给配套 semantic-query 工作流。
+- 不要要求公开 Skill 用户拥有未随包分发的本地白皮书 checkout。
 - 不要凭空发明列、join、日期粒度字段、枚举或业务口径。必须来自 `tables inspect`、只读 SQL 探针、用户确认或项目既有模型约定。
 - 除非用户明确只要 `tm-only` 或 `qm-only`，否则 TM 和 QM 要作为一组交付，避免两者漂移。
 

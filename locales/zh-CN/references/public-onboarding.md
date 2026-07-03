@@ -25,6 +25,19 @@ Default runtime URL=http://127.0.0.1:18066
 Default namespace=salesdrop
 ```
 
+## 官方公开文档
+
+Skill 包对安装、demo replay、数据源 onboarding 和基础 TM/QM 建模保持自包含。用户询问完整语法、兼容性或高级建模细节时，把公开文档作为更完整的契约参考：
+
+```text
+Foggy 文档=https://foggy-projects.github.io/foggy-data-mcp-docs/zh/
+白皮书 v1.0=https://foggy-projects.github.io/foggy-data-mcp-docs/zh/whitepaper/v1.0/
+TM/QM 语法参考=https://foggy-projects.github.io/foggy-data-mcp-docs/zh/whitepaper/v1.0/semantic-layer-syntax-reference.html
+Query DSL 语法参考=https://foggy-projects.github.io/foggy-data-mcp-docs/zh/whitepaper/v1.0/query-dsl-syntax-reference.html
+```
+
+不要把这些页面作为 onboarding 的阻塞条件。Runtime 行为仍必须通过 `capabilities`、`models validate`、`models describe` 和 query validation 验证。
+
 ## 安装 CLI
 
 Windows PowerShell：
