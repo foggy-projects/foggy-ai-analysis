@@ -28,9 +28,9 @@ foggy-runtime --base-url <runtime-url> --namespace <namespace> capabilities
 
 Continue only when `success=true` and the needed capability is supported. Record `engine`, `runtimeApiVersion`, `data.schemaVersion`, `data.securityMode`, and relevant `data.capabilities`. If `securityMode=auth-code`, pass `--auth-code` or set `FOGGY_RUNTIME_API_AUTH_CODE`.
 
-For commands that require Runtime API features, CLI `v0.1.9` performs capability preflight and exits with code `3` when unsupported. This covers models, query, table inspection, SQL probing, bundle/datasource/resource management, compose, and fsscript commands.
+For commands that require Runtime API features, CLI `v0.1.10` performs capability preflight and exits with code `3` when unsupported. This covers models, query, table inspection, SQL probing, bundle/datasource/resource management, compose, and fsscript commands.
 
-CLI `v0.1.9` accepts both `-h`/`--help` and the compatibility alias `-help` on top-level and nested commands.
+CLI `v0.1.10` accepts both `-h`/`--help` and the compatibility alias `-help` on top-level and nested commands.
 
 ## Datasource Exploration
 
@@ -133,7 +133,7 @@ foggy-runtime --base-url <runtime-url> --namespace <ns> query validate <QueryMod
 foggy-runtime --base-url <runtime-url> --namespace <ns> query execute <QueryModel> --payload <payload.json>
 ```
 
-CLI `v0.1.9` accepts query payload `groupBy` string-array shorthand and normalizes it to Runtime API v1 object items before sending the request:
+CLI `v0.1.10` accepts query payload `groupBy` string-array shorthand and normalizes it to Runtime API v1 object items before sending the request:
 
 ```json
 {

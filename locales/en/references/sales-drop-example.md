@@ -15,11 +15,16 @@ assets/sales-drop-demo/question-bank.json
 
 ## Replay
 
-After the Java runtime is running, use the CLI replay command:
+Install `foggy-ai-analysis` first if it is not already under `~/.agents/skills/foggy-ai-analysis`:
+
+```powershell
+foggy-runtime skills install foggy-ai-analysis --zip .\foggy-ai-analysis-skill-0.1.5.zip --replace
+```
+
+After the Java runtime is running, use the CLI replay command. When the Skill is installed under `~/.agents/skills/foggy-ai-analysis`, `--skill-dir` can be omitted; pass it only for an unpacked custom location:
 
 ```powershell
 foggy-runtime --base-url http://127.0.0.1:18066 --namespace salesdrop demo sales-drop replay `
-  --skill-dir <unzipped-foggy-ai-analysis-skill-dir> `
   --evidence-dir <evidence-dir> `
   --sqlite-path <runtime-default-sqlite-path> `
   --use-default-datasource

@@ -7,8 +7,8 @@
 ```text
 do not use foggy-runtime-cli source checkout
 do not set PYTHONPATH=src
-download Skill from https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.4
-download CLI from https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.9
+download Skill from https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.5
+download CLI from https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.10
 download Java launcher from https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/runtime-api-launcher-v0.1.2
 validate all SHA256SUMS
 scan the unzipped Skill for undeclared dollar-prefixed Skill references

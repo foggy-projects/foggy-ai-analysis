@@ -16,8 +16,8 @@ Build the default English package from the workspace:
 
 ```powershell
 .\.codex\skills\foggy-release-tagging\scripts\publish_foggy_ai_analysis_skill.ps1 `
-  -SkillVersion 0.1.4 `
-  -CliTag v0.1.9 `
+  -SkillVersion 0.1.5 `
+  -CliTag v0.1.10 `
   -LauncherTag runtime-api-launcher-v0.1.2 `
   -ReleaseRepo <local-foggy-ai-analysis-clone> `
   -IncludeZhCn
@@ -28,16 +28,16 @@ Build the paired semantic query Skill package explicitly and upload it to the sa
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\package-foggy-skill.ps1 `
   -SkillName foggy-semantic-query `
-  -Version 0.1.4 `
+  -Version 0.1.5 `
   -LauncherTag runtime-api-launcher-v0.1.2 `
-  -CliRequirement "foggy-runtime-cli >= 0.1.9" `
+  -CliRequirement "foggy-runtime-cli >= 0.1.10" `
   -RepoRoot D:\foggy-projects\foggy-data-mcp `
   -OutDir D:\foggy-projects\foggy-data-mcp\dist\skills
 
-gh release upload v0.1.4 `
-  D:\foggy-projects\foggy-data-mcp\dist\skills\foggy-semantic-query-skill-0.1.4.zip `
-  D:\foggy-projects\foggy-data-mcp\dist\skills\foggy-semantic-query-skill-0.1.4-manifest.json `
-  D:\foggy-projects\foggy-data-mcp\dist\skills\foggy-semantic-query-skill-0.1.4-SHA256SUMS `
+gh release upload v0.1.5 `
+  D:\foggy-projects\foggy-data-mcp\dist\skills\foggy-semantic-query-skill-0.1.5.zip `
+  D:\foggy-projects\foggy-data-mcp\dist\skills\foggy-semantic-query-skill-0.1.5-manifest.json `
+  D:\foggy-projects\foggy-data-mcp\dist\skills\foggy-semantic-query-skill-0.1.5-SHA256SUMS `
   --repo foggy-projects/foggy-ai-analysis
 ```
 
@@ -61,8 +61,8 @@ For the full release workflow, use:
 
 ```powershell
 .\.codex\skills\foggy-release-tagging\scripts\publish_foggy_ai_analysis_skill.ps1 `
-  -SkillVersion 0.1.4 `
-  -CliTag v0.1.9 `
+  -SkillVersion 0.1.5 `
+  -CliTag v0.1.10 `
   -LauncherTag runtime-api-launcher-v0.1.2 `
   -IncludeZhCn
 ```
@@ -76,12 +76,12 @@ For `v0.1.2`, also verify:
 - Java runtime, launcher, MCP endpoint, model catalog, and query execution issues route to `foggy-projects/foggy-data-mcp-bridge`.
 - CLI install, argument parsing, command UX, response formatting, and exit-code issues route to `foggy-projects/foggy-runtime-cli`.
 
-For `v0.1.4`, also verify:
+For `v0.1.5`, also verify:
 
-- `references/public-onboarding.md` points to `foggy-runtime-cli v0.1.9`.
-- `references/runtime-cli-command-rules.md` documents CLI `v0.1.9` capability preflight, `groupBy` string-array normalization, and `-help` compatibility.
-- Manifest `cliRequirement` is `foggy-runtime-cli >= 0.1.9`.
-- The same release includes `foggy-semantic-query-skill-0.1.4.*` assets.
+- `references/public-onboarding.md` points to `foggy-runtime-cli v0.1.10`.
+- `references/runtime-cli-command-rules.md` documents CLI `v0.1.10` capability preflight, `groupBy` string-array normalization, and `-help` compatibility.
+- Manifest `cliRequirement` is `foggy-runtime-cli >= 0.1.10`.
+- The same release includes `foggy-semantic-query-skill-0.1.5.*` assets.
 
 For the first bilingual release, also verify:
 
