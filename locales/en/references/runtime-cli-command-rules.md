@@ -45,7 +45,7 @@ foggy-runtime --base-url <runtime-url> --namespace <ns> datasources binding --na
 foggy-runtime --base-url <runtime-url> --namespace <ns> datasources diagnostics
 ```
 
-Use `datasources binding` after `datasources bind` when evidence must show the namespace registry entry. Use `datasources diagnostics` when evidence must show managed datasource persistence, pool lifecycle, or registry path.
+Use `datasources binding` after `datasources bind` when evidence must show the namespace registry entry. Use `datasources diagnostics` when evidence must show managed datasource persistence, pool lifecycle, or registry path. Report the exact paths returned by diagnostics for `runtime-datasources.json`, `runtime-datasource-registry.json`, or equivalent files; do not infer them from `.foggy-runtime`, the current working directory, or the user's home directory.
 
 With `foggy-runtime-cli v0.1.12` and Foggy Runtime Launcher `foggy-runtime-launcher-v0.1.3`, namespace-bound Runtime API-managed datasources are expected to support table discovery, read-only SQL probing, model validation, model refresh, model describe, and query execution. If an older runtime does not report those capabilities, stop at the capability failure instead of calling private endpoints.
 
@@ -67,7 +67,7 @@ Do not use `sql query` for mutation, DDL, stored procedures, multi-statement scr
 
 ## Model Loop
 
-Generate or patch TM/QM/model-list files only after the datasource schema is confirmed.
+Generate or patch TM/QM files only after the datasource schema is confirmed. Patch model-list registration only when the target embedded or legacy host already uses one.
 
 List existing query models before inspecting an unknown model name:
 
@@ -162,4 +162,4 @@ Execute only when the user needs data evidence or the environment is clearly dev
 
 ## Evidence
 
-Report commands and pass/fail status, runtime identity from `capabilities`, datasource/table inspection outcomes, changed TM/QM/model-list files, model validation/refresh/describe outcomes, query validation/execution outcomes, exact `error.code` and `error.phase` when present, and remaining assumptions about namespace, datasource, fixture, and dev/test runtime status.
+Report commands and pass/fail status, runtime identity from `capabilities`, datasource/table inspection outcomes, changed TM/QM files and any host-specific model-list registration, model validation/refresh/describe outcomes, query validation/execution outcomes, exact `error.code` and `error.phase` when present, and remaining assumptions about namespace, datasource, fixture, and dev/test runtime status.

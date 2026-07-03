@@ -9,7 +9,7 @@
 1. 用 `wait-ready` 和 `capabilities` 确认 runtime 就绪。
 2. 确定 namespace 和 datasource mode。
 3. 写模型前先 inspect 表。
-4. 生成或更新 TM/QM/model-list 文件。
+4. 生成或更新 TM/QM 文件；宿主项目需要时同步 model-list 注册。
 5. validate 模型。
 6. add 或 update model bundle。
 7. refresh 并 describe query model。
@@ -36,6 +36,14 @@ foggy-runtime --base-url <url> --namespace <ns> sql query --data-source <name> -
 
 除非用户明确要求，不要对用户数据执行变更 SQL。
 
+Runtime API-managed datasource 需要跨 runtime restart 保留时，必须采集 datasource 持久化证据：
+
+```powershell
+foggy-runtime --base-url <url> --namespace <ns> datasources diagnostics
+```
+
+报告 diagnostics 返回的 registry 和 datasource 文件路径，例如 `runtime-datasources.json` 或 `runtime-datasource-registry.json`。不要猜这些文件在 runtime 工作目录、用户 home，还是配置过的 runtime home 下。
+
 ## 模型文件
 
 将 namespace 资源放在一个可作为 runtime-managed bundle 添加的本地目录：
@@ -46,10 +54,13 @@ models/
     <Name>.tm
   query/
     <Name>QueryModel.qm
-  model-list.yml
 ```
 
+Runtime-managed bundle 不要主动创建 `model-list.yml`；只有目标宿主已经要求该注册文件时才维护。
+
 根据真实表字段、样例值和用户语言生成 TM 字段。优先使用清晰业务描述，而不是裸列名。必须明确记录单位、日期语义、枚举含义、owner/status 维度。
+
+写入或 review 具体 TM/QM 字段前，先读 `tm-qm-configuration.md`。该文档定义字段分类、度量聚合、日期粒度、金额单位、QM 暴露、可选宿主 model-list 和验证规则。
 
 ## 已有 Query Model Schema
 

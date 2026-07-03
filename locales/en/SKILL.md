@@ -12,7 +12,7 @@ Use this skill as the formal Foggy AI analysis onboarding and semantic-layer con
 1. Install `foggy-runtime-cli`, download the Java lite runtime launcher, and start Runtime API.
 2. Use the runtime default SQLite datasource when the user has not provided a datasource.
 3. Inspect tables and run read-only SQL probes before generating semantic models.
-4. Create or validate namespace-scoped TM/QM/model-list resources.
+4. Create or validate namespace-scoped TM/QM resources; handle model-list registration only for embedded or legacy hosts that require it.
 5. Refresh, describe, validate, and execute query models through `foggy-runtime-cli`.
 6. Create and run question banks, then tune TM/QM field names, captions, descriptions, and prompts.
 7. Connect IDE/MCP clients to the local runtime after Runtime API is ready.
@@ -44,6 +44,7 @@ For detailed Runtime API command sequencing and failure handling, read `referenc
 - `references/public-onboarding.md`: formal download links, CLI install, Java launcher download, runtime startup, and first smoke checks.
 - `references/runtime-cli-command-rules.md`: Runtime CLI JSON contract, readiness and capability gates, datasource/model/query sequence, exit-code handling, and public package dependency boundary.
 - `references/datasource-and-semantic-modeling.md`: datasource discovery, table inspection, SQL probes, namespace/TM/QM generation, validation, refresh, and describe workflow.
+- `references/tm-qm-configuration.md`: practical TM/QM configuration rules for fields, measures, dates, money units, query model exposure, optional host-specific model-list registration, and validation.
 - `references/question-bank-and-tuning.md`: build and run question banks, classify misses, and tune semantic metadata or prompts.
 - `references/mcp-deployment.md`: JAR/Docker/Odoo runtime deployment notes, Runtime API/MCP endpoint checks, namespace headers, and external bundle usage.
 - `references/mcp-ide-connection.md`: connect MCP-capable IDE clients to the local Foggy runtime.
@@ -57,7 +58,7 @@ For detailed Runtime API command sequencing and failure handling, read `referenc
 
 - `assets/sales-drop-demo/schema.sql`: SQLite schema for the optional example.
 - `assets/sales-drop-demo/data.sql`: deterministic example rows.
-- `assets/sales-drop-demo/models`: example TM/QM/model-list resources.
+- `assets/sales-drop-demo/models`: example TM/QM resources.
 - `assets/sales-drop-demo/queries`: smoke and question-bank query payloads.
 - `assets/sales-drop-demo/question-bank.json`: natural-language example question bank.
 - `assets/github-issue-template.md`: sanitized issue template.

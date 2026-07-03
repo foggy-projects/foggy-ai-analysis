@@ -7,12 +7,14 @@
 ```text
 do not use foggy-runtime-cli source checkout
 do not set PYTHONPATH=src
-download Skill from https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.7
-download CLI from https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.12
-download Foggy Runtime Launcher from https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/foggy-runtime-launcher-v0.1.3
+download Skill from https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v<skill-version>
+download CLI from https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v<cli-version>
+download Foggy Runtime Launcher from https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/<launcher-tag>
 validate all SHA256SUMS
 scan the unzipped Skill for undeclared dollar-prefixed Skill references
 ```
+
+使用当前待验证 release notes 中声明的 `<skill-version>`、`<cli-version>` 和 `<launcher-tag>`。validation prompt 或证据中不要残留历史版本号。
 
 ## Smoke
 

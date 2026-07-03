@@ -4,23 +4,23 @@ Use this reference when a user wants the formal public Foggy AI analysis Skill p
 
 ## Formal Download Links
 
-Current formal Skill package:
+Current formal Skill package. Replace `<skill-version>` with the release version without the leading `v`, and install paired Skills from the same release unless release notes say otherwise:
 
 ```text
-Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.7
-Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.7/foggy-ai-analysis-skill-0.1.7.zip
-Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.7/foggy-ai-analysis-skill-0.1.7-manifest.json
-Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.7/foggy-ai-analysis-skill-0.1.7-SHA256SUMS
-Semantic Query Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.7/foggy-semantic-query-skill-0.1.7.zip
-Semantic Query Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.7/foggy-semantic-query-skill-0.1.7-manifest.json
-Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.7/foggy-semantic-query-skill-0.1.7-SHA256SUMS
+Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v<skill-version>
+Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v<skill-version>/foggy-ai-analysis-skill-<skill-version>.zip
+Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v<skill-version>/foggy-ai-analysis-skill-<skill-version>-manifest.json
+Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v<skill-version>/foggy-ai-analysis-skill-<skill-version>-SHA256SUMS
+Semantic Query Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v<skill-version>/foggy-semantic-query-skill-<skill-version>.zip
+Semantic Query Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v<skill-version>/foggy-semantic-query-skill-<skill-version>-manifest.json
+Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v<skill-version>/foggy-semantic-query-skill-<skill-version>-SHA256SUMS
 ```
 
-Runtime components:
+Runtime components. Use the CLI and launcher versions listed in the same release notes:
 
 ```text
-CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.12
-Foggy Runtime Launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/foggy-runtime-launcher-v0.1.3
+CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v<cli-version>
+Foggy Runtime Launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/<launcher-tag>
 Default runtime URL=http://127.0.0.1:18066
 Default namespace=salesdrop
 ```
@@ -30,7 +30,7 @@ Default namespace=salesdrop
 Windows PowerShell:
 
 ```powershell
-$version = "0.1.12"
+$version = "<cli-version>"
 $download = Join-Path $env:TEMP "foggy-runtime-cli-install-$version"
 New-Item -ItemType Directory -Force -Path $download | Out-Null
 Invoke-WebRequest "https://github.com/foggy-projects/foggy-runtime-cli/releases/download/v$version/install-foggy-runtime-cli.ps1" -OutFile (Join-Path $download "install-foggy-runtime-cli.ps1")
@@ -41,7 +41,7 @@ foggy-runtime --version
 Linux or macOS:
 
 ```bash
-version="0.1.12"
+version="<cli-version>"
 download="${TMPDIR:-/tmp}/foggy-runtime-cli-install-$version"
 mkdir -p "$download"
 curl -fsSL "https://github.com/foggy-projects/foggy-runtime-cli/releases/download/v$version/install-foggy-runtime-cli.sh" -o "$download/install-foggy-runtime-cli.sh"
@@ -54,7 +54,8 @@ foggy-runtime --version
 Download the `foggy-ai-analysis` Skill zip from the formal release links above, then install it into the agent Skill directory:
 
 ```powershell
-foggy-runtime skills install foggy-ai-analysis --zip .\foggy-ai-analysis-skill-0.1.7.zip --replace
+$skillVersion = "<skill-version>"
+foggy-runtime skills install foggy-ai-analysis --zip ".\foggy-ai-analysis-skill-$skillVersion.zip" --replace
 ```
 
 The CLI installs only to:
@@ -68,22 +69,15 @@ It does not install copies under `~/.codex/skills` or `~/.claude/skills`.
 If existing-model query DSL, composeScript, or restricted Compose/CTE query work is needed, install the paired query Skill from the same release:
 
 ```powershell
-foggy-runtime skills install foggy-semantic-query --zip .\foggy-semantic-query-skill-0.1.7.zip --replace
+$skillVersion = "<skill-version>"
+foggy-runtime skills install foggy-semantic-query --zip ".\foggy-semantic-query-skill-$skillVersion.zip" --replace
 ```
 
-Maintainers using a local workspace can install both Skills together:
-
-```powershell
-foggy-runtime skills install foggy-analysis-suite --workspace-root D:\foggy-projects\foggy-data-mcp --replace
-```
+Local workspace installs are maintainer-only and must not be used in public onboarding. Public users should install release zip assets.
 
 ## Start Runtime
 
-Download and verify the Foggy Runtime Launcher release assets from `foggy-runtime-launcher-v0.1.3`. Start the runtime on port `18066` unless occupied. If a local debug path is explicitly needed on the maintainer workstation, use:
-
-```text
-D:\foggy-projects\foggy-data-mcp\foggy-data-mcp-bridge-wt-dev-compose\foggy-mcp-launcher
-```
+Download and verify the Foggy Runtime Launcher release assets from `<launcher-tag>`. Extract them to any local directory and start the runtime on port `18066` unless occupied. Do not require a maintainer workspace path for public onboarding.
 
 After start:
 

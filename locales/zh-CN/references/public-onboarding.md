@@ -4,23 +4,23 @@
 
 ## 正式下载链接
 
-当前正式 Skill 包：
+当前正式 Skill 包。将 `<skill-version>` 替换为去掉前导 `v` 的 release version；除非 release notes 另有说明，两个 Skill 使用同一个 release：
 
 ```text
-Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.7
-Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.7/foggy-ai-analysis-skill-0.1.7.zip
-Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.7/foggy-ai-analysis-skill-0.1.7-manifest.json
-Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.7/foggy-ai-analysis-skill-0.1.7-SHA256SUMS
-Semantic Query Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.7/foggy-semantic-query-skill-0.1.7.zip
-Semantic Query Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.7/foggy-semantic-query-skill-0.1.7-manifest.json
-Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.7/foggy-semantic-query-skill-0.1.7-SHA256SUMS
+Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v<skill-version>
+Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v<skill-version>/foggy-ai-analysis-skill-<skill-version>.zip
+Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v<skill-version>/foggy-ai-analysis-skill-<skill-version>-manifest.json
+Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v<skill-version>/foggy-ai-analysis-skill-<skill-version>-SHA256SUMS
+Semantic Query Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v<skill-version>/foggy-semantic-query-skill-<skill-version>.zip
+Semantic Query Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v<skill-version>/foggy-semantic-query-skill-<skill-version>-manifest.json
+Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v<skill-version>/foggy-semantic-query-skill-<skill-version>-SHA256SUMS
 ```
 
-Runtime components:
+Runtime components。使用同一 release notes 中列出的 CLI 和 launcher 版本：
 
 ```text
-CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.12
-Foggy Runtime Launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/foggy-runtime-launcher-v0.1.3
+CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v<cli-version>
+Foggy Runtime Launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/<launcher-tag>
 Default runtime URL=http://127.0.0.1:18066
 Default namespace=salesdrop
 ```
@@ -30,7 +30,7 @@ Default namespace=salesdrop
 Windows PowerShell：
 
 ```powershell
-$version = "0.1.12"
+$version = "<cli-version>"
 $download = Join-Path $env:TEMP "foggy-runtime-cli-install-$version"
 New-Item -ItemType Directory -Force -Path $download | Out-Null
 Invoke-WebRequest "https://github.com/foggy-projects/foggy-runtime-cli/releases/download/v$version/install-foggy-runtime-cli.ps1" -OutFile (Join-Path $download "install-foggy-runtime-cli.ps1")
@@ -41,7 +41,7 @@ foggy-runtime --version
 Linux 或 macOS：
 
 ```bash
-version="0.1.12"
+version="<cli-version>"
 download="${TMPDIR:-/tmp}/foggy-runtime-cli-install-$version"
 mkdir -p "$download"
 curl -fsSL "https://github.com/foggy-projects/foggy-runtime-cli/releases/download/v$version/install-foggy-runtime-cli.sh" -o "$download/install-foggy-runtime-cli.sh"
@@ -54,7 +54,8 @@ foggy-runtime --version
 从上面的正式 release 链接下载 `foggy-ai-analysis` Skill zip，然后安装到 agent Skill 目录：
 
 ```powershell
-foggy-runtime skills install foggy-ai-analysis --zip .\foggy-ai-analysis-skill-0.1.7.zip --replace
+$skillVersion = "<skill-version>"
+foggy-runtime skills install foggy-ai-analysis --zip ".\foggy-ai-analysis-skill-$skillVersion.zip" --replace
 ```
 
 CLI 只安装到：
@@ -68,22 +69,15 @@ CLI 只安装到：
 如果需要已有模型上的 query DSL、composeScript 或受限 Compose/CTE 查询工作，从同一个 release 安装配套查询 Skill：
 
 ```powershell
-foggy-runtime skills install foggy-semantic-query --zip .\foggy-semantic-query-skill-0.1.7.zip --replace
+$skillVersion = "<skill-version>"
+foggy-runtime skills install foggy-semantic-query --zip ".\foggy-semantic-query-skill-$skillVersion.zip" --replace
 ```
 
-维护者使用本地 workspace 时，可以一次安装两个 Skill：
-
-```powershell
-foggy-runtime skills install foggy-analysis-suite --workspace-root D:\foggy-projects\foggy-data-mcp --replace
-```
+本地 workspace 安装只属于维护者内部调试路径，不能放进公开 onboarding。公开用户应安装 release zip 资产。
 
 ## 启动 Runtime
 
-从 `foggy-runtime-launcher-v0.1.3` 下载并验证 Foggy Runtime Launcher release 资产。除非端口被占用，默认在 `18066` 启动 runtime。只有维护者工作站明确需要本地 debug 路径时，才使用：
-
-```text
-D:\foggy-projects\foggy-data-mcp\foggy-data-mcp-bridge-wt-dev-compose\foggy-mcp-launcher
-```
+从 `<launcher-tag>` 下载并验证 Foggy Runtime Launcher release 资产。解压到任意本地目录；除非端口被占用，默认在 `18066` 启动 runtime。公开 onboarding 不要求维护者 workspace 路径。
 
 启动后：
 

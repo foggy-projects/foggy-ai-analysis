@@ -9,7 +9,7 @@ For detailed command gates, exit codes, and failure handling, read `runtime-cli-
 1. Confirm runtime readiness with `wait-ready` and `capabilities`.
 2. Choose namespace and datasource mode.
 3. Inspect tables before writing models.
-4. Generate or update TM/QM/model-list files.
+4. Generate or update TM/QM files, plus model-list registration when the host project requires it.
 5. Validate models.
 6. Add or update the model bundle.
 7. Refresh and describe query models.
@@ -36,6 +36,14 @@ foggy-runtime --base-url <url> --namespace <ns> sql query --data-source <name> -
 
 Do not run mutating SQL against user data unless the user explicitly asks for it.
 
+When a Runtime API-managed datasource must survive runtime restarts, capture datasource persistence evidence:
+
+```powershell
+foggy-runtime --base-url <url> --namespace <ns> datasources diagnostics
+```
+
+Report the registry and datasource file paths returned by diagnostics for files such as `runtime-datasources.json` or `runtime-datasource-registry.json`. Do not guess whether they live under the runtime working directory, user home, or a configured runtime home.
+
 ## Model Files
 
 Keep namespace resources in a local folder that can be added as a runtime-managed bundle:
@@ -46,10 +54,13 @@ models/
     <Name>.tm
   query/
     <Name>QueryModel.qm
-  model-list.yml
 ```
 
+Do not create `model-list.yml` for runtime-managed bundles unless the target host already requires that registration file.
+
 Generate TM fields from actual table columns, sample values, and user language. Prefer clear business descriptions over raw column names. Explicitly document units, date semantics, enum meanings, and owner/status dimensions.
+
+Before writing or reviewing concrete TM/QM fields, read `tm-qm-configuration.md`. It defines the practical field classification, measure aggregation, date-grain, money-unit, QM exposure, optional host-specific model-list, and validation rules.
 
 ## Existing Query Model Schema
 

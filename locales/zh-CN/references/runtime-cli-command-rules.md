@@ -45,7 +45,7 @@ foggy-runtime --base-url <runtime-url> --namespace <ns> datasources binding --na
 foggy-runtime --base-url <runtime-url> --namespace <ns> datasources diagnostics
 ```
 
-当证据需要展示 namespace registry entry 时，在 `datasources bind` 后执行 `datasources binding`。当证据需要展示 managed datasource persistence、连接池 lifecycle 或 registry path 时，执行 `datasources diagnostics`。
+当证据需要展示 namespace registry entry 时，在 `datasources bind` 后执行 `datasources binding`。当证据需要展示 managed datasource persistence、连接池 lifecycle 或 registry path 时，执行 `datasources diagnostics`。报告 diagnostics 返回的 `runtime-datasources.json`、`runtime-datasource-registry.json` 或等价文件的精确路径；不要从 `.foggy-runtime`、当前工作目录或用户 home 推断。
 
 使用 `foggy-runtime-cli v0.1.12` 和 Foggy Runtime Launcher `foggy-runtime-launcher-v0.1.3` 时，namespace-bound Runtime API-managed datasource 预期支持 table discovery、只读 SQL probing、model validation、model refresh、model describe 和 query execution。如果旧 runtime 没有报告这些 capabilities，应停在 capability failure，不要改走私有端点。
 
@@ -67,7 +67,7 @@ foggy-runtime --base-url <runtime-url> --namespace <ns> sql query --data-source 
 
 ## 模型循环
 
-只有数据源 schema 已确认后，才生成或 patch TM/QM/model-list 文件。
+只有数据源 schema 已确认后，才生成或 patch TM/QM 文件。只有目标 embedded 或 legacy 宿主已经使用 model-list 时，才 patch model-list 注册。
 
 查看未知模型名前，先列出可用 query model：
 
@@ -162,4 +162,4 @@ CLI `v0.1.12` 接受 query payload 中的 `groupBy` string-array 简写，并在
 
 ## 证据
 
-报告命令及 pass/fail 状态、`capabilities` 中的 runtime identity、datasource/table inspection 结果、修改过的 TM/QM/model-list 文件、model validation/refresh/describe 结果、query validation/execution 结果、存在时的精确 `error.code` 和 `error.phase`，以及 namespace、datasource、fixture、dev/test runtime 状态相关的剩余假设。
+报告命令及 pass/fail 状态、`capabilities` 中的 runtime identity、datasource/table inspection 结果、修改过的 TM/QM 文件和任何宿主特定 model-list 注册、model validation/refresh/describe 结果、query validation/execution 结果、存在时的精确 `error.code` 和 `error.phase`，以及 namespace、datasource、fixture、dev/test runtime 状态相关的剩余假设。

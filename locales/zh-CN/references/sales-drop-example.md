@@ -18,7 +18,8 @@ assets/sales-drop-demo/question-bank.json
 如果 `~/.agents/skills/foggy-ai-analysis` 下还没有安装 `foggy-ai-analysis`，先安装正式 Skill：
 
 ```powershell
-foggy-runtime skills install foggy-ai-analysis --zip .\foggy-ai-analysis-skill-0.1.7.zip --replace
+$skillVersion = "<skill-version>"
+foggy-runtime skills install foggy-ai-analysis --zip ".\foggy-ai-analysis-skill-$skillVersion.zip" --replace
 ```
 
 Java runtime 运行后，使用 CLI replay 命令。Skill 安装到 `~/.agents/skills/foggy-ai-analysis` 时可以省略 `--skill-dir`；只有解压到自定义目录时才需要显式传入：
