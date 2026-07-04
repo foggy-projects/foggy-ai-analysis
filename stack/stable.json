@@ -1,7 +1,7 @@
 {
   "schemaVersion": "foggy-stack/v1",
   "channel": "stable",
-  "updatedAt": "2026-07-04T13:49:45+08:00",
+  "updatedAt": "2026-07-04T17:06:24+08:00",
   "policy": {
     "launcherPatchCanMoveAlone": true,
     "notes": [
@@ -58,48 +58,48 @@
     "skills": {
       "foggy-ai-analysis": {
         "name": "foggy-ai-analysis",
-        "recommendedVersion": "0.1.15",
-        "tag": "v0.1.15",
+        "recommendedVersion": "0.1.16",
+        "tag": "v0.1.16",
         "language": "en",
         "minCliVersion": "0.1.20",
-        "releaseUrl": "https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.15",
+        "releaseUrl": "https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.16",
         "zip": {
-          "file": "foggy-ai-analysis-skill-0.1.15.zip",
-          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.15/foggy-ai-analysis-skill-0.1.15.zip",
-          "sha256": "ee0440c6d8a050e2ab3b3ac44d9010068e4bff031651718e973880cae562c11e"
+          "file": "foggy-ai-analysis-skill-0.1.16.zip",
+          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.16/foggy-ai-analysis-skill-0.1.16.zip",
+          "sha256": "0e6d70620114c5f25b37c4986d3b53ff48e4e38d693f4e82afab0b17d51ab8e7"
         },
         "manifest": {
-          "file": "foggy-ai-analysis-skill-0.1.15-manifest.json",
-          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.15/foggy-ai-analysis-skill-0.1.15-manifest.json",
-          "sha256": "3222623646d82c8595db3202c138b73ffce63f3405a01f52ce85f9fbae0367b2"
+          "file": "foggy-ai-analysis-skill-0.1.16-manifest.json",
+          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.16/foggy-ai-analysis-skill-0.1.16-manifest.json",
+          "sha256": "5b44ca31766f8e351d778bc520f37019a755cd4cccd9d589b65e8bf0c2d53323"
         },
         "checksums": {
-          "file": "foggy-ai-analysis-skill-0.1.15-SHA256SUMS",
-          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.15/foggy-ai-analysis-skill-0.1.15-SHA256SUMS",
-          "sha256": "76445db16fc28af7c4a5b4cfd8cf71fbfe45d2edc2dea6d93f3e29458db26f77"
+          "file": "foggy-ai-analysis-skill-0.1.16-SHA256SUMS",
+          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.16/foggy-ai-analysis-skill-0.1.16-SHA256SUMS",
+          "sha256": "f6e65790b0c2524d362c8e6d525a05c092d9ea79566836a78a57874348e08f9a"
         }
       },
       "foggy-semantic-query": {
         "name": "foggy-semantic-query",
-        "recommendedVersion": "0.1.15",
-        "tag": "v0.1.15",
+        "recommendedVersion": "0.1.16",
+        "tag": "v0.1.16",
         "language": "en",
         "minCliVersion": "0.1.20",
-        "releaseUrl": "https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.15",
+        "releaseUrl": "https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.16",
         "zip": {
-          "file": "foggy-semantic-query-skill-0.1.15.zip",
-          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.15/foggy-semantic-query-skill-0.1.15.zip",
+          "file": "foggy-semantic-query-skill-0.1.16.zip",
+          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.16/foggy-semantic-query-skill-0.1.16.zip",
           "sha256": "2a9b38640816617c0ab336704471a662e1a218b7b8cf482b54b8fcccbba51ad1"
         },
         "manifest": {
-          "file": "foggy-semantic-query-skill-0.1.15-manifest.json",
-          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.15/foggy-semantic-query-skill-0.1.15-manifest.json",
-          "sha256": "c178750aa46112bbfccde4856238c5f04d4495979ee2f6df309aea0c5bc5184e"
+          "file": "foggy-semantic-query-skill-0.1.16-manifest.json",
+          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.16/foggy-semantic-query-skill-0.1.16-manifest.json",
+          "sha256": "498d8fa60e184137b780203a90fbb29f479bcca686154fc4b8e9db66c8b78f55"
         },
         "checksums": {
-          "file": "foggy-semantic-query-skill-0.1.15-SHA256SUMS",
-          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.15/foggy-semantic-query-skill-0.1.15-SHA256SUMS",
-          "sha256": "5f7971441200bf9e83e1a775a94d0594164d77f71ae3df77e81b2b1a115d4fa2"
+          "file": "foggy-semantic-query-skill-0.1.16-SHA256SUMS",
+          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.16/foggy-semantic-query-skill-0.1.16-SHA256SUMS",
+          "sha256": "318822d699a8b79f3be9699a8c2992a2ca19068870d1271948822f06ec88ebea"
         }
       }
     }
