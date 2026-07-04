@@ -1,7 +1,7 @@
 {
   "schemaVersion": "foggy-stack/v1",
   "channel": "stable",
-  "updatedAt": "2026-07-04T22:56:00+08:00",
+  "updatedAt": "2026-07-04T23:45:00+08:00",
   "policy": {
     "launcherPatchCanMoveAlone": true,
     "notes": [
@@ -22,36 +22,36 @@
     },
     "launcher": {
       "name": "foggy-runtime-launcher",
-      "recommendedTag": "foggy-runtime-launcher-v0.1.8",
-      "version": "0.1.8",
+      "recommendedTag": "foggy-runtime-launcher-v0.1.9",
+      "version": "0.1.9",
       "runtimeApiContract": "foggy-runtime-api/v1",
       "breaking": false,
-      "releaseUrl": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/foggy-runtime-launcher-v0.1.8",
+      "releaseUrl": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/foggy-runtime-launcher-v0.1.9",
       "assets": {
         "jar": {
-          "file": "foggy-runtime-launcher-0.1.8.jar",
-          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.8/foggy-runtime-launcher-0.1.8.jar",
-          "sha256": "c9d279440c5111b5964583cdd05b028418d176d82a2e20457ea463f3b3ed24b5"
+          "file": "foggy-runtime-launcher-0.1.9.jar",
+          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.9/foggy-runtime-launcher-0.1.9.jar",
+          "sha256": "4792388aa1c1a6194336589d9fe2bc8726ac18f124be072f2ac639bdea8ae14f"
         },
         "startPowerShell": {
           "file": "start-foggy-runtime.ps1",
-          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.8/start-foggy-runtime.ps1",
-          "sha256": "3d981f82f878c40e1b60ceeac1a0bcff0e248ab3e22daeb69a484d8895f9b58d"
+          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.9/start-foggy-runtime.ps1",
+          "sha256": "69487acd1200e0e8a8e2da1ff28b72d5f1a3770d28261e74a9064f3bbf5bb2c2"
         },
         "startShell": {
           "file": "start-foggy-runtime.sh",
-          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.8/start-foggy-runtime.sh",
-          "sha256": "f0e562b6a486fe5df48cb0b764d000c9d13885cedbb575b1ec0346cce686e75b"
+          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.9/start-foggy-runtime.sh",
+          "sha256": "a40063f6a6e4fae051ffa3380f11e0d140eda9e7aae036ee702a70e691150e54"
         },
         "manifest": {
           "file": "runtime-launcher-manifest.json",
-          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.8/runtime-launcher-manifest.json",
-          "sha256": "8e9c6325f10eaad73a04093e2e11c12b79e3d940ceb0c536b19304c9a2444c1f"
+          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.9/runtime-launcher-manifest.json",
+          "sha256": "38c4ebd3973e7e25f3c77f4513d02b0273790e7f50f38bc769f7f8246cdc2aee"
         },
         "checksums": {
           "file": "SHA256SUMS",
-          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.8/SHA256SUMS",
-          "sha256": "8b590ba50e8ca3d0985a6b0591f7637dcef74b91fb21eed551516c589127039c"
+          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.9/SHA256SUMS",
+          "sha256": "cf23be57d5fd7239a9c23a8dd00cf4b4a24d4fa6c3ab95c3501b5d94333558e2"
         }
       }
     },
