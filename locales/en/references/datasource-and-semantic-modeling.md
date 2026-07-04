@@ -15,6 +15,8 @@ For detailed command gates, exit codes, and failure handling, read `runtime-cli-
 7. Refresh and describe query models.
 8. Validate and execute query payloads.
 
+When the user explicitly asks to publish, update, submit to runtime, or make MCP/Runtime query service effective, continue with `semantic-layer-publish-runbook.md`.
+
 ## Datasource Discovery
 
 For a named datasource:

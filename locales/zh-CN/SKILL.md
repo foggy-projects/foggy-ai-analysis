@@ -44,6 +44,7 @@ Runtime API 命令顺序和失败处理详见 `references/runtime-cli-command-ru
 - `references/public-onboarding.md`：正式下载链接、CLI 安装、Java launcher 下载、runtime 启动和首轮 smoke 检查。
 - `references/runtime-cli-command-rules.md`：Runtime CLI JSON 契约、ready/capability gate、datasource/model/query 顺序、exit code 处理和公开包依赖边界。
 - `references/datasource-and-semantic-modeling.md`：数据源发现、表检查、SQL 探针、namespace/TM/QM 生成、validate、refresh 和 describe 流程。
+- `references/semantic-layer-publish-runbook.md`：将用户自有 Git 管理的 TM/QM 模型目录发布或更新到 Runtime API bundle registry，refresh 查询模型，并验证 Runtime API/MCP 查询服务。
 - `references/tm-qm-configuration.md`：TM/QM 配置实操规则，覆盖字段、度量、日期、金额单位、查询模型暴露、可选宿主 model-list 注册和验证。
 - `references/question-bank-and-tuning.md`：构建并运行 question bank，分类未命中原因，调优语义元数据或 prompt。
 - `references/mcp-deployment.md`：JAR/Docker/Odoo Runtime 部署说明、Runtime API/MCP endpoint 检查、namespace header 和外部 bundle 用法。

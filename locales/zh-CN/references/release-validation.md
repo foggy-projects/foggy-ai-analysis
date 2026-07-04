@@ -34,4 +34,13 @@ rg -n --pcre2 '(?<![A-Za-z0-9_-])\$([a-z][a-z0-9]*(?:-[a-z0-9]+)+)(?![A-Za-z0-9_
 
 除非 package manifest 声明了额外 `skillDependencies`，否则只允许 `$foggy-ai-analysis` 自引用。任何未声明的外部 Skill 引用都会阻塞 release validation。
 
+还需要确认 `references/semantic-layer-publish-runbook.md` 已包含在解压后的 Skill 中，并且文档自包含：
+
+```powershell
+Test-Path <unzipped-skill-dir>/references/semantic-layer-publish-runbook.md
+rg -n "semantic-layer-publish-runbook.md|private Java|private Python|models validate|bundles add|models refresh|tools/list|mcpServers" <unzipped-skill-dir>/references/semantic-layer-publish-runbook.md
+```
+
+该 runbook 必须通过公开 `foggy-runtime` 命令和公开 MCP JSON-RPC endpoint 工作。不得要求未声明的外部 Skill、绕过 `models validate`，或把 runtime metadata 放入 MCP client 的 `mcpServers`。
+
 报告命令、输出、端口、checksum、失败点和修复动作。

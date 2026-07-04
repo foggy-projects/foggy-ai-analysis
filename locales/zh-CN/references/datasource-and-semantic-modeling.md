@@ -15,6 +15,8 @@
 7. refresh 并 describe query model。
 8. validate 和 execute query payload。
 
+当用户明确要求“发布、更新、提交到 runtime、让 MCP/Runtime 查询服务生效”时，继续阅读 `semantic-layer-publish-runbook.md`。
+
 ## 数据源发现
 
 对于具名数据源：
