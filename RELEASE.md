@@ -17,10 +17,10 @@ foggy-ai-analysis/locales/zh-CN
 Set these values for each release. The examples below use the current validated component versions:
 
 ```powershell
-$skillVersion = "0.1.16"
+$skillVersion = "0.1.17"
 $skillTag = "v$skillVersion"
-$cliTag = "v0.1.20"
-$launcherTag = "foggy-runtime-launcher-v0.1.6"
+$cliTag = "v0.1.21"
+$launcherTag = "foggy-runtime-launcher-v0.1.8"
 $workspaceRoot = "<workspace-root>"
 ```
 
@@ -49,7 +49,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $workspaceRoot "s
   -SkillName foggy-semantic-query `
   -Version $skillVersion `
   -LauncherTag $launcherTag `
-  -CliRequirement "foggy-runtime-cli >= 0.1.20" `
+  -CliRequirement "foggy-runtime-cli >= 0.1.21" `
   -RepoRoot $workspaceRoot `
   -OutDir $outDir
 
@@ -92,11 +92,11 @@ Before publishing, unzip each package and verify that any dollar-prefixed Skill 
 
 For the current runtime-aligned release, also verify:
 
-- `references/public-onboarding.md` resolves to the current `foggy-ai-analysis` release, `foggy-runtime-cli v0.1.20`, and `foggy-runtime-launcher-v0.1.6` after packaging.
-- `references/runtime-cli-command-rules.md` documents CLI `v0.1.20` capability preflight, `datasources diagnostics`, `groupBy` string-array normalization, and `-help` compatibility.
+- `references/public-onboarding.md` resolves to the current `foggy-ai-analysis` release, `foggy-runtime-cli v0.1.21`, and `foggy-runtime-launcher-v0.1.8` after packaging.
+- `references/runtime-cli-command-rules.md` documents CLI `v0.1.21` capability preflight, `datasources diagnostics`, `groupBy` string-array normalization, and `-help` compatibility.
 - `references/tm-qm-configuration.md` links the official TM/QM and Query DSL syntax references.
 - `references/semantic-layer-publish-runbook.md` is present, self-contained, routes through public `foggy-runtime` commands and MCP JSON-RPC `tools/list`, and explicitly keeps Git approval, rollback, audit, and RBAC outside Skill scope.
-- Manifest `cliRequirement` is `foggy-runtime-cli >= 0.1.20` and `cliVersion` is `0.1.20`.
+- Manifest `cliRequirement` is `foggy-runtime-cli >= 0.1.21` and `cliVersion` is `0.1.21`.
 - English manifest has `language=en`.
 - Chinese manifest has `language=zh-CN`.
 - Default download remains the unsuffixed English zip.

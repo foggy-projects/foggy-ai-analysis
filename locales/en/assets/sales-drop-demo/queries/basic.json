@@ -5,6 +5,8 @@
     "region",
     "channel",
     "productCategory",
+    "customerName",
+    "customerSegment",
     "severity",
     "rootCause",
     "actionOwner",

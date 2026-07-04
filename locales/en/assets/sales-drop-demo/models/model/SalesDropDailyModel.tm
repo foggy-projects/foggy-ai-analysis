@@ -49,6 +49,27 @@ export const model = {
             type: 'STRING'
         },
         {
+            column: 'customer_id',
+            name: 'customerId',
+            caption: 'Customer ID',
+            description: 'Stable customer identifier for ranking sales drops by customer.',
+            type: 'STRING'
+        },
+        {
+            column: 'customer_name',
+            name: 'customerName',
+            caption: 'Customer Name',
+            description: 'Customer display name. Use this field when the user asks which customers declined or dropped the most.',
+            type: 'STRING'
+        },
+        {
+            column: 'customer_segment',
+            name: 'customerSegment',
+            caption: 'Customer Segment',
+            description: 'Customer segment such as Enterprise, Retail, or VIP.',
+            type: 'STRING'
+        },
+        {
             column: 'severity',
             caption: 'Severity',
             description: 'Sales-drop severity: LOW, MEDIUM, HIGH, or CRITICAL.',

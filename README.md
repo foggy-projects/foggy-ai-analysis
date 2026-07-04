@@ -19,15 +19,15 @@ The bundled sales-drop data is an optional example, not the main Skill identity.
 ## Current Release
 
 ```text
-Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.16
-Analysis Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.16/foggy-ai-analysis-skill-0.1.16.zip
-Analysis Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.16/foggy-ai-analysis-skill-0.1.16-manifest.json
-Analysis Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.16/foggy-ai-analysis-skill-0.1.16-SHA256SUMS
-Semantic Query Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.16/foggy-semantic-query-skill-0.1.16.zip
-Semantic Query Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.16/foggy-semantic-query-skill-0.1.16-manifest.json
-Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.16/foggy-semantic-query-skill-0.1.16-SHA256SUMS
+Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.17
+Analysis Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.17/foggy-ai-analysis-skill-0.1.17.zip
+Analysis Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.17/foggy-ai-analysis-skill-0.1.17-manifest.json
+Analysis Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.17/foggy-ai-analysis-skill-0.1.17-SHA256SUMS
+Semantic Query Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.17/foggy-semantic-query-skill-0.1.17.zip
+Semantic Query Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.17/foggy-semantic-query-skill-0.1.17-manifest.json
+Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.17/foggy-semantic-query-skill-0.1.17-SHA256SUMS
 CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.21
-Foggy Runtime Launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/foggy-runtime-launcher-v0.1.7
+Foggy Runtime Launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/foggy-runtime-launcher-v0.1.8
 Stable stack manifest=https://raw.githubusercontent.com/foggy-projects/foggy-ai-analysis/main/stack/stable.json
 ```
 
@@ -79,8 +79,8 @@ foggy-ai-analysis-skill-<version>-zh-CN.zip
 Download the Skill zip, verify `SHA256SUMS`, then install it with the runtime CLI:
 
 ```powershell
-foggy-runtime skills install foggy-ai-analysis --zip .\foggy-ai-analysis-skill-0.1.16.zip --replace
-foggy-runtime skills install foggy-semantic-query --zip .\foggy-semantic-query-skill-0.1.16.zip --replace
+foggy-runtime skills install foggy-ai-analysis --zip .\foggy-ai-analysis-skill-0.1.17.zip --replace
+foggy-runtime skills install foggy-semantic-query --zip .\foggy-semantic-query-skill-0.1.17.zip --replace
 ```
 
 The target agent Skill directories are:
@@ -133,7 +133,7 @@ The `v0.1.11` package has a cross-platform packaging defect: zip entries were ge
 
 ## Runtime API v1 CLI Alignment
 
-The `v0.1.16` package requires `foggy-runtime-cli v0.1.20` or later; the stable stack currently recommends `foggy-runtime-cli v0.1.21` and Foggy Runtime Launcher `foggy-runtime-launcher-v0.1.7`. It adds the Semantic Layer Publish/Update Runbook for publishing user-managed TM/QM directories into Runtime API bundles, then validating refresh, describe, query smoke, and MCP service readiness.
+The `v0.1.17` package requires `foggy-runtime-cli v0.1.21` or later; the stable stack currently recommends `foggy-runtime-cli v0.1.21` and Foggy Runtime Launcher `foggy-runtime-launcher-v0.1.8`. It refreshes the bundled sales-drop demo so customer fields are available in the example schema, TM/QM, question-bank payloads, and replay evidence.
 
 For compatible launcher patch updates, update `stack/stable.json` first. CLI and Skill releases are only required when command behavior, Skill content, or minimum compatibility changes.
 

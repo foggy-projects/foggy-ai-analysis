@@ -6,7 +6,7 @@ const salesDrop = loadTableModel('SalesDropDailyModel');
 export const queryModel = {
     name: 'SalesDropDailyQueryModel',
     caption: 'Sales Drop Diagnostic Query',
-    description: 'Single-table query model for sales-drop diagnostics. It supports analysis by date, region, channel, product category, campaign, severity, root cause, and action owner, with measures for current sales, prior-week sales, drop amount, drop rate, orders, visitors, conversion rate, and refund amount.',
+    description: 'Single-table query model for sales-drop diagnostics. It supports analysis by date, region, channel, product category, campaign, customer, customer segment, severity, root cause, and action owner, with measures for current sales, prior-week sales, drop amount, drop rate, orders, visitors, conversion rate, and refund amount.',
     loader: 'v2',
 
     model: salesDrop,
@@ -21,6 +21,9 @@ export const queryModel = {
                 { ref: salesDrop.channel },
                 { ref: salesDrop.productCategory },
                 { ref: salesDrop.campaignName },
+                { ref: salesDrop.customerId },
+                { ref: salesDrop.customerName },
+                { ref: salesDrop.customerSegment },
                 { ref: salesDrop.severity },
                 { ref: salesDrop.rootCause },
                 { ref: salesDrop.actionOwner },

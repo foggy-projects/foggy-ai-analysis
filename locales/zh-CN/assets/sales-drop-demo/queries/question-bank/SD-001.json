@@ -1,5 +1,5 @@
 {
   "limit": 5,
-  "columns": ["observationDate", "region", "channel", "salesDropAmount", "salesDropRate", "severity"],
+  "columns": ["observationDate", "region", "channel", "customerName", "salesDropAmount", "salesDropRate", "severity"],
   "orderBy": [{"field": "salesDropAmount", "dir": "DESC"}]
 }

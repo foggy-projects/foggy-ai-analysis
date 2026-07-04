@@ -28,9 +28,9 @@ foggy-runtime --base-url <runtime-url> --namespace <namespace> capabilities
 
 Continue only when `success=true` and the needed capability is supported. Record `engine`, `runtimeApiVersion`, `data.schemaVersion`, `data.securityMode`, and relevant `data.capabilities`. If `securityMode=auth-code`, pass `--auth-code` or set `FOGGY_RUNTIME_API_AUTH_CODE`.
 
-For commands that require Runtime API features, CLI `v0.1.20` performs capability preflight and exits with code `3` when unsupported. This covers models, query, table inspection, SQL probing, bundle/datasource/resource management, compose, and fsscript commands.
+For commands that require Runtime API features, CLI `v0.1.21` performs capability preflight and exits with code `3` when unsupported. This covers models, query, table inspection, SQL probing, bundle/datasource/resource management, compose, and fsscript commands.
 
-CLI `v0.1.20` accepts both `-h`/`--help` and the compatibility alias `-help` on top-level and nested commands.
+CLI `v0.1.21` accepts both `-h`/`--help` and the compatibility alias `-help` on top-level and nested commands.
 
 ## Datasource Exploration
 
@@ -47,7 +47,7 @@ foggy-runtime --base-url <runtime-url> --namespace <ns> datasources diagnostics
 
 Use `datasources binding` after `datasources bind` when evidence must show the namespace registry entry. When the runtime supports `datasources.diagnostics`, use `datasources diagnostics` as the primary evidence for registry path, namespace bindings, persisted datasource records, and pool lifecycle state. When evidence must show managed datasource persistence or registry paths, also record the launcher or runtime start configuration for files such as `runtime-datasources.json` or `runtime-datasource-registry.json`, verify the files exist, restart the runtime, and prove `datasources diagnostics` or `datasources list` still returns the datasource. Do not infer paths from `.foggy-runtime`, the current working directory, or the user's home directory.
 
-With `foggy-runtime-cli v0.1.20` and a runtime that reports the matching capabilities, Runtime API-managed datasources are expected to support datasource add/test/bind, table discovery, read-only SQL probing, model validation/refresh/describe, and namespace-bound query execution when the runtime has the JDBC driver. Keep the public sales-drop replay on the runtime default SQLite datasource because that demo owns and reseeds its fixture file. For user business data, use a separate Runtime API-managed datasource and namespace binding, then prove the path with diagnostics plus a model/query smoke. If an older runtime does not report needed capabilities, stop at the capability failure instead of calling private endpoints.
+With `foggy-runtime-cli v0.1.21` and a runtime that reports the matching capabilities, Runtime API-managed datasources are expected to support datasource add/test/bind, table discovery, read-only SQL probing, model validation/refresh/describe, and namespace-bound query execution when the runtime has the JDBC driver. Keep the public sales-drop replay on the runtime default SQLite datasource because that demo owns and reseeds its fixture file. For user business data, use a separate Runtime API-managed datasource and namespace binding, then prove the path with diagnostics plus a model/query smoke. If an older runtime does not report needed capabilities, stop at the capability failure instead of calling private endpoints.
 
 List and inspect tables before editing model files:
 
@@ -137,7 +137,7 @@ foggy-runtime --base-url <runtime-url> --namespace <ns> query validate <QueryMod
 foggy-runtime --base-url <runtime-url> --namespace <ns> query execute <QueryModel> --payload <payload.json>
 ```
 
-CLI `v0.1.20` accepts query payload `groupBy` string-array shorthand and normalizes it to Runtime API v1 object items before sending the request:
+CLI `v0.1.21` accepts query payload `groupBy` string-array shorthand and normalizes it to Runtime API v1 object items before sending the request:
 
 ```json
 {

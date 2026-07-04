@@ -34,9 +34,9 @@ foggy-runtime --base-url http://127.0.0.1:18066 --namespace salesdrop demo sales
 Target result:
 
 ```text
-question-bank total=12
-executable=11
-pass=11
+question-bank total=13
+executable=12
+pass=12
 fail=0
 needs-clarification=1
 runtime blockers=0

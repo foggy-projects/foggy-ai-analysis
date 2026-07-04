@@ -8,6 +8,9 @@ CREATE TABLE sales_drop_daily
     channel                       TEXT    NOT NULL,
     product_category              TEXT    NOT NULL,
     campaign_name                 TEXT,
+    customer_id                   TEXT    NOT NULL,
+    customer_name                 TEXT    NOT NULL,
+    customer_segment              TEXT    NOT NULL,
     severity                      TEXT    NOT NULL,
     root_cause                    TEXT    NOT NULL,
     action_owner                  TEXT    NOT NULL,
@@ -25,5 +28,7 @@ CREATE TABLE sales_drop_daily
 CREATE INDEX idx_sales_drop_date ON sales_drop_daily (observation_date);
 CREATE INDEX idx_sales_drop_region ON sales_drop_daily (region);
 CREATE INDEX idx_sales_drop_channel ON sales_drop_daily (channel);
+CREATE INDEX idx_sales_drop_customer ON sales_drop_daily (customer_name);
+CREATE INDEX idx_sales_drop_customer_segment ON sales_drop_daily (customer_segment);
 CREATE INDEX idx_sales_drop_severity ON sales_drop_daily (severity);
 CREATE INDEX idx_sales_drop_root_cause ON sales_drop_daily (root_cause);

@@ -1,0 +1,6 @@
+{
+  "limit": 5,
+  "columns": ["customerName", "customerSegment", "salesDropAmount"],
+  "groupBy": [{"field": "customerName"}, {"field": "customerSegment"}],
+  "orderBy": [{"field": "salesDropAmount", "dir": "DESC"}]
+}

@@ -6,13 +6,13 @@
       "id": "SD-001",
       "status": "executable",
       "question": "Show the largest sales drops this week.",
-      "requiredFields": ["observationDate", "region", "channel", "salesDropAmount", "salesDropRate", "severity"],
+      "requiredFields": ["observationDate", "region", "channel", "customerName", "salesDropAmount", "salesDropRate", "severity"],
       "payloadFile": "queries/question-bank/SD-001.json",
       "assertions": {
         "rowCountMin": 1,
-        "requiredColumns": ["observationDate", "region", "channel", "salesDropAmount", "salesDropRate", "severity"]
+        "requiredColumns": ["observationDate", "region", "channel", "customerName", "salesDropAmount", "salesDropRate", "severity"]
       },
-      "expectedBehavior": "Return rows sorted by salesDropAmount or salesDropRate descending."
+      "expectedBehavior": "Return rows sorted by salesDropAmount or salesDropRate descending, including the impacted customer."
     },
     {
       "id": "SD-002",
@@ -148,6 +148,18 @@
     },
     {
       "id": "SD-012",
+      "status": "executable",
+      "question": "Which customers have the largest sales drops?",
+      "requiredFields": ["customerName", "customerSegment", "salesDropAmount"],
+      "payloadFile": "queries/question-bank/SD-012.json",
+      "assertions": {
+        "rowCountMin": 1,
+        "requiredColumns": ["customerName", "customerSegment", "salesDropAmount"]
+      },
+      "expectedBehavior": "Group or rank by customerName and customerSegment, then sort by salesDropAmount descending."
+    },
+    {
+      "id": "SD-013",
       "status": "needs-clarification",
       "capabilitySet": "forecast-extension",
       "decision": "keep-as-negative-base-case",
