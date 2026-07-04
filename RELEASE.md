@@ -17,9 +17,9 @@ foggy-ai-analysis/locales/zh-CN
 Set these values for each release. The examples below use the current validated component versions:
 
 ```powershell
-$skillVersion = "0.1.13"
+$skillVersion = "0.1.14"
 $skillTag = "v$skillVersion"
-$cliTag = "v0.1.18"
+$cliTag = "v0.1.20"
 $launcherTag = "foggy-runtime-launcher-v0.1.5"
 $workspaceRoot = "<workspace-root>"
 ```
@@ -49,7 +49,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $workspaceRoot "s
   -SkillName foggy-semantic-query `
   -Version $skillVersion `
   -LauncherTag $launcherTag `
-  -CliRequirement "foggy-runtime-cli >= 0.1.18" `
+  -CliRequirement "foggy-runtime-cli >= 0.1.20" `
   -RepoRoot $workspaceRoot `
   -OutDir $outDir
 
@@ -92,10 +92,10 @@ Before publishing, unzip each package and verify that any dollar-prefixed Skill 
 
 For the current runtime-aligned release, also verify:
 
-- `references/public-onboarding.md` resolves to the current `foggy-ai-analysis` release, `foggy-runtime-cli v0.1.18`, and `foggy-runtime-launcher-v0.1.5` after packaging.
-- `references/runtime-cli-command-rules.md` documents CLI `v0.1.18` capability preflight, `datasources diagnostics`, `groupBy` string-array normalization, and `-help` compatibility.
+- `references/public-onboarding.md` resolves to the current `foggy-ai-analysis` release, `foggy-runtime-cli v0.1.20`, and `foggy-runtime-launcher-v0.1.5` after packaging.
+- `references/runtime-cli-command-rules.md` documents CLI `v0.1.20` capability preflight, `datasources diagnostics`, `groupBy` string-array normalization, and `-help` compatibility.
 - `references/tm-qm-configuration.md` links the official TM/QM and Query DSL syntax references.
-- Manifest `cliRequirement` is `foggy-runtime-cli >= 0.1.18` and `cliVersion` is `0.1.18`.
+- Manifest `cliRequirement` is `foggy-runtime-cli >= 0.1.20` and `cliVersion` is `0.1.20`.
 - English manifest has `language=en`.
 - Chinese manifest has `language=zh-CN`.
 - Default download remains the unsuffixed English zip.

@@ -19,14 +19,14 @@ The bundled sales-drop data is an optional example, not the main Skill identity.
 ## Current Release
 
 ```text
-Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.13
-Analysis Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.13/foggy-ai-analysis-skill-0.1.13.zip
-Analysis Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.13/foggy-ai-analysis-skill-0.1.13-manifest.json
-Analysis Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.13/foggy-ai-analysis-skill-0.1.13-SHA256SUMS
-Semantic Query Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.13/foggy-semantic-query-skill-0.1.13.zip
-Semantic Query Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.13/foggy-semantic-query-skill-0.1.13-manifest.json
-Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.13/foggy-semantic-query-skill-0.1.13-SHA256SUMS
-CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.19
+Skill release=https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.14
+Analysis Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.14/foggy-ai-analysis-skill-0.1.14.zip
+Analysis Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.14/foggy-ai-analysis-skill-0.1.14-manifest.json
+Analysis Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.14/foggy-ai-analysis-skill-0.1.14-SHA256SUMS
+Semantic Query Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.14/foggy-semantic-query-skill-0.1.14.zip
+Semantic Query Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.14/foggy-semantic-query-skill-0.1.14-manifest.json
+Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.14/foggy-semantic-query-skill-0.1.14-SHA256SUMS
+CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.20
 Foggy Runtime Launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/foggy-runtime-launcher-v0.1.5
 Stable stack manifest=https://raw.githubusercontent.com/foggy-projects/foggy-ai-analysis/main/stack/stable.json
 ```
@@ -79,8 +79,8 @@ foggy-ai-analysis-skill-<version>-zh-CN.zip
 Download the Skill zip, verify `SHA256SUMS`, then install it with the runtime CLI:
 
 ```powershell
-foggy-runtime skills install foggy-ai-analysis --zip .\foggy-ai-analysis-skill-0.1.13.zip --replace
-foggy-runtime skills install foggy-semantic-query --zip .\foggy-semantic-query-skill-0.1.13.zip --replace
+foggy-runtime skills install foggy-ai-analysis --zip .\foggy-ai-analysis-skill-0.1.14.zip --replace
+foggy-runtime skills install foggy-semantic-query --zip .\foggy-semantic-query-skill-0.1.14.zip --replace
 ```
 
 The target agent Skill directories are:
@@ -133,7 +133,7 @@ The `v0.1.11` package has a cross-platform packaging defect: zip entries were ge
 
 ## Runtime API v1 CLI Alignment
 
-The `v0.1.13` package points public onboarding to `foggy-runtime-cli v0.1.18` or later and Foggy Runtime Launcher `foggy-runtime-launcher-v0.1.5`. The current stable stack recommends `foggy-runtime-cli v0.1.19` for stack-manifest-driven Skill installation. This release keeps the `datasources diagnostics` runtime evidence path, Runtime API v1 capability preflight, and `groupBy` string-array normalization, while fixing cross-platform Skill zip member paths for Linux/macOS installation.
+The `v0.1.14` package points public onboarding to `foggy-runtime-cli v0.1.20` and Foggy Runtime Launcher `foggy-runtime-launcher-v0.1.5`. The current stable stack is updated after each CLI/Skill release pair and is the preferred source for stack-manifest-driven Skill installation. This release keeps the `datasources diagnostics` runtime evidence path, Runtime API v1 capability preflight, `groupBy` string-array normalization, and hardened stack Skill install behavior.
 
 For compatible launcher patch updates, update `stack/stable.json` first. CLI and Skill releases are only required when command behavior, Skill content, or minimum compatibility changes.
 
