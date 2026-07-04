@@ -26,7 +26,7 @@ Analysis Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/rele
 Semantic Query Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.16/foggy-semantic-query-skill-0.1.16.zip
 Semantic Query Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.16/foggy-semantic-query-skill-0.1.16-manifest.json
 Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.16/foggy-semantic-query-skill-0.1.16-SHA256SUMS
-CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.20
+CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.21
 Foggy Runtime Launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/foggy-runtime-launcher-v0.1.7
 Stable stack manifest=https://raw.githubusercontent.com/foggy-projects/foggy-ai-analysis/main/stack/stable.json
 ```
@@ -133,7 +133,7 @@ The `v0.1.11` package has a cross-platform packaging defect: zip entries were ge
 
 ## Runtime API v1 CLI Alignment
 
-The `v0.1.16` package points public onboarding to `foggy-runtime-cli v0.1.20`; the stable stack currently points to Foggy Runtime Launcher `foggy-runtime-launcher-v0.1.7`. It adds the Semantic Layer Publish/Update Runbook for publishing user-managed TM/QM directories into Runtime API bundles, then validating refresh, describe, query smoke, and MCP service readiness.
+The `v0.1.16` package requires `foggy-runtime-cli v0.1.20` or later; the stable stack currently recommends `foggy-runtime-cli v0.1.21` and Foggy Runtime Launcher `foggy-runtime-launcher-v0.1.7`. It adds the Semantic Layer Publish/Update Runbook for publishing user-managed TM/QM directories into Runtime API bundles, then validating refresh, describe, query smoke, and MCP service readiness.
 
 For compatible launcher patch updates, update `stack/stable.json` first. CLI and Skill releases are only required when command behavior, Skill content, or minimum compatibility changes.
 

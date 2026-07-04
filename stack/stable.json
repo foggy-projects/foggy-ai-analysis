@@ -1,7 +1,7 @@
 {
   "schemaVersion": "foggy-stack/v1",
   "channel": "stable",
-  "updatedAt": "2026-07-04T18:50:18+08:00",
+  "updatedAt": "2026-07-04T19:42:37+08:00",
   "policy": {
     "launcherPatchCanMoveAlone": true,
     "notes": [
@@ -12,12 +12,12 @@
   "components": {
     "cli": {
       "name": "foggy-runtime-cli",
-      "recommendedVersion": "0.1.20",
-      "tag": "v0.1.20",
-      "releaseUrl": "https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.20",
+      "recommendedVersion": "0.1.21",
+      "tag": "v0.1.21",
+      "releaseUrl": "https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.21",
       "install": {
-        "windows": "https://github.com/foggy-projects/foggy-runtime-cli/releases/download/v0.1.20/install-foggy-runtime-cli.ps1",
-        "posix": "https://github.com/foggy-projects/foggy-runtime-cli/releases/download/v0.1.20/install-foggy-runtime-cli.sh"
+        "windows": "https://github.com/foggy-projects/foggy-runtime-cli/releases/download/v0.1.21/install-foggy-runtime-cli.ps1",
+        "posix": "https://github.com/foggy-projects/foggy-runtime-cli/releases/download/v0.1.21/install-foggy-runtime-cli.sh"
       }
     },
     "launcher": {
