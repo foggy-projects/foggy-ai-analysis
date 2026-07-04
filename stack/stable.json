@@ -1,7 +1,7 @@
 {
   "schemaVersion": "foggy-stack/v1",
   "channel": "stable",
-  "updatedAt": "2026-07-04T12:46:27+08:00",
+  "updatedAt": "2026-07-04T13:49:45+08:00",
   "policy": {
     "launcherPatchCanMoveAlone": true,
     "notes": [
@@ -22,84 +22,84 @@
     },
     "launcher": {
       "name": "foggy-runtime-launcher",
-      "recommendedTag": "foggy-runtime-launcher-v0.1.5",
-      "version": "0.1.5",
+      "recommendedTag": "foggy-runtime-launcher-v0.1.6",
+      "version": "0.1.6",
       "runtimeApiContract": "foggy-runtime-api/v1",
       "breaking": false,
-      "releaseUrl": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/foggy-runtime-launcher-v0.1.5",
+      "releaseUrl": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/foggy-runtime-launcher-v0.1.6",
       "assets": {
         "jar": {
-          "file": "foggy-runtime-launcher-0.1.5.jar",
-          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.5/foggy-runtime-launcher-0.1.5.jar",
-          "sha256": "1c5ecc41d01a379fa323a70ef40d66ad3fb6c5384c2cf29b8456fbc28bbfed65"
+          "file": "foggy-runtime-launcher-0.1.6.jar",
+          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.6/foggy-runtime-launcher-0.1.6.jar",
+          "sha256": "c02b7a8a0be6d9b7ce65b5cecf31d99fc580e4e7f754e0189e37d4ccd5e76b18"
         },
         "startPowerShell": {
           "file": "start-foggy-runtime.ps1",
-          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.5/start-foggy-runtime.ps1",
-          "sha256": "2d10ebe4f4687ba6c3fe3af3e036b3b5af0151581d7157c57036f02d75d704ff"
+          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.6/start-foggy-runtime.ps1",
+          "sha256": "e4325a070866f2edddf193834dfa6e4df637401573ac85ead40c7a387dfaf8d1"
         },
         "startShell": {
           "file": "start-foggy-runtime.sh",
-          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.5/start-foggy-runtime.sh",
-          "sha256": "37c934486c89cb2258b824c010f38b09e74e7f30a83c04223e4c9a901463fba5"
+          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.6/start-foggy-runtime.sh",
+          "sha256": "90920c48b20eaa11b4789904c7d4afd34e3b087b055773ee8393dd2f4dee5ca2"
         },
         "manifest": {
           "file": "runtime-launcher-manifest.json",
-          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.5/runtime-launcher-manifest.json",
-          "sha256": "0e32214fb1db09f0ee39abf00d0b087b6a35f7cd76abf53513eed72bb6e76310"
+          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.6/runtime-launcher-manifest.json",
+          "sha256": "e4dcb8084aa786fd02a11916028b59f8f113ec6df59cb983f4802f2761f27dc4"
         },
         "checksums": {
           "file": "SHA256SUMS",
-          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.5/SHA256SUMS",
-          "sha256": "108aa58fc8a73798d2d02ebe62397a8a8ca4c293b4472392fa80de6f224dccab"
+          "url": "https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/download/foggy-runtime-launcher-v0.1.6/SHA256SUMS",
+          "sha256": "504f4cee836972988bf4aede6029122afffa315c327edd0363538ec41d911362"
         }
       }
     },
     "skills": {
       "foggy-ai-analysis": {
         "name": "foggy-ai-analysis",
-        "recommendedVersion": "0.1.14",
-        "tag": "v0.1.14",
+        "recommendedVersion": "0.1.15",
+        "tag": "v0.1.15",
         "language": "en",
         "minCliVersion": "0.1.20",
-        "releaseUrl": "https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.14",
+        "releaseUrl": "https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.15",
         "zip": {
-          "file": "foggy-ai-analysis-skill-0.1.14.zip",
-          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.14/foggy-ai-analysis-skill-0.1.14.zip",
-          "sha256": "e3c6f632f55b58cbe087de986b97f5ccf2b9b76c3f00b5110adadf2d061901fa"
+          "file": "foggy-ai-analysis-skill-0.1.15.zip",
+          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.15/foggy-ai-analysis-skill-0.1.15.zip",
+          "sha256": "ee0440c6d8a050e2ab3b3ac44d9010068e4bff031651718e973880cae562c11e"
         },
         "manifest": {
-          "file": "foggy-ai-analysis-skill-0.1.14-manifest.json",
-          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.14/foggy-ai-analysis-skill-0.1.14-manifest.json",
-          "sha256": "c1e220c9d9efa4d40bb1c0cd96295524aff89ad0d0ac25eae37cdc93a52de2cb"
+          "file": "foggy-ai-analysis-skill-0.1.15-manifest.json",
+          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.15/foggy-ai-analysis-skill-0.1.15-manifest.json",
+          "sha256": "3222623646d82c8595db3202c138b73ffce63f3405a01f52ce85f9fbae0367b2"
         },
         "checksums": {
-          "file": "foggy-ai-analysis-skill-0.1.14-SHA256SUMS",
-          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.14/foggy-ai-analysis-skill-0.1.14-SHA256SUMS",
-          "sha256": "581106978db0be6f57998577d13b744c3b53b0ddbc723bfab331f0502e8edd30"
+          "file": "foggy-ai-analysis-skill-0.1.15-SHA256SUMS",
+          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.15/foggy-ai-analysis-skill-0.1.15-SHA256SUMS",
+          "sha256": "76445db16fc28af7c4a5b4cfd8cf71fbfe45d2edc2dea6d93f3e29458db26f77"
         }
       },
       "foggy-semantic-query": {
         "name": "foggy-semantic-query",
-        "recommendedVersion": "0.1.14",
-        "tag": "v0.1.14",
+        "recommendedVersion": "0.1.15",
+        "tag": "v0.1.15",
         "language": "en",
         "minCliVersion": "0.1.20",
-        "releaseUrl": "https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.14",
+        "releaseUrl": "https://github.com/foggy-projects/foggy-ai-analysis/releases/tag/v0.1.15",
         "zip": {
-          "file": "foggy-semantic-query-skill-0.1.14.zip",
-          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.14/foggy-semantic-query-skill-0.1.14.zip",
+          "file": "foggy-semantic-query-skill-0.1.15.zip",
+          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.15/foggy-semantic-query-skill-0.1.15.zip",
           "sha256": "2a9b38640816617c0ab336704471a662e1a218b7b8cf482b54b8fcccbba51ad1"
         },
         "manifest": {
-          "file": "foggy-semantic-query-skill-0.1.14-manifest.json",
-          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.14/foggy-semantic-query-skill-0.1.14-manifest.json",
-          "sha256": "27a7d585be48e9146e4d31a4f8f44f26c625bd922123f295ce7e0a8c32fd711c"
+          "file": "foggy-semantic-query-skill-0.1.15-manifest.json",
+          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.15/foggy-semantic-query-skill-0.1.15-manifest.json",
+          "sha256": "c178750aa46112bbfccde4856238c5f04d4495979ee2f6df309aea0c5bc5184e"
         },
         "checksums": {
-          "file": "foggy-semantic-query-skill-0.1.14-SHA256SUMS",
-          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.14/foggy-semantic-query-skill-0.1.14-SHA256SUMS",
-          "sha256": "e20160cf0823d090330b4ebe98112963f87e5c00ee1cd4d06c21ff8d2306aecf"
+          "file": "foggy-semantic-query-skill-0.1.15-SHA256SUMS",
+          "url": "https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.15/foggy-semantic-query-skill-0.1.15-SHA256SUMS",
+          "sha256": "5f7971441200bf9e83e1a775a94d0594164d77f71ae3df77e81b2b1a115d4fa2"
         }
       }
     }
