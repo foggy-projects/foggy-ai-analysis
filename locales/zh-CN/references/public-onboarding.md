@@ -19,11 +19,22 @@ Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysi
 Runtime components。使用同一 release notes 中列出的 CLI 和 launcher 版本：
 
 ```text
+Stable stack manifest=https://raw.githubusercontent.com/foggy-projects/foggy-ai-analysis/main/stack/stable.json
 CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v<cli-version>
 Foggy Runtime Launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/<launcher-tag>
 Default runtime URL=http://127.0.0.1:18066
 Default namespace=salesdrop
 ```
+
+使用支持 stack manifest 的 `foggy-runtime-cli` 时，先查看当前推荐栈：
+
+```powershell
+foggy-runtime stack show
+foggy-runtime skills install foggy-ai-analysis --replace
+foggy-runtime skills install foggy-semantic-query --replace
+```
+
+这些命令会读取 stable stack manifest，并把推荐的公开 release zip 安装到 `~/.agents/skills`。
 
 ## 官方公开文档
 
@@ -64,7 +75,13 @@ foggy-runtime --version
 
 ## 安装 Skill
 
-从上面的正式 release 链接下载 `foggy-ai-analysis` Skill zip，然后安装到 agent Skill 目录：
+支持 stack manifest 的 CLI 可以直接按当前 stable 推荐安装：
+
+```powershell
+foggy-runtime skills install foggy-ai-analysis --replace
+```
+
+如果需要固定版本或离线安装，从上面的正式 release 链接下载 `foggy-ai-analysis` Skill zip，然后安装到 agent Skill 目录：
 
 ```powershell
 $skillVersion = "<skill-version>"
@@ -82,9 +99,10 @@ CLI 只安装到：
 如果需要已有模型上的 query DSL、composeScript 或受限 Compose/CTE 查询工作，从同一个 release 安装配套查询 Skill：
 
 ```powershell
-$skillVersion = "<skill-version>"
-foggy-runtime skills install foggy-semantic-query --zip ".\foggy-semantic-query-skill-$skillVersion.zip" --replace
+foggy-runtime skills install foggy-semantic-query --replace
 ```
+
+需要固定本地 release zip 时，再使用 `--zip ".\foggy-semantic-query-skill-$skillVersion.zip"`。
 
 本地 workspace 安装只属于维护者内部调试路径，不能放进公开 onboarding。公开用户应安装 release zip 资产。
 

@@ -26,8 +26,9 @@ Analysis Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/rele
 Semantic Query Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.13/foggy-semantic-query-skill-0.1.13.zip
 Semantic Query Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.13/foggy-semantic-query-skill-0.1.13-manifest.json
 Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.13/foggy-semantic-query-skill-0.1.13-SHA256SUMS
-CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.18
+CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.19
 Foggy Runtime Launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/foggy-runtime-launcher-v0.1.5
+Stable stack manifest=https://raw.githubusercontent.com/foggy-projects/foggy-ai-analysis/main/stack/stable.json
 ```
 
 ## Official Public Docs
@@ -132,7 +133,9 @@ The `v0.1.11` package has a cross-platform packaging defect: zip entries were ge
 
 ## Runtime API v1 CLI Alignment
 
-The `v0.1.13` package points public onboarding to `foggy-runtime-cli v0.1.18` and Foggy Runtime Launcher `foggy-runtime-launcher-v0.1.5`. This release keeps the `datasources diagnostics` runtime evidence path, Runtime API v1 capability preflight, and `groupBy` string-array normalization, while fixing cross-platform Skill zip member paths for Linux/macOS installation.
+The `v0.1.13` package points public onboarding to `foggy-runtime-cli v0.1.18` or later and Foggy Runtime Launcher `foggy-runtime-launcher-v0.1.5`. The current stable stack recommends `foggy-runtime-cli v0.1.19` for stack-manifest-driven Skill installation. This release keeps the `datasources diagnostics` runtime evidence path, Runtime API v1 capability preflight, and `groupBy` string-array normalization, while fixing cross-platform Skill zip member paths for Linux/macOS installation.
+
+For compatible launcher patch updates, update `stack/stable.json` first. CLI and Skill releases are only required when command behavior, Skill content, or minimum compatibility changes.
 
 ## Bilingual Source Status
 

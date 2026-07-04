@@ -19,11 +19,22 @@ Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysi
 Runtime components. Use the CLI and launcher versions listed in the same release notes:
 
 ```text
+Stable stack manifest=https://raw.githubusercontent.com/foggy-projects/foggy-ai-analysis/main/stack/stable.json
 CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v<cli-version>
 Foggy Runtime Launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/<launcher-tag>
 Default runtime URL=http://127.0.0.1:18066
 Default namespace=salesdrop
 ```
+
+When using `foggy-runtime-cli` with stack-manifest support, inspect the current recommendation first:
+
+```powershell
+foggy-runtime stack show
+foggy-runtime skills install foggy-ai-analysis --replace
+foggy-runtime skills install foggy-semantic-query --replace
+```
+
+These commands read the stable stack manifest and install the recommended public release zips into `~/.agents/skills`.
 
 ## Official Public Docs
 
@@ -64,7 +75,13 @@ foggy-runtime --version
 
 ## Install Skill
 
-Download the `foggy-ai-analysis` Skill zip from the formal release links above, then install it into the agent Skill directory:
+With stack-manifest-capable CLI versions, install directly from the current stable recommendation:
+
+```powershell
+foggy-runtime skills install foggy-ai-analysis --replace
+```
+
+For pinned or offline installs, download the `foggy-ai-analysis` Skill zip from the formal release links above, then install it into the agent Skill directory:
 
 ```powershell
 $skillVersion = "<skill-version>"
@@ -82,9 +99,10 @@ It does not install copies under `~/.codex/skills` or `~/.claude/skills`.
 If existing-model query DSL, composeScript, or restricted Compose/CTE query work is needed, install the paired query Skill from the same release:
 
 ```powershell
-$skillVersion = "<skill-version>"
-foggy-runtime skills install foggy-semantic-query --zip ".\foggy-semantic-query-skill-$skillVersion.zip" --replace
+foggy-runtime skills install foggy-semantic-query --replace
 ```
+
+Use `--zip ".\foggy-semantic-query-skill-$skillVersion.zip"` when pinning to a local release zip.
 
 Local workspace installs are maintainer-only and must not be used in public onboarding. Public users should install release zip assets.
 
