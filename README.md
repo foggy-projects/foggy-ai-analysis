@@ -143,4 +143,8 @@ The repository carries English and Chinese `foggy-ai-analysis` Skill sources. Th
 
 ## Boundary
 
-The current public onboarding path is dev/test-oriented. Production permission, RBAC, audit, and governance are deferred to a later production-readiness phase.
+Runtime model-author permissions are supported through QM `modelPermissions`,
+field/member permissions, typed row predicates, optional opaque data-plane
+Authorization, authorization-scoped caches, and safe pre-aggregation fallback.
+Customer IAM design, token issuance, RBAC administration, audit storage, and
+organization-specific governance remain external production-readiness concerns.

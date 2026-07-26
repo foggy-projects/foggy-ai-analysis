@@ -28,6 +28,17 @@ foggy-runtime --base-url <runtime-url> --namespace <namespace> capabilities
 
 Continue only when `success=true` and the needed capability is supported. Record `engine`, `runtimeApiVersion`, `data.schemaVersion`, `data.securityMode`, and relevant `data.capabilities`. If `securityMode=auth-code`, pass `--auth-code` or set `FOGGY_RUNTIME_API_AUTH_CODE`.
 
+Keep management and data credentials separate:
+
+- `--auth-code` / `FOGGY_RUNTIME_API_AUTH_CODE` becomes
+  `X-Foggy-Runtime-Code` for protected management operations.
+- `--authorization` / `FOGGY_RUNTIME_AUTHORIZATION` is an optional complete,
+  opaque `Authorization` value for model list/describe, query, Compose, and
+  dimension-member calls. The CLI does not add `Bearer`.
+- The two options may coexist but do not grant each other's permissions.
+- Do not print, persist, shell-trace, or include the Authorization value in
+  evidence. Cross-origin redirects must not receive it.
+
 For commands that require Runtime API features, CLI `v0.1.21` performs capability preflight and exits with code `3` when unsupported. This covers models, query, table inspection, SQL probing, bundle/datasource/resource management, compose, and fsscript commands.
 
 CLI `v0.1.21` accepts both `-h`/`--help` and the compatibility alias `-help` on top-level and nested commands.
@@ -81,6 +92,7 @@ Use `models describe` as the primary query-model schema inspection path:
 foggy-runtime --base-url <runtime-url> --namespace <ns> models describe <QueryModel>
 foggy-runtime --base-url <runtime-url> --namespace <ns> models describe <QueryModel> --field <fieldName>
 foggy-runtime --base-url <runtime-url> --namespace <ns> models describe <QueryModel> --include-examples
+foggy-runtime --base-url <runtime-url> --namespace <ns> --authorization <opaque-value> models describe <QueryModel>
 ```
 
 Render describe output as a compact field table when the user asks what fields, dimensions, measures, filterability, sortability, or aggregation options a QM exposes. Use described field names exactly when building query payloads, including dimension property names such as `<dimension>$id` or `<dimension>$caption`.
@@ -135,7 +147,13 @@ Build DSL payloads only from `models describe` output. Validate before execute:
 ```powershell
 foggy-runtime --base-url <runtime-url> --namespace <ns> query validate <QueryModel> --payload <payload.json>
 foggy-runtime --base-url <runtime-url> --namespace <ns> query execute <QueryModel> --payload <payload.json>
+foggy-runtime --base-url <runtime-url> --namespace <ns> --authorization <opaque-value> members list <QueryModel> <dimension-field>
 ```
+
+For a protected model, use the same caller Authorization for describe,
+validate/execute, Compose leaves, and member lookup. A denial must be reported as
+a model-permission failure; do not retry without Authorization or switch to a
+private endpoint.
 
 CLI `v0.1.21` accepts query payload `groupBy` string-array shorthand and normalizes it to Runtime API v1 object items before sending the request:
 

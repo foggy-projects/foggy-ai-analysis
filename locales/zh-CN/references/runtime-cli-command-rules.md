@@ -28,6 +28,17 @@ foggy-runtime --base-url <runtime-url> --namespace <namespace> capabilities
 
 只有 `success=true` 且所需 capability 为 supported 时继续。记录 `engine`、`runtimeApiVersion`、`data.schemaVersion`、`data.securityMode` 和相关 `data.capabilities`。如果 `securityMode=auth-code`，传入 `--auth-code` 或设置 `FOGGY_RUNTIME_API_AUTH_CODE`。
 
+管理凭据和数据凭据必须分开：
+
+- `--auth-code` / `FOGGY_RUNTIME_API_AUTH_CODE` 作为
+  `X-Foggy-Runtime-Code`，用于受保护的管理操作。
+- `--authorization` / `FOGGY_RUNTIME_AUTHORIZATION` 是可选的完整 opaque
+  `Authorization` 值，仅发送到模型 list/describe、query、Compose 和维度成员调用；
+  CLI 不自动补 `Bearer`。
+- 两个选项可以共存，但不能互相授予权限。
+- 不得输出、持久化、shell trace 或把 Authorization 值写入证据；跨 origin 重定向
+  不能收到该值。
+
 对于依赖 Runtime API 能力的命令，CLI `v0.1.21` 会先做 capability preflight；不支持时以 exit code `3` 退出。覆盖 models、query、table inspection、SQL probing、bundle/datasource/resource management、compose 和 fsscript 命令。
 
 CLI `v0.1.21` 在顶层和子命令中都支持 `-h`/`--help`，同时兼容单横线 `-help`。
@@ -81,6 +92,7 @@ foggy-runtime --base-url <runtime-url> --namespace <ns> models list
 foggy-runtime --base-url <runtime-url> --namespace <ns> models describe <QueryModel>
 foggy-runtime --base-url <runtime-url> --namespace <ns> models describe <QueryModel> --field <fieldName>
 foggy-runtime --base-url <runtime-url> --namespace <ns> models describe <QueryModel> --include-examples
+foggy-runtime --base-url <runtime-url> --namespace <ns> --authorization <opaque-value> models describe <QueryModel>
 ```
 
 用户询问 QM 有哪些字段、维度、度量、可筛选、可排序或可聚合能力时，将 describe 输出整理成紧凑字段表。构造 query payload 时必须使用 describe 中真实的 `fieldName`，包括 `<dimension>$id`、`<dimension>$caption` 这类维度属性名。
@@ -135,7 +147,12 @@ foggy-runtime --base-url <runtime-url> --namespace <ns> models describe <QueryMo
 ```powershell
 foggy-runtime --base-url <runtime-url> --namespace <ns> query validate <QueryModel> --payload <payload.json>
 foggy-runtime --base-url <runtime-url> --namespace <ns> query execute <QueryModel> --payload <payload.json>
+foggy-runtime --base-url <runtime-url> --namespace <ns> --authorization <opaque-value> members list <QueryModel> <dimension-field>
 ```
+
+受保护模型的 describe、validate/execute、Compose 叶子和 member lookup 应使用同一
+调用方 Authorization。权限拒绝必须按模型权限失败处理；不得去掉 Authorization 重试，
+也不得切换到私有端点。
 
 CLI `v0.1.21` 接受 query payload 中的 `groupBy` string-array 简写，并在发送请求前规范化为 Runtime API v1 object items：
 

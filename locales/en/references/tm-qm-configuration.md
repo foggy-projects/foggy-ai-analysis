@@ -198,6 +198,50 @@ export const queryModel = {
 };
 ```
 
+### Model-author permissions
+
+Omitting `modelPermissions` keeps the QM public. Authors may make that explicit
+with `modelPermissions: { mode: 'public' }`. A protected QM uses
+`mode: 'resolver'`; its resolver runs for
+`DISCOVER`, `DESCRIBE`, `VALIDATE`, `EXECUTE`, and `MEMBER_QUERY`, including
+anonymous calls, and must return a boolean `allow`.
+
+```javascript
+modelPermissions: {
+    mode: 'resolver',
+    resolver: (context) => {
+        const decision = post({
+            url: 'https://permission.example.internal/v1/resolve',
+            headers: { Authorization: context.authorization },
+            body: {
+                namespace: context.namespace,
+                model: context.model,
+                action: context.action
+            },
+            responseType: 'map'
+        });
+        return {
+            allow: decision.allowed === true,
+            attributes: decision.attributes,
+            rowPredicates: [
+                context.predicate.in(salesDrop.region, decision.allowedRegions)
+            ],
+            decisionId: decision.decisionId,
+            policyVersion: decision.policyVersion,
+            expiresAt: decision.expiresAt
+        };
+    }
+}
+```
+
+The Authorization value is opaque and nullable. A null header entry is omitted
+by platform `get/post`. Resolver exceptions, timeouts, malformed results, expired
+decisions, or missing `allow` fail closed. Use typed `context.predicate` methods
+for row restrictions; TM base restrictions and QM restrictions are ANDed.
+`attributes` may drive existing `fieldPermissions`, while member lookup also
+applies model, field, and row permissions. Do not log or copy the Authorization
+value into decisions, SQL, cache keys, or diagnostics.
+
 QM rules:
 
 - Export `queryModel`; do not use an alternate export name.
@@ -209,13 +253,15 @@ QM rules:
 - Put additive measures and carefully described ratios in measure groups.
 - For QM-level calculated fields, use `name + formula + type` and document the formula semantics in `description`. Window formulas using `partitionBy`, `windowOrderBy`, or `windowFrame` require runtime validation.
 - Use `orders` for default sorting. Sort fields must be resolvable by the QM and should not depend on hidden TM internals.
-- For dev/test demo models, `accesses: []` is acceptable. For tenant or production models, access rules must fail closed when auth context is missing.
+- For dev/test demo models, `accesses: []` is acceptable. New protected models
+  should prefer typed `modelPermissions.rowPredicates`; existing `accesses`
+  remains compatible and may only narrow the TM base restriction.
 - For multi-table models, prefer the project's recommended QM `joins` shape, such as `fo.leftJoin(fp).on(fo.orderId, fp.orderId)`. TM `onBuilder` is an advanced association hook and should not be the default example for new QM multi-model binding.
 - `memberPermissions` can override and narrow TM dimension member permissions at the QM layer. It should narrow production boundaries, not broaden them.
 
 ## Optional Advanced Features
 
-- `preAggregations` is TM performance-optimization metadata. It does not change QM field semantics and is not a default query path. Make it a delivery requirement only after high-frequency aggregations, refresh mechanics, data freshness, and query evidence are validated.
+- `preAggregations` is TM performance-optimization metadata. It does not change QM field semantics and is not a default query path. Existing definitions use `buildMode: 'GLOBAL'`; they may serve a protected query only when the runtime proves the effective row predicates can be represented by the candidate. Missing permission fields or unprovable predicates must safely fall back to the source query. `SECURITY_SCOPED` is reserved and must fail validation until scoped materialization is implemented.
 - `VECTOR`, MongoDB, non-JDBC models, complex window formulas, parent-child dimensions, and cross-model joins depend on the target runtime/host capability. Public onboarding should claim support only after target runtime validate/describe passes.
 - v2.0 whitepaper capabilities such as Memory Grid, Pivot, Experience Recipe, and DSL_CTE inherit the TM/QM base contract, but they are not mandatory TM/QM file settings. Do not broaden the QM field surface or bypass validators for those advanced capabilities.
 

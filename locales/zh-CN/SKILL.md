@@ -22,7 +22,9 @@ description: 引导 Foggy AI 分析环境安装、Runtime 启动、数据源接�
 
 Sales-drop 只是内置示例路径。用户想快速演示或没有数据源时使用；如果用户提供了自己的业务数据，不要把 sales-drop 当成主流程。
 
-生产权限设计不在本 Skill 范围内。需要明确说明当前公开 onboarding 面向 dev/test，生产 auth、RBAC、审计和治理在后续阶段处理。
+本 Skill 可以指导 Runtime 模型作者使用 QM `modelPermissions`、字段/成员权限、typed 行谓词
+和 CLI 可选数据面 Authorization。客户 IAM 设计、token 签发、RBAC 管理、审计存储、
+租户治理和生产网络策略仍不属于本 onboarding 流程。
 
 已有模型上的查询语言工作是独立关注点。涉及 queryModel DSL payload、composeScript、受限 Compose/CTE 检查、虚拟语义 SQL 翻译、预聚合路由或查询错误恢复时，如果 `foggy-semantic-query` Skill 可用，应使用该 Skill。当前 Skill 负责准备 runtime/model 上下文，再把查询语言细节交给该工作流。当前公开 Skill 包必须自包含，不得要求未声明的外部 Skill 依赖。
 
@@ -33,9 +35,10 @@ Sales-drop 只是内置示例路径。用户想快速演示或没有数据源时
 3. 执行长流程前，先确定 runtime URL、namespace、datasource mode、SQLite path、model directory 和 evidence directory。
 4. 新启动的 runtime 先跑 `wait-ready`，再跑 `capabilities`，记录 `engine`、`runtimeApiVersion`、`schemaVersion`、`securityMode` 和启用能力。
 5. 如果 runtime 返回 `securityMode=auth-code`，传入 `--auth-code` 或设置 `FOGGY_RUNTIME_API_AUTH_CODE`。当前公开 sales-drop 示例使用 `securityMode=none-dev-test-only`。
-6. 用户提供数据时先 inspect schema，并使用绑定到目标 namespace 的具名 datasource；没有数据源时使用内置 sales-drop SQLite 示例。不要把用户数据库和 sales-drop reseed 流程混用。
-7. refresh 前先 validate 模型；查询前先 describe 已 refresh 的模型；除非用户明确要求 seed 示例数据，否则 SQL 探针必须保持只读。
-8. 记录命令、端口、证据路径、失败点和修复动作。
+6. 涉及受保护 QM 时，单独获取调用方提供的完整 Authorization 值，通过 `--authorization` 或 `FOGGY_RUNTIME_AUTHORIZATION` 传入。不得从 `--auth-code` 推导、自动补 `Bearer`、输出或持久化到证据。
+7. 用户提供数据时先 inspect schema，并使用绑定到目标 namespace 的具名 datasource；没有数据源时使用内置 sales-drop SQLite 示例。不要把用户数据库和 sales-drop reseed 流程混用。
+8. refresh 前先 validate 模型；查询前先 describe 已 refresh 的模型；除非用户明确要求 seed 示例数据，否则 SQL 探针必须保持只读。
+9. 记录命令、端口、证据路径、失败点和修复动作。
 
 Runtime API 命令顺序和失败处理详见 `references/runtime-cli-command-rules.md`。公开 Skill 包必须保持自包含；除非 package manifest 明确声明，否则不要依赖其他 Codex Skill。
 
@@ -52,7 +55,7 @@ Runtime API 命令顺序和失败处理详见 `references/runtime-cli-command-ru
 - `references/embedded-java-integration.md`：可选 Spring Boot 内嵌集成，覆盖 `foggy-dataset-model`、`@EnableFoggyFramework`、datasource、namespace 和 bundle 自检。
 - `references/sales-drop-example.md`：可选内置 SQLite 示例，包含 demo data、TM/QM 资产和 replay 命令。
 - `references/feedback.md`：使用脱敏证据准备 GitHub BUG 或优化反馈。
-- `references/production-permission-next-phase.md`：说明生产权限边界，不在 onboarding 流程中实现。
+- `references/production-permission-next-phase.md`：区分 Runtime 已支持的模型权限与客户 IAM、管理、审计及网络治理事项。
 - `references/release-validation.md`：从 release 下载 Skill、CLI 和 Java launcher 资产后做验证，不依赖源码 checkout。
 
 ## 内置资产
@@ -74,7 +77,7 @@ Runtime API 命令顺序和失败处理详见 `references/runtime-cli-command-ru
 - 创建、复制或修改的文件。
 - Evidence directory 和关键输出文件。
 - 失败点和具体修复。
-- 剩余假设，特别是 datasource ownership 和生产权限延期。
+- 剩余假设，特别是 datasource ownership、模型权限行为和外部生产 IAM/治理。
 
 提供 MCP client 配置时，runtime metadata 必须和 `mcpServers` 分开：
 

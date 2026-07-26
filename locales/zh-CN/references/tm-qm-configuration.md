@@ -198,6 +198,47 @@ export const queryModel = {
 };
 ```
 
+### 模型作者权限
+
+省略 `modelPermissions` 时 QM 保持公开；作者也可以显式配置
+`modelPermissions: { mode: 'public' }`。受保护 QM 使用 `mode: 'resolver'`，
+resolver 会在匿名调用下照常执行，并分别处理 `DISCOVER`、`DESCRIBE`、`VALIDATE`、
+`EXECUTE`、`MEMBER_QUERY`，返回值必须包含 boolean `allow`。
+
+```javascript
+modelPermissions: {
+    mode: 'resolver',
+    resolver: (context) => {
+        const decision = post({
+            url: 'https://permission.example.internal/v1/resolve',
+            headers: { Authorization: context.authorization },
+            body: {
+                namespace: context.namespace,
+                model: context.model,
+                action: context.action
+            },
+            responseType: 'map'
+        });
+        return {
+            allow: decision.allowed === true,
+            attributes: decision.attributes,
+            rowPredicates: [
+                context.predicate.in(salesDrop.region, decision.allowedRegions)
+            ],
+            decisionId: decision.decisionId,
+            policyVersion: decision.policyVersion,
+            expiresAt: decision.expiresAt
+        };
+    }
+}
+```
+
+Authorization 是 nullable opaque 值；平台 `get/post` 会省略值为 null 的 Header。
+resolver 异常、超时、非法结构、过期决策或缺少 `allow` 都会 fail closed。行限制使用
+typed `context.predicate` 方法；TM 基础限制与 QM 限制按 AND 合并。`attributes` 可以供
+现有 `fieldPermissions` 使用，member lookup 同样执行模型、字段和行权限。不得把
+Authorization 写入日志、决策、SQL、缓存 key 或诊断正文。
+
 QM 规则：
 
 - 导出名使用 `queryModel`，不要改成其他导出名。
@@ -209,13 +250,14 @@ QM 规则：
 - 度量组放可加总指标和描述清楚的比率。
 - 如需 QM 级计算字段，使用 `name + formula + type`，并在 `description` 中说明公式口径；窗口公式涉及 `partitionBy`、`windowOrderBy`、`windowFrame` 时必须做 runtime 验证。
 - 默认排序使用 `orders`；排序字段必须来自 QM 可解析字段，且不要依赖未暴露的 TM 内部字段。
-- dev/test 示例中 `accesses: []` 可以接受；租户或生产模型必须在缺少 auth context 时 fail closed。
+- dev/test 示例中 `accesses: []` 可以接受。新受保护模型优先使用 typed
+  `modelPermissions.rowPredicates`；既有 `accesses` 保持兼容，且只能继续收窄 TM 基础限制。
 - 多表模型优先使用项目推荐的 QM `joins` 写法，例如 `fo.leftJoin(fp).on(fo.orderId, fp.orderId)`；TM `onBuilder` 属于高级关联条件，不应作为新 QM 多模型绑定的默认示例。
 - `memberPermissions` 可在 QM 层覆盖并收窄 TM 维度成员权限；只能收窄，不应放宽生产权限边界。
 
 ## 可选高级能力
 
-- `preAggregations` 是 TM 上的性能优化元数据，不改变 QM 字段语义，也不是默认查询路径。只有真实高频聚合、刷新机制、数据新鲜度和查询证据都验证后，才把它作为交付要求。
+- `preAggregations` 是 TM 上的性能优化元数据，不改变 QM 字段语义，也不是默认查询路径。存量配置使用 `buildMode: 'GLOBAL'`；受保护查询只有在 Runtime 能证明候选可等价表达有效行谓词时才能命中。权限字段缺失或谓词不可证明时必须安全回源。`SECURITY_SCOPED` 仍为保留模式，在 scoped 物化未实现前必须 validation fail fast。
 - `VECTOR`、MongoDB、非 JDBC 模型、复杂窗口公式、父子维度和跨模型 joins 都依赖具体 runtime/宿主能力；公开 onboarding 中只能在目标 runtime validate/describe 通过后宣称支持。
 - v2.0 白皮书中的 Memory Grid、Pivot、Experience Recipe、DSL_CTE 等能力继承 TM/QM 基础契约，但不是 TM/QM 文件本身的必配项。不要为了这些高级能力扩大 QM 字段面或绕过 validator。
 

@@ -1,12 +1,18 @@
-# Production Permission Next Phase
+# Production Permission Boundary
 
-Current public onboarding is dev/test-oriented. Do not implement production permission, auth, RBAC, audit, or governance inside this onboarding flow.
+Runtime model-author permissions are available through QM `modelPermissions`,
+existing field/member permissions, typed row predicates, optional opaque
+data-plane Authorization, authorization-scoped caches, and safe
+pre-aggregation fallback. These features govern semantic-model access; they are
+not a customer IAM product.
 
-When asked about production readiness, explain that the next phase should cover:
+Keep the following production concerns in the customer's platform or a separate
+delivery:
 
 ```text
 identity and authentication model
-runtime API authorization
+token issuance and verification
+management-plane RBAC
 datasource ownership and access scope
 SQL probe restrictions
 namespace and bundle write permissions
@@ -15,6 +21,10 @@ MCP tool permissions
 audit logs
 secret handling
 tenant isolation
+outbound network, proxy, certificate, and mTLS policy
 ```
 
-For current demos, avoid production keys, private hostnames, customer rows, and unrestricted SQL.
+Keep `--auth-code` management credentials separate from optional data
+Authorization. Never store either value in TM/QM source, evidence, logs, SQL, or
+cache keys. For demos, avoid production keys, private hostnames, customer rows,
+and unrestricted SQL.
