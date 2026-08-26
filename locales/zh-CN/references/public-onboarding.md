@@ -110,6 +110,11 @@ foggy-runtime skills install foggy-semantic-query --replace
 
 从 `<launcher-tag>` 下载并验证 Foggy Runtime Launcher release 资产。解压到任意本地目录；除非端口被占用，默认在 `18066` 启动 runtime。公开 onboarding 不要求维护者 workspace 路径。
 
+用户需要 Analytics Console 时，先检查 `runtime-launcher-manifest.json`。只有它声明
+`features.analyticsConsole.embedded=true` 时，才继续使用
+`analytics-console-and-fap.md`；否则保持普通 `lite` 启动并选择更新的已发布 Launcher。
+Console 不需要独立安装前端。
+
 启动后：
 
 ```powershell

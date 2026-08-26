@@ -36,6 +36,8 @@ foggy-runtime --base-url http://127.0.0.1:18066 --namespace <ns> capabilities
 ## Profiles
 
 - `lite`：公开本地 onboarding 的默认 profile，用于 Runtime API 和 JDBC/SQLite smoke。
+- `lite,analytics-console`：仅当 Launcher Manifest 声明内嵌 Console 时，用于本地 dev/test
+  显式启用。继续阅读 `analytics-console-and-fap.md`；FAP 仍是独立能力并默认关闭。
 - `lite,odoo`：Odoo 模型 bundle 或上游 Odoo Bridge gateway 场景。namespace 按上游版本隔离规则显式使用，例如 `odoo`、`odoo17` 或 `odoo18`。
 - full/default profile：只有 release 或源码项目明确记录用户需要的 demo/data-viewer 组件时才使用。
 

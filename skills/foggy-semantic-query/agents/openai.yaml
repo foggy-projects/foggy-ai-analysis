@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foggy Semantic Query"
+  short_description: "Build governed Foggy Function, DSL, and Compose queries."
+  default_prompt: "Use $foggy-semantic-query to discover and describe the current model, then validate a governed queryModel or Compose request with the published Function or Runtime CLI contract."

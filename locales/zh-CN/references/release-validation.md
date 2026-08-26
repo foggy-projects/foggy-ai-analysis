@@ -21,8 +21,16 @@ scan the unzipped Skill for undeclared dollar-prefixed Skill references
 1. 在隔离环境安装 CLI。
 2. 除非端口被占用，在 `18066` 启动 Java runtime。
 3. 执行 `wait-ready` 和 `capabilities`。
-4. 如果没有数据源，使用 `--use-default-datasource` 跑内置 sales-drop replay。
-5. 停止 runtime，并验证端口已释放。
+4. 如果 Launcher Manifest 声明 `features.analyticsConsole.embedded=true`，先验证默认启动不
+   暴露 Console/Analytics 路由，再使用打包内的 Console opt-in 重启并验证
+   `/analytics-console/` 与 Analytics capabilities。
+5. 除非 release 测试显式提供隔离、已 provision 的 FAP fixture，否则确认 FAP 保持关闭；
+   Launcher 启动不得 provision FAP。
+   如果同时提供该 fixture 与宿主源码 checkout，则在宿主 apply 前使用
+   `scripts/release/fap_question_publication_gate.py` 校验导出的五项 Function projection；要求
+   `mutationPerformed=false`，apply 后再确认宿主 describe 返回相同 immutable digest。
+6. 如果没有数据源，使用 `--use-default-datasource` 跑内置 sales-drop replay。
+7. 停止 runtime，并验证端口已释放。
 
 ## 静态 Skill 引用检查
 

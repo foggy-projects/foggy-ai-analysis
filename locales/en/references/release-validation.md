@@ -21,8 +21,16 @@ Use the concrete `<skill-version>`, `<cli-version>`, and `<launcher-tag>` stated
 1. Install CLI in an isolated environment.
 2. Start Java runtime on port `18066` unless occupied.
 3. Run `wait-ready` and `capabilities`.
-4. If no datasource is available, run the bundled sales-drop replay with `--use-default-datasource`.
-5. Stop runtime and verify the port is released.
+4. If the launcher manifest advertises `features.analyticsConsole.embedded=true`, verify default
+   startup does not expose Console/Analytics routes, then restart with the packaged Console opt-in
+   and verify `/analytics-console/` plus Analytics capabilities.
+5. Confirm FAP remains disabled unless the release test explicitly supplies an isolated,
+   already-provisioned FAP fixture; launcher startup must not provision it.
+   When such a fixture and host source checkout are supplied, validate the host-exported five
+   Function projections with `scripts/release/fap_question_publication_gate.py` before host apply;
+   require `mutationPerformed=false`, then verify the host describes the same immutable digests.
+6. If no datasource is available, run the bundled sales-drop replay with `--use-default-datasource`.
+7. Stop runtime and verify the port is released.
 
 ## Static Skill Reference Check
 

@@ -110,6 +110,11 @@ Local workspace installs are maintainer-only and must not be used in public onbo
 
 Download and verify the Foggy Runtime Launcher release assets from `<launcher-tag>`. Extract them to any local directory and start the runtime on port `18066` unless occupied. Do not require a maintainer workspace path for public onboarding.
 
+If the user wants Analytics Console, inspect `runtime-launcher-manifest.json` first. When it
+advertises `features.analyticsConsole.embedded=true`, continue with
+`analytics-console-and-fap.md`; otherwise keep the normal `lite` startup and select a newer
+published launcher. The Console never requires a separate frontend installation.
+
 After start:
 
 ```powershell

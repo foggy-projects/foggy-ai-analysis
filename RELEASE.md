@@ -17,16 +17,17 @@ foggy-ai-analysis/locales/zh-CN
 Set these values for each release. The examples below use the current validated component versions:
 
 ```powershell
-$skillVersion = "0.1.17"
+$skillVersion = "<skill-version>"
 $skillTag = "v$skillVersion"
-$cliTag = "v0.1.21"
-$launcherTag = "foggy-runtime-launcher-v0.1.8"
+$cliTag = "v0.1.22"
+$launcherTag = "foggy-runtime-launcher-v0.1.18"
 $workspaceRoot = "<workspace-root>"
 ```
 
-## Full Analysis Skill Release
+## Atomic Skill-set Release
 
-Build, validate, and publish the default English package plus the Chinese package:
+Build, validate, and publish the default English analysis package, the paired semantic-query
+package, and optionally the Chinese analysis package in one gated release:
 
 ```powershell
 .\.codex\skills\foggy-release-tagging\scripts\publish_foggy_ai_analysis_skill.ps1 `
@@ -36,29 +37,17 @@ Build, validate, and publish the default English package plus the Chinese packag
   -IncludeZhCn
 ```
 
-The release script validates source templates, packages the Skill, unzips the result, verifies concrete version replacement, uploads assets, downloads them back, and re-validates the remote package.
+The release script validates both canonical sources, packages both Skills, unzips each result,
+verifies concrete version replacement, uploads the exact paired asset set, downloads every asset
+back, and re-validates the remote packages. `-IncludeZhCn` adds the Chinese analysis package to the
+same transaction.
 
 ## Paired Semantic Query Skill
 
-Build the paired semantic-query package explicitly and upload it to the same release:
-
-```powershell
-$outDir = Join-Path $workspaceRoot "dist\skills"
-
-powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $workspaceRoot "scripts\package-foggy-skill.ps1") `
-  -SkillName foggy-semantic-query `
-  -Version $skillVersion `
-  -LauncherTag $launcherTag `
-  -CliRequirement "foggy-runtime-cli >= 0.1.21" `
-  -RepoRoot $workspaceRoot `
-  -OutDir $outDir
-
-gh release upload $skillTag `
-  (Join-Path $outDir "foggy-semantic-query-skill-$skillVersion.zip") `
-  (Join-Path $outDir "foggy-semantic-query-skill-$skillVersion-manifest.json") `
-  (Join-Path $outDir "foggy-semantic-query-skill-$skillVersion-SHA256SUMS") `
-  --repo foggy-projects/foggy-ai-analysis
-```
+The canonical source is `skills/foggy-semantic-query` in this repository. The publisher always
+builds and publishes it with the English analysis Skill; there is no supported analysis-only
+release path. `scripts/package-foggy-skill.ps1` can still package either canonical source alone for
+local diagnostics, but manual upload is not the release workflow.
 
 ## Asset Names
 
@@ -92,16 +81,25 @@ Before publishing, unzip each package and verify that any dollar-prefixed Skill 
 
 For the current runtime-aligned release, also verify:
 
-- `references/public-onboarding.md` resolves to the current `foggy-ai-analysis` release, `foggy-runtime-cli v0.1.21`, and `foggy-runtime-launcher-v0.1.8` after packaging.
-- `references/runtime-cli-command-rules.md` documents CLI `v0.1.21` capability preflight, `datasources diagnostics`, `groupBy` string-array normalization, and `-help` compatibility.
+- `references/public-onboarding.md` resolves to the current `foggy-ai-analysis` release, `foggy-runtime-cli v0.1.22`, and `foggy-runtime-launcher-v0.1.18` after packaging.
+- `references/runtime-cli-command-rules.md` documents CLI `v0.1.22` capability preflight, `datasources diagnostics`, `groupBy` string-array normalization, and `-help` compatibility.
 - `references/tm-qm-configuration.md` links the official TM/QM and Query DSL syntax references.
 - `references/semantic-layer-publish-runbook.md` is present, self-contained, routes through public `foggy-runtime` commands and MCP JSON-RPC `tools/list`, and explicitly keeps Git approval, rollback, audit, and RBAC outside Skill scope.
-- Manifest `cliRequirement` is `foggy-runtime-cli >= 0.1.21` and `cliVersion` is `0.1.21`.
+- Manifest `cliRequirement` is `foggy-runtime-cli >= 0.1.22` and `cliVersion` is `0.1.22`.
 - English manifest has `language=en`.
 - Chinese manifest has `language=zh-CN`.
 - Default download remains the unsuffixed English zip.
-- The same release includes `foggy-semantic-query-skill-<version>.*` assets.
+- The release contains exactly six default assets: three for `foggy-ai-analysis` and three for
+  `foggy-semantic-query`. `-IncludeZhCn` makes the exact set nine assets.
+- Both manifests use the same committed `foggy-ai-analysis` repository source and release version.
 - Zip entry names use `/` separators and contain no Windows `\` paths.
+
+Before OBS replay, run this repository's `scripts/sync-release-to-obs.sh` with
+`--validate-assets-only`. It rejects any asset outside the exact six-file default set (or nine-file
+set with Chinese), missing paired Semantic Query assets, incomplete checksum coverage, or mismatched
+Skill manifests. The live sync writes `latest/skills.json` first and treats the shared
+`latest.json` as a reconciled derived index so concurrent CLI/Launcher publication cannot silently
+drop another component.
 
 ## Historical Checks
 

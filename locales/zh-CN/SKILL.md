@@ -1,6 +1,6 @@
 ---
 name: foggy-ai-analysis
-description: 引导 Foggy AI 分析环境安装、Runtime 启动、数据源接入、SQLite fallback、namespace/TM/QM/query model 创建、查询模型 schema 查看、模型 refresh/validate、问题集调优、IDE/MCP 连接、JAR/Docker/Odoo Runtime 部署说明、可选 Spring Boot 内嵌集成，识别并路由已有模型上的 queryModel DSL、composeScript 或受限 Compose/CTE 用法到 foggy-semantic-query，以及问题反馈证据整理。
+description: 引导 Foggy AI 分析环境安装、Runtime 启动、内嵌 Analytics Console 启用与可选 FAP 集成说明、数据源接入、SQLite fallback、namespace/TM/QM/query model 创建、查询模型 schema 查看、模型 refresh/validate、问题集调优、IDE/MCP 连接、JAR/Docker/Odoo Runtime 部署说明、可选 Spring Boot 内嵌集成，识别并路由已有模型上的 queryModel DSL、composeScript 或受限 Compose/CTE 用法到 foggy-semantic-query，以及问题反馈证据整理。
 ---
 
 # Foggy AI Analysis
@@ -18,7 +18,8 @@ description: 引导 Foggy AI 分析环境安装、Runtime 启动、数据源接�
 7. Runtime API 就绪后，输出 IDE/MCP 客户端连接配置。
 8. 说明 Runtime 部署模式、namespace header 和外部模型 bundle。
 9. 仅在用户明确需要把 Foggy 嵌入 Spring Boot 应用时，引导 Java 内嵌集成。
-10. 收集脱敏后的命令、证据和日志，用于 GitHub BUG 或优化反馈。
+10. 启用并验证标准 Launcher 内嵌的 Analytics Console，说明它与可选、外部管理 FAP 资源的边界。
+11. 收集脱敏后的命令、证据和日志，用于 GitHub BUG 或优化反馈。
 
 Sales-drop 只是内置示例路径。用户想快速演示或没有数据源时使用；如果用户提供了自己的业务数据，不要把 sales-drop 当成主流程。
 
@@ -30,7 +31,7 @@ Sales-drop 只是内置示例路径。用户想快速演示或没有数据源时
 
 ## 工作流
 
-1. 判断用户状态：全新安装、runtime 已运行、已有数据源、没有数据源、模型迭代、question bank 调优、MCP 连接或反馈问题。
+1. 判断用户状态：全新安装、runtime 已运行、Analytics Console opt-in、FAP 集成、已有数据源、没有数据源、模型迭代、question bank 调优、MCP 连接或反馈问题。
 2. 只读取下方索引中与当前任务相关的 reference。
 3. 执行长流程前，先确定 runtime URL、namespace、datasource mode、SQLite path、model directory 和 evidence directory。
 4. 新启动的 runtime 先跑 `wait-ready`，再跑 `capabilities`，记录 `engine`、`runtimeApiVersion`、`schemaVersion`、`securityMode` 和启用能力。
@@ -51,6 +52,7 @@ Runtime API 命令顺序和失败处理详见 `references/runtime-cli-command-ru
 - `references/tm-qm-configuration.md`：TM/QM 配置实操规则，覆盖字段、度量、日期、金额单位、查询模型暴露、可选宿主 model-list 注册和验证。
 - `references/question-bank-and-tuning.md`：构建并运行 question bank，分类未命中原因，调优语义元数据或 prompt。
 - `references/mcp-deployment.md`：JAR/Docker/Odoo Runtime 部署说明、Runtime API/MCP endpoint 检查、namespace header 和外部 bundle 用法。
+- `references/analytics-console-and-fap.md`：标准 Launcher 内嵌 Console、默认关闭的启用方式、Manifest/endpoint 检查，以及可选宿主管理 FAP 的边界。
 - `references/mcp-ide-connection.md`：将支持 MCP 的 IDE 客户端连接到本地 Foggy runtime。
 - `references/embedded-java-integration.md`：可选 Spring Boot 内嵌集成，覆盖 `foggy-dataset-model`、`@EnableFoggyFramework`、datasource、namespace 和 bundle 自检。
 - `references/sales-drop-example.md`：可选内置 SQLite 示例，包含 demo data、TM/QM 资产和 replay 命令。
@@ -71,7 +73,7 @@ Runtime API 命令顺序和失败处理详见 `references/runtime-cli-command-ru
 
 完成 setup、modeling 或 debugging 后，需要报告：
 
-- Runtime URL、namespace、port、datasource mode、使用到的 SQLite path 和 model directory。
+- Runtime URL、namespace、port、datasource mode、使用到的 SQLite path、model directory，以及相关时的 Console/FAP 启用状态。
 - 已执行命令及 pass/fail 状态。
 - `capabilities` 返回的 runtime identity 和 security mode。
 - 创建、复制或修改的文件。

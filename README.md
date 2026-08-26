@@ -26,8 +26,8 @@ Analysis Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/rele
 Semantic Query Skill zip=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.17/foggy-semantic-query-skill-0.1.17.zip
 Semantic Query Skill manifest=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.17/foggy-semantic-query-skill-0.1.17-manifest.json
 Semantic Query Skill checksum=https://github.com/foggy-projects/foggy-ai-analysis/releases/download/v0.1.17/foggy-semantic-query-skill-0.1.17-SHA256SUMS
-CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.21
-Foggy Runtime Launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/foggy-runtime-launcher-v0.1.8
+CLI release=https://github.com/foggy-projects/foggy-runtime-cli/releases/tag/v0.1.22
+Foggy Runtime Launcher release=https://github.com/foggy-projects/foggy-data-mcp-bridge/releases/tag/foggy-runtime-launcher-v0.1.18
 Stable stack manifest=https://raw.githubusercontent.com/foggy-projects/foggy-ai-analysis/main/stack/stable.json
 ```
 
@@ -60,6 +60,12 @@ locales/zh-CN/SKILL.md
 locales/zh-CN/agents/
 locales/zh-CN/assets/
 locales/zh-CN/references/
+```
+
+The paired semantic-query Skill is maintained in the same release repository:
+
+```text
+skills/foggy-semantic-query/
 ```
 
 Default release downloads use the English package name:
@@ -113,7 +119,7 @@ Choose the repository by the component that most likely owns the failure:
 | `foggy-projects/foggy-ai-analysis` | Skill packaging, Skill instructions, bundled demo assets, onboarding docs, GitHub issue template, release validation instructions, and unclear routing. | <https://github.com/foggy-projects/foggy-ai-analysis/issues/new> |
 | `foggy-projects/foggy-runtime-cli` | CLI installation, argument parsing, command behavior, request or response formatting, exit codes, and command UX. | <https://github.com/foggy-projects/foggy-runtime-cli/issues/new> |
 | `foggy-projects/foggy-data-mcp-bridge` | Java runtime, Runtime API, Java launcher, MCP JSON-RPC endpoint, MCP tool execution, datasource/model loader, model catalog or `dataset.list_models`, query validation, and query execution. | <https://github.com/foggy-projects/foggy-data-mcp-bridge/issues/new> |
-| `foggy-projects/foggy-ai-analysis-demo` | Legacy demo-only Skill package issues, if that package is still in use. | <https://github.com/foggy-projects/foggy-ai-analysis-demo/issues/new> |
+| `foggy-projects/foggy-ai-analysis-demo` | Historical demo-only release evidence. New onboarding and fixture issues belong in `foggy-ai-analysis`. | <https://github.com/foggy-projects/foggy-ai-analysis/issues/new> |
 
 If ownership is unclear, file the issue in `foggy-projects/foggy-ai-analysis` with sanitized evidence and mark it as a routing question.
 
@@ -133,7 +139,7 @@ The `v0.1.11` package has a cross-platform packaging defect: zip entries were ge
 
 ## Runtime API v1 CLI Alignment
 
-The `v0.1.17` package requires `foggy-runtime-cli v0.1.21` or later; the stable stack currently recommends `foggy-runtime-cli v0.1.21` and Foggy Runtime Launcher `foggy-runtime-launcher-v0.1.8`. It refreshes the bundled sales-drop demo so customer fields are available in the example schema, TM/QM, question-bank payloads, and replay evidence.
+The `v0.1.17` package requires `foggy-runtime-cli v0.1.21` or later; the stable stack currently recommends `foggy-runtime-cli v0.1.22` and Foggy Runtime Launcher `foggy-runtime-launcher-v0.1.18`. It refreshes the bundled sales-drop demo so customer fields are available in the example schema, TM/QM, question-bank payloads, and replay evidence. Launcher `0.1.18` embeds the optional Analytics Console and Analytics Runtime API while keeping both disabled by default.
 
 For compatible launcher patch updates, update `stack/stable.json` first. CLI and Skill releases are only required when command behavior, Skill content, or minimum compatibility changes.
 

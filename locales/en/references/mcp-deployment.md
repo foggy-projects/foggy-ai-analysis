@@ -36,6 +36,9 @@ If `securityMode=auth-code`, pass `--auth-code` or set `FOGGY_RUNTIME_API_AUTH_C
 ## Profiles
 
 - `lite`: default public onboarding profile for local Runtime API and JDBC/SQLite smoke work.
+- `lite,analytics-console`: explicit local dev/test activation for a launcher whose manifest
+  advertises the embedded Console. Read `analytics-console-and-fap.md`; FAP remains separate and
+  disabled by default.
 - `lite,odoo`: gateway-style profile for Odoo-oriented model bundles or upstream Odoo Bridge integration. Use an explicit Odoo namespace such as `odoo`, `odoo17`, or `odoo18` according to the upstream project's versioning rule.
 - Full/default profile: use only when the release or source project documents the included demo/data-viewer components needed by the user.
 

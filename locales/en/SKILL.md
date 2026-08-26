@@ -1,6 +1,6 @@
 ---
 name: foggy-ai-analysis
-description: Guide Foggy AI analysis onboarding and semantic modeling. Use when Codex needs to help a user install or start Foggy Runtime, connect or inspect a datasource, fall back to SQLite, create namespaces/TM/QM/query models, inspect query-model schema, refresh and validate models, run question banks, tune semantic descriptions and prompts, connect an IDE or MCP client, explain JAR/Docker/Odoo runtime deployment, optionally integrate embedded Spring Boot projects, identify and route existing-model queryModel DSL, composeScript, or restricted Compose/CTE usage to foggy-semantic-query, or prepare GitHub bug and optimization feedback for Foggy analysis workflows.
+description: Guide Foggy AI analysis onboarding and semantic modeling. Use when Codex needs to help a user install or start Foggy Runtime, enable the embedded Analytics Console or explain its optional FAP integration, connect or inspect a datasource, fall back to SQLite, create namespaces/TM/QM/query models, inspect query-model schema, refresh and validate models, run question banks, tune semantic descriptions and prompts, connect an IDE or MCP client, explain JAR/Docker/Odoo runtime deployment, optionally integrate embedded Spring Boot projects, identify and route existing-model queryModel DSL, composeScript, or restricted Compose/CTE usage to foggy-semantic-query, or prepare GitHub bug and optimization feedback for Foggy analysis workflows.
 ---
 
 # Foggy AI Analysis
@@ -18,7 +18,8 @@ Use this skill as the formal Foggy AI analysis onboarding and semantic-layer con
 7. Connect IDE/MCP clients to the local runtime after Runtime API is ready.
 8. Explain supported runtime deployment modes, namespace headers, and external model bundles.
 9. Guide embedded Spring Boot integration only when the user explicitly wants an in-app Java integration rather than a standalone runtime.
-10. Gather sanitized commands, evidence, and logs for GitHub bug or optimization feedback.
+10. Enable and verify the standard launcher's embedded Analytics Console, and explain the boundary to optional externally managed FAP resources.
+11. Gather sanitized commands, evidence, and logs for GitHub bug or optimization feedback.
 
 Sales-drop is only the bundled example path. Use it when the user wants a quick demo or has no datasource; do not make it the main workflow when the user supplies their own business data.
 
@@ -32,7 +33,7 @@ Existing-model query-language work is a separate concern. For queryModel DSL pay
 
 ## Workflow
 
-1. Identify the user's state: fresh install, runtime already running, datasource available, no datasource, model iteration, question-bank tuning, MCP connection, or feedback.
+1. Identify the user's state: fresh install, runtime already running, Analytics Console opt-in, FAP integration, datasource available, no datasource, model iteration, question-bank tuning, MCP connection, or feedback.
 2. Read only the relevant reference from the index below.
 3. Resolve runtime URL, namespace, datasource mode, SQLite path, model directory, and evidence directory before running long operations.
 4. Start newly launched runtimes with `wait-ready`, then run `capabilities` and record `engine`, `runtimeApiVersion`, `schemaVersion`, `securityMode`, and enabled capabilities.
@@ -53,6 +54,7 @@ For detailed Runtime API command sequencing and failure handling, read `referenc
 - `references/tm-qm-configuration.md`: practical TM/QM configuration rules for fields, measures, dates, money units, query model exposure, optional host-specific model-list registration, and validation.
 - `references/question-bank-and-tuning.md`: build and run question banks, classify misses, and tune semantic metadata or prompts.
 - `references/mcp-deployment.md`: JAR/Docker/Odoo runtime deployment notes, Runtime API/MCP endpoint checks, namespace headers, and external bundle usage.
+- `references/analytics-console-and-fap.md`: standard launcher embedding, default-off Console activation, manifest checks, endpoint smoke, and the optional host-managed FAP boundary.
 - `references/mcp-ide-connection.md`: connect MCP-capable IDE clients to the local Foggy runtime.
 - `references/embedded-java-integration.md`: optional embedded Spring Boot integration with `foggy-dataset-model`, `@EnableFoggyFramework`, datasource, namespace, and bundle checks.
 - `references/sales-drop-example.md`: optional bundled SQLite example with demo data, TM/QM assets, and replay command.
@@ -73,7 +75,7 @@ For detailed Runtime API command sequencing and failure handling, read `referenc
 
 When finishing setup, modeling, or debugging, report:
 
-- Runtime URL, namespace, port, datasource mode, SQLite path if used, and model directory.
+- Runtime URL, namespace, port, datasource mode, SQLite path if used, model directory, and Console/FAP activation state when relevant.
 - Commands run and pass/fail status.
 - Runtime identity and security mode from `capabilities`.
 - Files created, copied, or modified.
