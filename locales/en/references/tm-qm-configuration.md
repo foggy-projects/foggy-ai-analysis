@@ -126,11 +126,59 @@ Dimension rules:
 ## Dictionary, Formula, And AI Metadata
 
 - When Java Entity metadata or project metadata confirms a dictionary/enum field, configure `dictRef` on the TM field and still document important enum values in `description`.
+- On a target Java Runtime, referencing a static `dictRef` field from a QM exposes both the original field, with its real type and database code, and a text `<field>$caption`. Always confirm the field in `models describe`; do not guess `$caption` on an older runtime or another engine that does not advertise it.
 - Use `formulaDef`/`dialectFormulaDef` only when ordinary `column`, dimension joins, dictRef, or semantic scale cannot express the business field.
 - Prefer `dialectFormulaDef` for dialect-specific formulas. Formula SQL must be model-author-controlled; do not concatenate user input or LLM-generated content.
 - For display calculations that are not bound to one physical column, prefer QM column item `formula` and validate formula support in the target runtime.
 - `ai.prompt` / `ai.levels` can supplement model, field, or query-model semantic hints for AI callers. Do not use AI prompts as a substitute for executable types, access rules, or field definitions.
 - `deprecated` / `extData` and similar extension metadata can follow project conventions, but they are not query capabilities by themselves.
+
+Recommended static-dictionary shape:
+
+```javascript
+// dicts.fsscript
+import { registerDict } from '@jdbcModelDictService';
+
+export const dicts = {
+    orderStatus: registerDict({
+        id: 'express_order_status',
+        caption: 'Order Status',
+        items: [
+            { value: 100, label: 'Awaiting pickup' },
+            { value: 1200, label: 'Signed' }
+        ]
+    })
+};
+```
+
+```javascript
+// model/ExpressOrderModel.tm
+import { dicts } from '../dicts.fsscript';
+
+{
+    column: 'order_status',
+    name: 'orderStatus',
+    caption: 'Order Status',
+    type: 'INTEGER',
+    dictRef: dicts.orderStatus
+}
+```
+
+```javascript
+// query/ExpressOrderQueryModel.qm
+items: [
+    { ref: expressOrder.orderStatus }
+]
+```
+
+When the Java Runtime advertises this contract, the last reference automatically exposes
+`orderStatus` and `orderStatus$caption`; the QM does not need a duplicate caption item:
+
+- Selecting `orderStatus` returns the original integer database code. Selecting `orderStatus$caption` returns the registered label. SQL and the raw result field are not rewritten.
+- `slice` may use a registered label on either the raw field or `$caption` for equality, inequality, `in`/`not in`, and null checks. Runtime converts the label to the field's typed code, while direct code filters remain compatible. A regular dictionary property is not an aggregate field and does not belong in `having`.
+- `$caption` does not support ordering, range comparisons, or fuzzy matching. Model a database-backed dimension when display-name ordering or range semantics are required.
+- `members list <QueryModel> orderStatus` enumerates the registered code/label pairs without scanning the fact table.
+- An unknown code remains visible in caption output. An unknown or ambiguous label filter fails instead of silently returning the wrong result.
 
 ## Amount And Unit Rules
 
@@ -162,9 +210,97 @@ Example when the inspected schema confirms a cent/fen column and the runtime sch
 - Choose the main business time field before generating the QM. Examples: order date, payment date, accounting date, observation date, completion time.
 - Do not treat a technical audit timestamp as the main business time unless the user confirms that meaning.
 - Keep the original date/time field visible in TM/QM.
-- Date grain fields such as `observationDate$month` are query/runtime fields, not physical columns to invent in the TM.
+- When a date is needed only for detail projection or range filtering, it may remain a `DATE` /
+  `DATETIME` property.
+- When an LLM needs stable year, month, year-month, trend, pivot, or timeWindow analysis, prefer
+  projecting the same physical `DATE` / `DATETIME` column as a single-column self date dimension.
+  A self date dimension does not require or join a database `dim_date` table.
+- Use dimension type `DAY` for a physical `DATE`, and `DATETIME` for a physical `DATETIME` /
+  `TIMESTAMP`. Do not define the same logical name as both a property and a dimension.
+- Date grain fields such as `observationDate$month` are query/runtime fields, not invented physical
+  TM columns. They come from explicitly defined self-date properties or a real date dimension.
 - Use `models describe <QueryModelName>` after refresh to confirm which date grain fields the runtime exposes before writing query payloads.
-- If a DateTime field needs year/month/day analysis but no date dimension exists, use the project's supported self-dimension pattern; do not fake a date dimension join.
+- For cross-year monthly analysis, prefer a stable `<date>$yearMonth`, or use `<date>$year` and
+  `<date>$month` together. Do not merge different years by grouping on `$month` alone.
+- Prefer `<date>$id` with ISO date/datetime values for range filters; do not range-filter a caption
+  or display string.
+- Join a physical date dimension only when database-backed calendar attributes such as holidays,
+  working days, fiscal years, or business weeks are required.
+
+### Single-column self date dimension
+
+The following `order_date` remains the only physical column on the fact table. `foreignKey`,
+`primaryKey`, and `captionColumn` all point to it, while `tableName` is omitted, so Runtime uses
+expressions against the main table and does not join `dim_date`:
+
+```javascript
+dimensions: [
+    {
+        name: 'orderDate',
+        foreignKey: 'order_date',
+        primaryKey: 'order_date',
+        captionColumn: 'order_date',
+        caption: 'Order Date',
+        description: 'Self date dimension backed by order_date without joining dim_date',
+        type: 'DAY',
+        timeRole: 'business_date',
+        recommendedUse: 'Primary time axis for order trends, period filters, and monthly summaries.',
+        properties: [
+            {
+                column: 'order_date',
+                name: 'year',
+                caption: 'Order Year',
+                type: 'INTEGER',
+                dialectFormulaDef: {
+                    sqlite: { builder: (alias) => { return `CAST(strftime('%Y', ${alias}.order_date) AS INTEGER)`; } },
+                    postgresql: { builder: (alias) => { return `EXTRACT(YEAR FROM ${alias}.order_date)`; } },
+                    mysql: { builder: (alias) => { return `YEAR(${alias}.order_date)`; } },
+                    sqlserver: { builder: (alias) => { return `DATEPART(year, ${alias}.order_date)`; } }
+                }
+            },
+            {
+                column: 'order_date',
+                name: 'month',
+                caption: 'Order Month',
+                type: 'INTEGER',
+                dialectFormulaDef: {
+                    sqlite: { builder: (alias) => { return `CAST(strftime('%m', ${alias}.order_date) AS INTEGER)`; } },
+                    postgresql: { builder: (alias) => { return `EXTRACT(MONTH FROM ${alias}.order_date)`; } },
+                    mysql: { builder: (alias) => { return `MONTH(${alias}.order_date)`; } },
+                    sqlserver: { builder: (alias) => { return `DATEPART(month, ${alias}.order_date)`; } }
+                }
+            },
+            {
+                column: 'order_date',
+                name: 'yearMonth',
+                caption: 'Order Year-Month',
+                type: 'STRING',
+                dialectFormulaDef: {
+                    sqlite: { builder: (alias) => { return `strftime('%Y-%m', ${alias}.order_date)`; } },
+                    postgresql: { builder: (alias) => { return `TO_CHAR(${alias}.order_date, 'YYYY-MM')`; } },
+                    mysql: { builder: (alias) => { return `DATE_FORMAT(${alias}.order_date, '%Y-%m')`; } },
+                    sqlserver: { builder: (alias) => { return `CONVERT(char(7), ${alias}.order_date, 120)`; } }
+                }
+            }
+        ]
+    }
+]
+```
+
+The corresponding QM should reference the date-dimension root and the grains intended for LLM use:
+
+```javascript
+items: [
+    { ref: order.orderDate },
+    { ref: order.orderDate$year },
+    { ref: order.orderDate$month },
+    { ref: order.orderDate$yearMonth }
+]
+```
+
+The dimension-root reference exposes `orderDate$id` and `orderDate$caption`. Queries and prompts
+must use only fields returned by `models describe`; clients must not append `$year`, `$month`, or
+`$yearMonth` merely because a field has a `DATE` / `DATETIME` type.
 
 ## QM Configuration
 
@@ -300,7 +436,10 @@ Check:
 - `models refresh` includes the target query model.
 - `models describe` exposes expected field names, captions, types, dimensions, measures, filterability, sortability, aggregation support, and descriptions.
 - Query payloads use only described field names. Date grain names such as `<dateField>$month` are allowed only after runtime metadata or query validation confirms support.
+- For a single-column self date dimension, confirm that describe returns `$id`, `$caption`, and
+  every explicitly modeled grain, then use a smoke query to verify that SQL does not join `dim_date`.
 - Nested dimension fields, caption fields, QM calculated fields, default orders, accesses, and memberPermissions must be covered by describe output or query smoke evidence.
+- For a static `dictRef`, confirm that describe exposes the real-typed raw field and text `$caption`, then smoke-test code/label output, label-to-typed-code filtering, members enumeration, and the no-caption-ordering boundary.
 - At least one smoke query executes for the primary time field, one dimension, and one measure.
 - If semantic scale is configured, projection, filtering, ordering, aggregation, calculated fields, and pivot/time-window paths should be tested before delivery.
 - If preAggregations are configured, additionally check pre-aggregation hit evidence in query debug output. When no pre-aggregation hits, the query should still fall back to the original query path.
@@ -311,5 +450,7 @@ The bundled sales-drop example is the concrete syntax reference:
 
 - `assets/sales-drop-demo/models/model/SalesDropDailyModel.tm`
 - `assets/sales-drop-demo/models/query/SalesDropDailyQueryModel.qm`
+- `assets/sales-drop-demo/queries/date-dimension.json` (single-column self date-dimension year-month summary)
+- `assets/sales-drop-demo/queries/static-dictionary-caption.json` (run only when describe advertises `severity$caption`)
 
 Use those files for syntax shape, but replace the business fields with inspected user datasource facts.

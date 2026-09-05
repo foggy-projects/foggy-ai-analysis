@@ -6,11 +6,11 @@
       "id": "SD-001",
       "status": "executable",
       "question": "Show the largest sales drops this week.",
-      "requiredFields": ["observationDate", "region", "channel", "customerName", "salesDropAmount", "salesDropRate", "severity"],
+      "requiredFields": ["observationDate$caption", "region", "channel", "customerName", "salesDropAmount", "salesDropRate", "severity"],
       "payloadFile": "queries/question-bank/SD-001.json",
       "assertions": {
         "rowCountMin": 1,
-        "requiredColumns": ["observationDate", "region", "channel", "customerName", "salesDropAmount", "salesDropRate", "severity"]
+        "requiredColumns": ["observationDate$caption", "region", "channel", "customerName", "salesDropAmount", "salesDropRate", "severity"]
       },
       "expectedBehavior": "Return rows sorted by salesDropAmount or salesDropRate descending, including the impacted customer."
     },

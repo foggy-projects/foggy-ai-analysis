@@ -17,6 +17,9 @@ export const queryModel = {
             items: [
                 { ref: salesDrop.salesDropId },
                 { ref: salesDrop.observationDate },
+                { ref: salesDrop.observationDate$year },
+                { ref: salesDrop.observationDate$month },
+                { ref: salesDrop.observationDate$yearMonth },
                 { ref: salesDrop.region },
                 { ref: salesDrop.channel },
                 { ref: salesDrop.productCategory },

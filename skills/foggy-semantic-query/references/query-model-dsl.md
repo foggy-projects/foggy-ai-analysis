@@ -76,6 +76,63 @@ controlled CTE, use only the documented recipe below. In particular:
   `partitionBy`, `windowOrderBy`, and `windowFrame`. Allowed `agg` values come from the Function
   schema. Expressions are Foggy expression DSL, not database SQL.
 
+## Single-column date dimensions
+
+A model can project one physical `DATE` / `DATETIME` fact-table column as a self date dimension
+without joining a calendar table. When describe returns fields such as `observationDate$id`,
+`observationDate$caption`, `observationDate$year`, `observationDate$month`, and
+`observationDate$yearMonth`:
+
+- use `$id` with ISO date/datetime values for ranges and timeWindow axes;
+- use `$caption` only when a display-formatted date is needed;
+- prefer `$yearMonth` for cross-year monthly grouping and ordering, or group by `$year` and
+  `$month` together;
+- do not group by `$month` alone when multiple years may be present;
+- do not synthesize a grain suffix from a plain `DATE` / `DATETIME` property. A grain is usable
+  only when the current describe response contains it.
+
+```json
+{
+  "columns": [
+    "observationDate$yearMonth",
+    "sum(salesDropAmount) as totalSalesDropAmount"
+  ],
+  "groupBy": ["observationDate$yearMonth"],
+  "orderBy": ["observationDate$yearMonth"],
+  "limit": 24
+}
+```
+
+## Static dictionary fields
+
+When model describe advertises both a static `dictRef` field such as `orderStatus` and its
+`orderStatus$caption` companion, treat them as two views of the same database value:
+
+- the raw field keeps the model's real type and returns the original database code;
+- `$caption` is a text projection translated by Java Runtime after JDBC execution;
+- an exact registered label can be used in `slice` with equality, inequality, `in`/`not in`, or
+  null checks on either field, and Runtime converts it to the raw field's typed code before SQL
+  binding; a regular dictionary property is not an aggregate field and does not belong in `having`;
+- direct code filters remain valid on the raw field;
+- do not order by `$caption`, or use range/fuzzy operators on it. If display-name ordering is a
+  requirement, the model needs a database-backed dimension instead;
+- member lookup may enumerate the registered code/label pairs without scanning the fact table.
+
+Do not infer `$caption` from a field name or type. Use it only when the current describe response
+contains it. The client, agent, CLI, and MCP caller must not perform a second code/label conversion.
+
+```json
+{
+  "columns": ["orderStatus", "orderStatus$caption", "orderCount"],
+  "slice": [
+    {"field": "orderStatus", "op": "=", "value": "Awaiting pickup"}
+  ],
+  "groupBy": ["orderStatus", "orderStatus$caption"],
+  "orderBy": ["-orderCount"],
+  "limit": 20
+}
+```
+
 ## Detail query
 
 ```json

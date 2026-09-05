@@ -1,0 +1,14 @@
+import { registerDict } from '@jdbcModelDictService';
+
+export const dicts = {
+    severity: registerDict({
+        id: 'sales_drop_severity',
+        caption: '销售下降严重程度',
+        items: [
+            { value: 'LOW', label: '低' },
+            { value: 'MEDIUM', label: '中' },
+            { value: 'HIGH', label: '高' },
+            { value: 'CRITICAL', label: '严重' }
+        ]
+    })
+};

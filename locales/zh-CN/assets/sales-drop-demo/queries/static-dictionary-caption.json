@@ -1,0 +1,14 @@
+{
+  "columns": [
+    "salesDropId",
+    "severity",
+    "severity$caption",
+    "rootCause",
+    "salesDropAmount"
+  ],
+  "slice": [
+    {"field": "severity", "op": "=", "value": "严重"}
+  ],
+  "orderBy": ["-salesDropAmount"],
+  "limit": 5
+}

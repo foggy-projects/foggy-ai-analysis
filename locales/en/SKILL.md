@@ -12,7 +12,7 @@ Use this skill as the formal Foggy AI analysis onboarding and semantic-layer con
 1. Install `foggy-runtime-cli`, download the Java lite runtime launcher, and start Runtime API.
 2. Use the runtime default SQLite datasource when the user has not provided a datasource.
 3. Inspect tables and run read-only SQL probes before generating semantic models.
-4. Create or validate namespace-scoped TM/QM resources; handle model-list registration only for embedded or legacy hosts that require it.
+4. Create or validate namespace-scoped TM/QM resources, including static `dictRef` code/`$caption` contracts advertised by the target Runtime; handle model-list registration only for embedded or legacy hosts that require it.
 5. Refresh, describe, validate, and execute query models through `foggy-runtime-cli`.
 6. Create and run question banks, then tune TM/QM field names, captions, descriptions, and prompts.
 7. Connect IDE/MCP clients to the local runtime after Runtime API is ready.
@@ -52,7 +52,7 @@ For detailed Runtime API command sequencing and failure handling, read `referenc
 - `references/runtime-cli-command-rules.md`: Runtime CLI JSON contract, readiness and capability gates, datasource/model/query sequence, exit-code handling, and public package dependency boundary.
 - `references/datasource-and-semantic-modeling.md`: datasource discovery, table inspection, SQL probes, namespace/TM/QM generation, validation, refresh, and describe workflow.
 - `references/semantic-layer-publish-runbook.md`: publish or update user-managed TM/QM model directories into the Runtime API bundle registry, refresh query models, and verify Runtime API/MCP query service.
-- `references/tm-qm-configuration.md`: practical TM/QM configuration rules for fields, measures, dates, money units, query model exposure, optional host-specific model-list registration, and validation.
+- `references/tm-qm-configuration.md`: practical TM/QM configuration rules for fields, static dictionary code/`$caption`, measures, single-column self date dimensions, money units, query model exposure, optional host-specific model-list registration, and validation.
 - `references/question-bank-and-tuning.md`: build and run question banks, classify misses, and tune semantic metadata or prompts.
 - `references/mcp-deployment.md`: JAR/Docker/Odoo runtime deployment notes, Runtime API/MCP endpoint checks, namespace headers, and external bundle usage.
 - `references/analytics-console-and-fap.md`: standard launcher embedding, default-off Console activation, manifest checks, endpoint smoke, and the optional host-managed FAP boundary.

@@ -12,7 +12,7 @@ description: 引导 Foggy AI 分析环境安装、Runtime 启动、内嵌 Analyt
 1. 安装 `foggy-runtime-cli`，下载 Java lite runtime launcher，并启动 Runtime API。
 2. 用户未提供数据源时，使用 runtime 默认 SQLite 数据源。
 3. 生成语义模型前，先 inspect 表结构并执行只读 SQL 探针。
-4. 创建或验证 namespace 维度的 TM/QM 资源；只有 embedded 或 legacy 宿主要求时才处理 model-list 注册。
+4. 创建或验证 namespace 维度的 TM/QM 资源，包括目标 Runtime 已暴露的静态 `dictRef` code/`$caption` 契约；只有 embedded 或 legacy 宿主要求时才处理 model-list 注册。
 5. 通过 `foggy-runtime-cli` refresh、describe、validate、execute 查询模型。
 6. 创建并运行 question bank，再根据结果调优 TM/QM 字段名、caption、description 和 prompt。
 7. Runtime API 就绪后，输出 IDE/MCP 客户端连接配置。
@@ -50,7 +50,7 @@ Runtime API 命令顺序和失败处理详见 `references/runtime-cli-command-ru
 - `references/runtime-cli-command-rules.md`：Runtime CLI JSON 契约、ready/capability gate、datasource/model/query 顺序、exit code 处理和公开包依赖边界。
 - `references/datasource-and-semantic-modeling.md`：数据源发现、表检查、SQL 探针、namespace/TM/QM 生成、validate、refresh 和 describe 流程。
 - `references/semantic-layer-publish-runbook.md`：将用户自有 Git 管理的 TM/QM 模型目录发布或更新到 Runtime API bundle registry，refresh 查询模型，并验证 Runtime API/MCP 查询服务。
-- `references/tm-qm-configuration.md`：TM/QM 配置实操规则，覆盖字段、度量、日期、金额单位、查询模型暴露、可选宿主 model-list 注册和验证。
+- `references/tm-qm-configuration.md`：TM/QM 配置实操规则，覆盖字段、静态字典 code/`$caption`、度量、单列日期自维度、金额单位、查询模型暴露、可选宿主 model-list 注册和验证。
 - `references/question-bank-and-tuning.md`：构建并运行 question bank，分类未命中原因，调优语义元数据或 prompt。
 - `references/mcp-deployment.md`：JAR/Docker/Odoo Runtime 部署说明、Runtime API/MCP endpoint 检查、namespace header 和外部 bundle 用法。
 - `references/analytics-console-and-fap.md`：标准 Launcher 内嵌 Console、默认关闭的启用方式、Manifest/endpoint 检查，以及可选宿主管理 FAP 的边界。

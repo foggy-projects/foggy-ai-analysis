@@ -1,0 +1,9 @@
+{
+  "columns": [
+    "observationDate$yearMonth",
+    "sum(salesDropAmount) as totalSalesDropAmount"
+  ],
+  "groupBy": ["observationDate$yearMonth"],
+  "orderBy": ["observationDate$yearMonth"],
+  "limit": 24
+}

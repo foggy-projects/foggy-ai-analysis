@@ -159,12 +159,47 @@ CLI `v0.1.21` accepts query payload `groupBy` string-array shorthand and normali
 
 ```json
 {
-  "columns": ["customerName", "customerSegment", "observationDate$month", "sum(salesDropAmount) as totalDrop"],
-  "groupBy": ["customerName", "customerSegment", "observationDate$month"]
+  "columns": ["customerName", "customerSegment", "observationDate$yearMonth", "sum(salesDropAmount) as totalDrop"],
+  "groupBy": ["customerName", "customerSegment", "observationDate$yearMonth"]
 }
 ```
 
+This `$yearMonth` field must be explicitly supplied by a TM self date dimension or a physical date
+dimension and returned by `models describe`. The CLI does not append date grains to a plain
+`DATE` / `DATETIME` property.
+
 Raw Runtime API v1 HTTP callers that bypass the CLI should send `groupBy` as `[{"field":"customerName"}]` until the Java API adds native string-array compatibility.
+
+### Static dictionary `$caption` smoke
+
+When `models describe <QueryModel>` explicitly returns both a static-dictionary raw field and
+`<field>$caption`, the CLI passes the standard DSL through unchanged. Java Runtime owns code/label
+translation; the CLI does not keep a dictionary map or rewrite result rows. Example payload:
+
+```json
+{
+  "columns": ["orderStatus", "orderStatus$caption", "orderCount"],
+  "slice": [
+    {"field": "orderStatus", "op": "=", "value": "Awaiting pickup"}
+  ],
+  "groupBy": ["orderStatus", "orderStatus$caption"],
+  "orderBy": ["-orderCount"],
+  "limit": 20
+}
+```
+
+```powershell
+foggy-runtime --base-url <runtime-url> --namespace <ns> models describe <QueryModel> --field orderStatus
+foggy-runtime --base-url <runtime-url> --namespace <ns> query validate <QueryModel> --payload <dict-query.json>
+foggy-runtime --base-url <runtime-url> --namespace <ns> query execute <QueryModel> --payload <dict-query.json>
+foggy-runtime --base-url <runtime-url> --namespace <ns> members list <QueryModel> orderStatus
+```
+
+Verify that `orderStatus` remains the raw code, `orderStatus$caption` is the label, and the label
+filter is converted server-side to the field's real code type. Do not order by `$caption` or use
+range/fuzzy operators on it; model a database dimension when display-name ordering is required.
+If describe does not return `$caption`, treat the feature as unavailable on that runtime and do not
+generate the field.
 
 Execute only when the user needs data evidence or the environment is clearly dev/test. On `FIELD_NOT_FOUND`, re-describe the model and replace only with an existing field. On `MODEL_NOT_FOUND`, run `models list` or `models refresh`; do not silently switch to a similar model. If `safeToAutoRepair=false`, explain the issue and stop before changing semantics.
 

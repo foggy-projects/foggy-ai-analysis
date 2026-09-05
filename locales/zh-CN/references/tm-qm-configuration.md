@@ -126,11 +126,59 @@ dimensions: [
 ## 字典、公式与 AI 元数据
 
 - Java Entity 或项目元数据能确认字段是字典/枚举时，可以在 TM 字段上配置 `dictRef`，并在 `description` 中写清楚关键枚举值。
+- 对目标 Java Runtime，静态 `dictRef` 字段在 QM 中引用原字段后，会同时暴露保留真实类型和数据库 code 的原字段，以及文本类型的 `<field>$caption`。使用前必须以 `models describe` 的实际字段列表为准；不要为旧 runtime 或其他尚未暴露该字段的引擎猜测 `$caption`。
 - 只有普通 `column`、维度 JOIN、dictRef 或 semantic scale 不能表达业务字段时，才使用 `formulaDef`/`dialectFormulaDef`。
 - 方言相关公式优先使用 `dialectFormulaDef`；公式内容必须是模型作者控制的 SQL 片段，不拼接用户输入或 LLM 生成内容。
 - 需要不依赖单个物理列的展示计算时，优先考虑 QM column item 的 `formula`，并验证目标 runtime 的公式能力。
 - `ai.prompt` / `ai.levels` 可以补充模型、字段或查询模型的 AI 语义提示；不要用 AI prompt 代替可执行的类型、权限或字段定义。
 - `deprecated` / `extData` 等扩展元数据可以保留项目约定，但不要把它们当成查询能力本身。
+
+静态字典的推荐写法：
+
+```javascript
+// dicts.fsscript
+import { registerDict } from '@jdbcModelDictService';
+
+export const dicts = {
+    orderStatus: registerDict({
+        id: 'express_order_status',
+        caption: '运单状态',
+        items: [
+            { value: 100, label: '待揽收' },
+            { value: 1200, label: '已签收' }
+        ]
+    })
+};
+```
+
+```javascript
+// model/ExpressOrderModel.tm
+import { dicts } from '../dicts.fsscript';
+
+{
+    column: 'order_status',
+    name: 'orderStatus',
+    caption: '运单状态',
+    type: 'INTEGER',
+    dictRef: dicts.orderStatus
+}
+```
+
+```javascript
+// query/ExpressOrderQueryModel.qm
+items: [
+    { ref: expressOrder.orderStatus }
+]
+```
+
+Java Runtime 支持该契约时，最后一条引用会自动暴露 `orderStatus` 和
+`orderStatus$caption`，无需在 QM 中重复声明 caption。执行行为如下：
+
+- 选择 `orderStatus` 返回数据库原始整数 code；选择 `orderStatus$caption` 返回注册的 label。SQL 和原始结果字段不会被改写。
+- `slice` 可以在原字段或 `$caption` 上使用注册 label 做等值、非等值、`in`/`not in` 和空值过滤，Runtime 会把 label 转成字段真实类型的 code；原字段继续兼容直接传 code。普通字典属性不是聚合字段，不用于 `having`。
+- `$caption` 不支持排序、范围或模糊匹配。需要按名称排序或做范围语义时，把该属性建模为有数据库来源的维度。
+- `members list <QueryModel> orderStatus` 直接枚举注册的 code/label，不要求扫描事实表。
+- 未知 code 的 caption 保留原值；未知或重复 label 的过滤会失败，而不是静默产生错误结果。
 
 ## 金额和单位规则
 
@@ -162,9 +210,93 @@ dimensions: [
 - 生成 QM 前先确定主业务时间字段，例如订单日期、付款日期、记账日期、观测日期、完成时间。
 - 不要把技术审计时间当成主业务时间，除非用户确认这个含义。
 - TM/QM 中保留原始日期或时间字段。
-- `observationDate$month` 这类日期粒度字段属于查询/runtime 字段，不是 TM 里要伪造的物理列。
+- 只把日期作为明细或范围条件时，可以继续建模为 `properties` 中的 `DATE` / `DATETIME` 字段。
+- 需要让 LLM 稳定进行年、月、年月、趋势、pivot 或 timeWindow 分析时，优先把同一个物理
+  `DATE` / `DATETIME` 列投影为单列日期自维度。自维度不要求数据库存在 `dim_date`，也不会
+  JOIN 日期表。
+- 日期自维度中，物理 `DATE` 使用维度类型 `DAY`，物理 `DATETIME` / `TIMESTAMP` 使用
+  `DATETIME`。不要把同一逻辑名称同时定义为 property 和 dimension。
+- `observationDate$month` 这类日期粒度字段属于查询/runtime 字段，不是 TM 里伪造的物理列；
+  它们应来自日期自维度中显式定义的属性，或真实日期维表属性。
 - refresh 后用 `models describe <QueryModelName>` 确认 runtime 暴露了哪些日期粒度字段，再写 query payload。
-- DateTime 字段需要 year/month/day 分析但没有日期维表时，使用项目支持的 self-dimension 模式；不要伪造日期维表 join。
+- 跨年按月分析优先使用稳定的 `<date>$yearMonth`，或同时使用 `<date>$year` +
+  `<date>$month`；不要只用 `$month` 合并不同年份。
+- 日期范围过滤优先使用 `<date>$id` 的 ISO 日期/时间值，不要对 `$caption` 或展示文本做范围过滤。
+- 只有需要节假日、工作日、财年、业务周等数据库日历属性时，才关联物理日期维表。
+
+### 单列日期自维度
+
+下面的 `order_date` 仍是事实表上的唯一物理列。`foreignKey`、`primaryKey` 和
+`captionColumn` 都指向它，同时省略 `tableName`，因此 Runtime 直接使用主表表达式：
+
+```javascript
+dimensions: [
+    {
+        name: 'orderDate',
+        foreignKey: 'order_date',
+        primaryKey: 'order_date',
+        captionColumn: 'order_date',
+        caption: '订单日期',
+        description: '基于订单表 order_date 的日期自维度，不关联 dim_date',
+        type: 'DAY',
+        timeRole: 'business_date',
+        recommendedUse: '订单趋势、期间筛选和按月汇总的主时间轴',
+        properties: [
+            {
+                column: 'order_date',
+                name: 'year',
+                caption: '订单年份',
+                type: 'INTEGER',
+                dialectFormulaDef: {
+                    sqlite: { builder: (alias) => { return `CAST(strftime('%Y', ${alias}.order_date) AS INTEGER)`; } },
+                    postgresql: { builder: (alias) => { return `EXTRACT(YEAR FROM ${alias}.order_date)`; } },
+                    mysql: { builder: (alias) => { return `YEAR(${alias}.order_date)`; } },
+                    sqlserver: { builder: (alias) => { return `DATEPART(year, ${alias}.order_date)`; } }
+                }
+            },
+            {
+                column: 'order_date',
+                name: 'month',
+                caption: '订单月份',
+                type: 'INTEGER',
+                dialectFormulaDef: {
+                    sqlite: { builder: (alias) => { return `CAST(strftime('%m', ${alias}.order_date) AS INTEGER)`; } },
+                    postgresql: { builder: (alias) => { return `EXTRACT(MONTH FROM ${alias}.order_date)`; } },
+                    mysql: { builder: (alias) => { return `MONTH(${alias}.order_date)`; } },
+                    sqlserver: { builder: (alias) => { return `DATEPART(month, ${alias}.order_date)`; } }
+                }
+            },
+            {
+                column: 'order_date',
+                name: 'yearMonth',
+                caption: '订单年月',
+                type: 'STRING',
+                dialectFormulaDef: {
+                    sqlite: { builder: (alias) => { return `strftime('%Y-%m', ${alias}.order_date)`; } },
+                    postgresql: { builder: (alias) => { return `TO_CHAR(${alias}.order_date, 'YYYY-MM')`; } },
+                    mysql: { builder: (alias) => { return `DATE_FORMAT(${alias}.order_date, '%Y-%m')`; } },
+                    sqlserver: { builder: (alias) => { return `CONVERT(char(7), ${alias}.order_date, 120)`; } }
+                }
+            }
+        ]
+    }
+]
+```
+
+对应 QM 应引用日期维度根字段和希望交给 LLM 使用的粒度：
+
+```javascript
+items: [
+    { ref: order.orderDate },
+    { ref: order.orderDate$year },
+    { ref: order.orderDate$month },
+    { ref: order.orderDate$yearMonth }
+]
+```
+
+维度根引用会暴露 `orderDate$id` 和 `orderDate$caption`。查询和提示词只能使用
+`models describe` 实际返回的字段，不能因为看见 `DATE` / `DATETIME` 类型就在客户端
+自行拼接 `$year`、`$month` 或 `$yearMonth`。
 
 ## QM 配置
 
@@ -296,7 +428,10 @@ foggy-runtime --base-url <url> --namespace <ns> models describe <QueryModelName>
 - `models refresh` 包含目标 query model。
 - `models describe` 暴露预期字段名、caption、type、维度、度量、是否可筛选、是否可排序、是否支持聚合和 description。
 - query payload 只能使用 describe 返回的字段名。`<dateField>$month` 这类日期粒度字段，必须在 runtime metadata 或 query validate 确认支持后才能使用。
+- 配置单列日期自维度时，确认 describe 返回 `$id`、`$caption` 和显式建模的日期粒度，
+  并用 smoke query 验证 SQL 没有产生 `dim_date` JOIN。
 - 嵌套维度字段、caption 字段、QM 计算字段、默认排序、accesses 和 memberPermissions 都必须在 describe 或 query smoke 中被验证到。
+- 配置静态 `dictRef` 时，确认 describe 同时给出真实类型的原字段和文本型 `$caption`，并 smoke 验证 code/label 结果、label 过滤到 typed code、members 枚举，以及 `$caption` 不可排序的边界。
 - 至少执行一个覆盖主时间字段、一个维度和一个度量的 smoke query。
 - 配置 semantic scale 时，交付前应覆盖 projection、filtering、ordering、aggregation、calculated fields、pivot/time-window 等路径。
 - 配置 preAggregations 时，额外检查查询证据中的预聚合命中信息；没有命中时结果仍应能回退到原始查询路径。
@@ -307,5 +442,7 @@ foggy-runtime --base-url <url> --namespace <ns> models describe <QueryModelName>
 
 - `assets/sales-drop-demo/models/model/SalesDropDailyModel.tm`
 - `assets/sales-drop-demo/models/query/SalesDropDailyQueryModel.qm`
+- `assets/sales-drop-demo/queries/date-dimension.json`（单列日期自维度年月汇总）
+- `assets/sales-drop-demo/queries/static-dictionary-caption.json`（仅在 describe 暴露 `severity$caption` 时运行）
 
 语法形态参考这些文件，但业务字段必须替换为用户真实数据源 inspect 后的事实。

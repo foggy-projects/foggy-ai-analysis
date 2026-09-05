@@ -67,6 +67,10 @@ Runtime-managed bundle 不要主动创建 `model-list.yml`；只有目标宿主�
 
 根据真实表字段、样例值和用户语言生成 TM 字段。优先使用清晰业务描述，而不是裸列名。必须明确记录单位、日期语义、枚举含义、owner/status 维度。
 
+发现主业务 `DATE` / `DATETIME` 列时，同时判断 LLM 是否需要年、月、年月、趋势、pivot
+或 timeWindow。如果需要且没有日期表，使用 `tm-qm-configuration.md` 的单列日期自维度；
+不要把它只作为普通属性后再让调用方猜测 `$year` / `$month`。
+
 写入或 review 具体 TM/QM 字段前，先读 `tm-qm-configuration.md`。该文档定义字段分类、度量聚合、日期粒度、金额单位、QM 暴露、可选宿主 model-list 和验证规则。
 
 ## 已有 Query Model Schema

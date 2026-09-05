@@ -158,12 +158,45 @@ CLI `v0.1.21` 接受 query payload 中的 `groupBy` string-array 简写，并在
 
 ```json
 {
-  "columns": ["customerName", "customerSegment", "observationDate$month", "sum(salesDropAmount) as totalDrop"],
-  "groupBy": ["customerName", "customerSegment", "observationDate$month"]
+  "columns": ["customerName", "customerSegment", "observationDate$yearMonth", "sum(salesDropAmount) as totalDrop"],
+  "groupBy": ["customerName", "customerSegment", "observationDate$yearMonth"]
 }
 ```
 
+这里的 `$yearMonth` 必须由 TM 中的日期自维度或物理日期维表显式提供，并出现在
+`models describe` 中。CLI 不会根据普通 `DATE` / `DATETIME` 属性自动拼接日期粒度。
+
 绕过 CLI 的原始 Runtime API v1 HTTP 调用方，在 Java API 原生支持 string-array 前，应使用 `[{"field":"customerName"}]` 形式发送 `groupBy`。
+
+### 静态字典 `$caption` 验证
+
+当 `models describe <QueryModel>` 明确返回静态字典原字段和
+`<field>$caption` 时，CLI 直接透传标准 DSL；code/label 转换由 Java Runtime
+执行，CLI 不维护字典映射，也不改写结果。示例 payload：
+
+```json
+{
+  "columns": ["orderStatus", "orderStatus$caption", "orderCount"],
+  "slice": [
+    {"field": "orderStatus", "op": "=", "value": "待揽收"}
+  ],
+  "groupBy": ["orderStatus", "orderStatus$caption"],
+  "orderBy": ["-orderCount"],
+  "limit": 20
+}
+```
+
+```powershell
+foggy-runtime --base-url <runtime-url> --namespace <ns> models describe <QueryModel> --field orderStatus
+foggy-runtime --base-url <runtime-url> --namespace <ns> query validate <QueryModel> --payload <dict-query.json>
+foggy-runtime --base-url <runtime-url> --namespace <ns> query execute <QueryModel> --payload <dict-query.json>
+foggy-runtime --base-url <runtime-url> --namespace <ns> members list <QueryModel> orderStatus
+```
+
+检查结果中的 `orderStatus` 仍为原始 code，`orderStatus$caption` 为 label，
+并确认 label 过滤已在服务端转换为字段真实类型的 code。不要按 `$caption`
+排序，也不要对它使用范围或模糊操作符；需要名称排序时改用数据库维度建模。
+如果 describe 没有返回 `$caption`，把它视为当前 runtime 未提供该能力，不要生成该字段。
 
 只有用户需要数据证据，或环境明确为 dev/test 时才 execute。遇到 `FIELD_NOT_FOUND`，重新 describe 模型，只替换为已存在字段。遇到 `MODEL_NOT_FOUND`，执行 `models list` 或 `models refresh`；不要静默切换到相似模型。如果 `safeToAutoRepair=false`，先解释问题并停止，不要改变语义。
 

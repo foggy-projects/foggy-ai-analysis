@@ -1,7 +1,7 @@
 {
   "limit": 5,
   "columns": [
-    "observationDate",
+    "observationDate$caption",
     "region",
     "channel",
     "productCategory",

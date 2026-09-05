@@ -58,6 +58,14 @@ protocol, and transport failures keep their own codes and boundaries.
 | `FIELD_NOT_FOUND` | Re-describe the model and replace only with an existing field. |
 | Missing caption | Use an exposed id field, omit caption, or switch only to a model that exposes the caption. |
 | Missing date grain | Use an exposed grain field or explain that the requested grain is unavailable. |
+| `DICT_LABEL_NOT_FOUND` | Re-describe the field and use a registered label or the raw code; do not guess a spelling or silently drop the filter. |
+| `DICT_LABEL_AMBIGUOUS` | Stop and ask the model owner to make labels unique, or use the exact raw code when the user's intent identifies one. |
+| `DICT_CAPTION_ORDER_UNSUPPORTED` | Remove label ordering only when it is not required. If it is required, report that the field must be modeled as a database-backed dimension. |
+| `DICT_CAPTION_FILTER_UNSUPPORTED` | Replace range/fuzzy caption filtering only with a semantically equivalent supported code/label equality or set filter; otherwise report the limitation. |
+
+For a static dictionary, absence of `<field>$caption` in the current model description means the
+field is unavailable on that runtime/model. Do not manually translate returned rows or maintain a
+client-side label map as error recovery.
 
 ## DSL Syntax Errors
 

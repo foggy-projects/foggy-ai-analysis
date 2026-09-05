@@ -67,6 +67,11 @@ Do not create `model-list.yml` for runtime-managed bundles unless the target hos
 
 Generate TM fields from actual table columns, sample values, and user language. Prefer clear business descriptions over raw column names. Explicitly document units, date semantics, enum meanings, and owner/status dimensions.
 
+When a primary business `DATE` / `DATETIME` column is found, also decide whether the LLM needs
+year, month, year-month, trend, pivot, or timeWindow analysis. If it does and no date table exists,
+use the single-column self date-dimension pattern from `tm-qm-configuration.md`; do not leave it as
+a plain property and expect callers to guess `$year` / `$month`.
+
 Before writing or reviewing concrete TM/QM fields, read `tm-qm-configuration.md`. It defines the practical field classification, measure aggregation, date-grain, money-unit, QM exposure, optional host-specific model-list, and validation rules.
 
 ## Existing Query Model Schema

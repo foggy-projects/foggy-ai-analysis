@@ -39,8 +39,8 @@ without it.
 1. Identify the target namespace, runtime URL or Function surface, and whether execution evidence
    is required. If the Analytics Function caller does not know a model, list dependencies before
    selecting one.
-2. Describe the current model before using fields, metrics, captions, date axes, pivot, or
-   timeWindow. If FAP delivers a Function schema on demand because of prompt budget, retrieve the
+2. Describe the current model before using fields, metrics, dimension or static-dictionary
+   captions, self date-dimension grains, date axes, pivot, or timeWindow. If FAP delivers a Function schema on demand because of prompt budget, retrieve the
    published input schema before building nested DSL; do not guess from a summary.
 3. Choose the narrowest supported query surface from the routing table below.
 4. Build payloads only from described model fields or from columns produced by prior compose plans.

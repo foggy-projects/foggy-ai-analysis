@@ -3,24 +3,62 @@
  *
  * Single-table SQLite model for local Foggy AI analysis demos.
  */
+import { dicts } from '../dicts.fsscript';
+
 export const model = {
     name: 'SalesDropDailyModel',
     caption: 'Sales Drop Daily Diagnostics',
     tableName: 'sales_drop_daily',
     idColumn: 'sales_drop_id',
 
+    dimensions: [
+        {
+            name: 'observationDate',
+            foreignKey: 'observation_date',
+            primaryKey: 'observation_date',
+            captionColumn: 'observation_date',
+            caption: 'Observation Date',
+            description: 'Self date dimension backed by sales_drop_daily.observation_date without joining a date table.',
+            type: 'DAY',
+            timeRole: 'business_date',
+            recommendedUse: 'Primary time axis for sales-drop trends, period filters, pivots, and time-window analysis.',
+            properties: [
+                {
+                    column: 'observation_date',
+                    name: 'year',
+                    caption: 'Observation Year',
+                    type: 'INTEGER',
+                    dialectFormulaDef: {
+                        sqlite: { builder: (alias) => { return `CAST(strftime('%Y', ${alias}.observation_date) AS INTEGER)`; } }
+                    }
+                },
+                {
+                    column: 'observation_date',
+                    name: 'month',
+                    caption: 'Observation Month',
+                    type: 'INTEGER',
+                    dialectFormulaDef: {
+                        sqlite: { builder: (alias) => { return `CAST(strftime('%m', ${alias}.observation_date) AS INTEGER)`; } }
+                    }
+                },
+                {
+                    column: 'observation_date',
+                    name: 'yearMonth',
+                    caption: 'Observation Year-Month',
+                    type: 'STRING',
+                    dialectFormulaDef: {
+                        sqlite: { builder: (alias) => { return `strftime('%Y-%m', ${alias}.observation_date)`; } }
+                    }
+                }
+            ]
+        }
+    ],
+
     properties: [
         {
             column: 'sales_drop_id',
             caption: 'Sales Drop Record ID',
             type: 'LONG'
-        },
-        {
-            column: 'observation_date',
-            name: 'observationDate',
-            caption: 'Observation Date',
-            description: 'Business date for the sales-drop diagnostic row. Use it to compare current sales with prior-week sales.',
-            type: 'DATE'
         },
         {
             column: 'region',
@@ -73,7 +111,8 @@ export const model = {
             column: 'severity',
             caption: 'Severity',
             description: 'Sales-drop severity: LOW, MEDIUM, HIGH, or CRITICAL.',
-            type: 'STRING'
+            type: 'STRING',
+            dictRef: dicts.severity
         },
         {
             column: 'root_cause',
