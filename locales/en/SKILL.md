@@ -42,6 +42,7 @@ Existing-model query-language work is a separate concern. For queryModel DSL pay
 7. For user data, inspect schema first and keep it on a named datasource bound to the target namespace; for no datasource, use the bundled sales-drop SQLite example. Do not mix user databases with the sales-drop reseed flow.
 8. Validate models before refresh, describe refreshed models before query execution, and keep all SQL probes read-only unless the user explicitly asks to seed example data.
 9. Record commands, ports, evidence paths, failures, and repairs.
+10. Treat `success=true` plus Runtime `warnings` as a qualified success. Preserve stable warning facts, inspect the described model when semantics may differ, and revalidate a corrected payload only when it preserves the user's intent. Do not depend on or invent free-text remediation.
 
 For detailed Runtime API command sequencing and failure handling, read `references/runtime-cli-command-rules.md`. The public Skill package must stay self-contained; do not require another Codex Skill unless the package manifest explicitly declares it.
 
@@ -81,6 +82,7 @@ When finishing setup, modeling, or debugging, report:
 - Files created, copied, or modified.
 - Evidence directory and key output files.
 - Failure points and exact repairs.
+- Runtime warning count/codes, semantic-impact status, and the evidence path containing the full warning objects.
 - Remaining assumptions, especially datasource ownership, model-permission behavior, and external production IAM/governance.
 
 When providing MCP client configuration, keep runtime metadata separate from `mcpServers`:

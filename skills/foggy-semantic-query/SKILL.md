@@ -48,6 +48,9 @@ without it.
 6. On errors, inspect `error.code`, `error.phase`, diagnostics, `safeToAutoRepair`, and FAP
    `modelRepairable`/`violations` when present. Repair only a pre-effect request problem whose fix
    preserves the user's semantics, then validate again.
+7. On successful responses with `warnings`, inspect their stable structured facts before using the
+   result. Correct and revalidate semantic-impact warnings only when the described model supports an
+   intent-preserving equivalent; otherwise disclose the limitation. Do not depend on free-text advice.
 
 ## Surface Routing
 
@@ -93,5 +96,6 @@ Report:
 - Validation command/result before execution.
 - Execution result only when requested or appropriate for dev/test evidence.
 - Exact unsupported pieces when the semantic model cannot answer the request.
+- Runtime warning codes/actions and semantic impact when validation or execution succeeded with warnings.
 - Whether the model was queried anonymously or with caller-supplied
   Authorization, without ever reporting the credential value.

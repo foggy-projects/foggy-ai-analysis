@@ -167,6 +167,14 @@ CLI `v0.1.21` 接受 query payload 中的 `groupBy` string-array 简写，并在
 
 只有用户需要数据证据，或环境明确为 dev/test 时才 execute。遇到 `FIELD_NOT_FOUND`，重新 describe 模型，只替换为已存在字段。遇到 `MODEL_NOT_FOUND`，执行 `models list` 或 `models refresh`；不要静默切换到相似模型。如果 `safeToAutoRepair=false`，先解释问题并停止，不要改变语义。
 
+exit code 0 或 `success=true` 仍可能包含 Runtime `warnings`。向用户给出结论前，需要检查
+validate 和 execute 两阶段的 warning。将 `code`、`path`、`property`、`action`、
+`semanticImpact`、`allowedProperties`、规范化后的请求片段和 `docsRef` 等稳定字段视为契约；
+自由文本 `suggestedAction` 只是可选提示，可能不存在。如果被忽略或规范化的选项会改变
+查询语义，应重新 describe 模型；存在不改变用户意图的受支持等价写法时，构造新 payload
+并重新 validate，否则明确报告限制，不要声称结果满足了未受支持的语义。无语义影响的
+信息类 warning 不会把成功请求变成失败。
+
 ## Exit Code
 
 | Exit | 含义 | 处理 |
@@ -179,4 +187,4 @@ CLI `v0.1.21` 接受 query payload 中的 `groupBy` string-array 简写，并在
 
 ## 证据
 
-报告命令及 pass/fail 状态、`capabilities` 中的 runtime identity、datasource/table inspection 结果、修改过的 TM/QM 文件和任何宿主特定 model-list 注册、model validation/refresh/describe 结果、query validation/execution 结果、存在时的精确 `error.code` 和 `error.phase`，以及 namespace、datasource、fixture、dev/test runtime 状态相关的剩余假设。
+报告命令及 pass/fail 状态、`capabilities` 中的 runtime identity、datasource/table inspection 结果、修改过的 TM/QM 文件和任何宿主特定 model-list 注册、model validation/refresh/describe 结果、query validation/execution 结果、存在时的精确 `error.code` 和 `error.phase`、Runtime warning 数量/代码及语义影响，以及 namespace、datasource、fixture、dev/test runtime 状态相关的剩余假设。

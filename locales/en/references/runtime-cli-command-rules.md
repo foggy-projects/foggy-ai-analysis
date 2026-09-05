@@ -168,6 +168,15 @@ Raw Runtime API v1 HTTP callers that bypass the CLI should send `groupBy` as `[{
 
 Execute only when the user needs data evidence or the environment is clearly dev/test. On `FIELD_NOT_FOUND`, re-describe the model and replace only with an existing field. On `MODEL_NOT_FOUND`, run `models list` or `models refresh`; do not silently switch to a similar model. If `safeToAutoRepair=false`, explain the issue and stop before changing semantics.
 
+A zero exit code or `success=true` can include Runtime `warnings`. Inspect warnings from both validate
+and execute before presenting the answer. Treat stable fields such as `code`, `path`, `property`,
+`action`, `semanticImpact`, `allowedProperties`, normalized request fragments, and `docsRef` as the
+contract. Free-text `suggestedAction` is advisory and may be absent. If an ignored or normalized option
+can change query meaning, re-describe the model and validate a corrected payload when a supported
+equivalent preserves the user's intent; otherwise report the limitation and do not describe the
+result as matching the unsupported semantics. Informational warnings that do not affect semantics do
+not turn a successful request into a failure.
+
 ## Exit Codes
 
 | Exit | Meaning | Handling |
@@ -180,4 +189,4 @@ Execute only when the user needs data evidence or the environment is clearly dev
 
 ## Evidence
 
-Report commands and pass/fail status, runtime identity from `capabilities`, datasource/table inspection outcomes, changed TM/QM files and any host-specific model-list registration, model validation/refresh/describe outcomes, query validation/execution outcomes, exact `error.code` and `error.phase` when present, and remaining assumptions about namespace, datasource, fixture, and dev/test runtime status.
+Report commands and pass/fail status, runtime identity from `capabilities`, datasource/table inspection outcomes, changed TM/QM files and any host-specific model-list registration, model validation/refresh/describe outcomes, query validation/execution outcomes, exact `error.code` and `error.phase` when present, Runtime warning count/codes and semantic impact when present, and remaining assumptions about namespace, datasource, fixture, and dev/test runtime status.

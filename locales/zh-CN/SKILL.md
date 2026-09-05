@@ -40,6 +40,7 @@ Sales-drop 只是内置示例路径。用户想快速演示或没有数据源时
 7. 用户提供数据时先 inspect schema，并使用绑定到目标 namespace 的具名 datasource；没有数据源时使用内置 sales-drop SQLite 示例。不要把用户数据库和 sales-drop reseed 流程混用。
 8. refresh 前先 validate 模型；查询前先 describe 已 refresh 的模型；除非用户明确要求 seed 示例数据，否则 SQL 探针必须保持只读。
 9. 记录命令、端口、证据路径、失败点和修复动作。
+10. 将 `success=true` 且带 Runtime `warnings` 视为有条件成功。保留稳定的 warning 事实；语义可能变化时检查已 describe 的模型，只在不改变用户意图时修正并重新 validate。不要依赖或编造自由文本修复建议。
 
 Runtime API 命令顺序和失败处理详见 `references/runtime-cli-command-rules.md`。公开 Skill 包必须保持自包含；除非 package manifest 明确声明，否则不要依赖其他 Codex Skill。
 
@@ -79,6 +80,7 @@ Runtime API 命令顺序和失败处理详见 `references/runtime-cli-command-ru
 - 创建、复制或修改的文件。
 - Evidence directory 和关键输出文件。
 - 失败点和具体修复。
+- Runtime warning 数量/代码、语义影响状态，以及保存完整 warning 对象的 evidence 路径。
 - 剩余假设，特别是 datasource ownership、模型权限行为和外部生产 IAM/治理。
 
 提供 MCP client 配置时，runtime metadata 必须和 `mcpServers` 分开：

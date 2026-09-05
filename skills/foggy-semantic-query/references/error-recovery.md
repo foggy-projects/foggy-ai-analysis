@@ -2,6 +2,20 @@
 
 Use this reference when a semantic query fails validation or execution.
 
+## Successful Responses With Warnings
+
+A successful validation or execution can still report that an input property was ignored, normalized,
+or otherwise interpreted differently. Read stable structured fields such as `code`, `path`, `property`,
+`action`, `semanticImpact`, `allowedProperties`, normalized request fragments, and `docsRef`. Preserve
+the warning in evidence and report it to the caller.
+
+Do not require or invent a natural-language `suggestedAction`; Runtime code cannot enumerate every
+model-specific correction. A stable `suggestionCode` and parameters may help when the remedy is
+deterministic, but the actual repair should be derived from the current model description. When a
+warning indicates possible semantic drift, correct and revalidate only if the described model exposes
+an equivalent that preserves the user's intent. Otherwise keep the successful result qualified and
+state which requested semantics were not applied. Purely informational warnings need no repair.
+
 ## Fail-Closed Rules
 
 - Do not invent fields, captions, date grains, metrics, or model names.
