@@ -36,6 +36,8 @@ without it.
 
 ## Workflow
 
+Reuse the current runtime/model context and select only the reference for the requested query surface. Query construction alone does not require reinstalling Runtime, changing models, or replaying the demo. Reuse a current describe result for the same runtime, namespace, model, and caller; re-describe after schema/identity changes or a relevant validation failure. If setup repair is needed and foggy-ai-analysis is unavailable, report that specific prerequisite and continue independent payload work without inventing schema or bypassing permissions.
+
 1. Identify the target namespace, runtime URL or Function surface, and whether execution evidence
    is required. If the Analytics Function caller does not know a model, list dependencies before
    selecting one.
@@ -87,6 +89,8 @@ authority, datasource, tenant, model digests, or revision fields in the payload.
 published Function schema and preserve its validation diagnostics for repair.
 
 ## Output Rules
+
+Finish when the requested payload is constructed and its relevant validation succeeds, plus execution evidence when requested or appropriate under the rules above. Do not run the full question bank or release suite for a local query change. Expand checks only for a new change, failure, or unresolved semantic risk. If Runtime is unavailable, distinguish an unvalidated draft from a validated query and report the missing evidence.
 
 Report:
 

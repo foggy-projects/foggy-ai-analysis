@@ -12,6 +12,8 @@ Use this reference whenever the task needs `foggy-runtime` command evidence. Thi
 
 ## Preflight
 
+Apply this sequence to the affected live workflow, not to every documentation edit. Reuse a healthy Runtime and current capabilities for unchanged runtime/security context; the CLI's per-command capability checks still apply. Datasource registration, rebinding, refresh, restart, and fixture reseeding are conditional operations within the authorized task, not prerequisites for reading an existing model or constructing a query.
+
 Resolve runtime URL from the user, `FOGGY_RUNTIME_API_URL`, or the public onboarding defaults. Resolve namespace from the user, `FOGGY_NAMESPACE`, or state the assumed namespace.
 
 If a runtime was just started:
@@ -133,7 +135,7 @@ Attach local models when they should survive runtime restarts:
 foggy-runtime --base-url <runtime-url> --namespace <ns> bundles add --name <ns>-dev-models --path <models-dir> --watch --replace
 ```
 
-Refresh and describe before querying:
+After model changes, refresh within the authorized scope and describe before querying. For an unchanged existing model, describe it without an unnecessary refresh:
 
 ```powershell
 foggy-runtime --base-url <runtime-url> --namespace <ns> models refresh --model <QueryModel>

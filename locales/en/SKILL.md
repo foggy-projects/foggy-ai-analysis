@@ -33,6 +33,8 @@ Existing-model query-language work is a separate concern. For queryModel DSL pay
 
 ## Workflow
 
+Reuse a healthy Runtime and the existing authorized datasource/model context. Select the steps needed for the requested outcome; a model edit or connection question does not restart installation, reseed the demo, or enable Console/FAP. Read the relevant reference only. If a companion Skill is unavailable, continue independent work using the bundled command rules and described schema; report any remaining query-language gap without claiming that Skill ran.
+
 1. Identify the user's state: fresh install, runtime already running, Analytics Console opt-in, FAP integration, datasource available, no datasource, model iteration, question-bank tuning, MCP connection, or feedback.
 2. Read only the relevant reference from the index below.
 3. Resolve runtime URL, namespace, datasource mode, SQLite path, model directory, and evidence directory before running long operations.
@@ -74,7 +76,9 @@ For detailed Runtime API command sequencing and failure handling, read `referenc
 
 ## Output Rules
 
-When finishing setup, modeling, or debugging, report:
+Verify the affected model or contract: validate changed models before an authorized refresh, describe the affected models, and validate relevant queries. Run targeted question-bank cases when semantics change; use the full bank or release validation only for that requested scope or an existing release gate. Pure documentation edits need local review, not a live Runtime. Reuse evidence for unchanged context, refreshing it when identity, permissions, schema, failures, or unresolved warnings make it stale. Stop when the requested outcome and relevant checks are complete; report unavailable checks as gaps rather than success.
+
+When finishing setup, modeling, or debugging, report the applicable items below; omit setup details unrelated to the task:
 
 - Runtime URL, namespace, port, datasource mode, SQLite path if used, model directory, and Console/FAP activation state when relevant.
 - Commands run and pass/fail status.

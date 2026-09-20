@@ -12,6 +12,8 @@
 
 ## Preflight
 
+以下顺序适用于受影响的运行态流程，不适用于每次文档修改。Runtime/安全上下文未变时复用健康实例和当前 capabilities，CLI 每条命令自身的能力检查仍保留。注册/重绑数据源、refresh、重启及重新 seed fixture 都是任务授权范围内的条件步骤，不是读取既有模型或构造查询的前置动作。
+
 从用户输入、`FOGGY_RUNTIME_API_URL` 或公开 onboarding 默认值解析 runtime URL。从用户输入或 `FOGGY_NAMESPACE` 解析 namespace；如果做了假设，需要明确说明。
 
 如果 runtime 刚启动：
@@ -133,7 +135,7 @@ Invoke-RestMethod -Method Post `
 foggy-runtime --base-url <runtime-url> --namespace <ns> bundles add --name <ns>-dev-models --path <models-dir> --watch --replace
 ```
 
-查询前先 refresh 和 describe：
+模型修改后，在授权范围内 refresh，再 describe 后查询；未修改的既有模型直接 describe，不无故 refresh：
 
 ```powershell
 foggy-runtime --base-url <runtime-url> --namespace <ns> models refresh --model <QueryModel>

@@ -31,6 +31,8 @@ Sales-drop 只是内置示例路径。用户想快速演示或没有数据源时
 
 ## 工作流
 
+复用健康的 Runtime 和已有授权的数据源/模型上下文，按用户目标选择所需步骤。模型局部修改或连接问题不重新安装、不重新 seed 示例，也不顺带启用 Console/FAP。只读相关 reference。配套 Skill 不可用时，使用包内命令规则和已 describe 的 schema 继续独立工作；剩余查询语言缺口如实说明，不假称已运行该 Skill。
+
 1. 判断用户状态：全新安装、runtime 已运行、Analytics Console opt-in、FAP 集成、已有数据源、没有数据源、模型迭代、question bank 调优、MCP 连接或反馈问题。
 2. 只读取下方索引中与当前任务相关的 reference。
 3. 执行长流程前，先确定 runtime URL、namespace、datasource mode、SQLite path、model directory 和 evidence directory。
@@ -72,7 +74,9 @@ Runtime API 命令顺序和失败处理详见 `references/runtime-cli-command-ru
 
 ## 输出规则
 
-完成 setup、modeling 或 debugging 后，需要报告：
+验证受影响的模型或合同：模型修改后先 validate，再在已授权范围 refresh，describe 受影响模型并 validate 相关查询。语义变化运行相应题库用例；只有完整题库/发行验证属于请求范围或已有发布门禁时才全量运行。纯文档修改只做本地检查，不要求运行 Runtime。上下文未变时复用已有证据；身份、权限、schema、失败或未解 warning 使证据过期时重新核验。用户目标及相关检查完成后结束；无法执行的检查明确记为缺口。
+
+完成 setup、modeling 或 debugging 后，报告以下适用项；省略与当前任务无关的安装细节：
 
 - Runtime URL、namespace、port、datasource mode、使用到的 SQLite path、model directory，以及相关时的 Console/FAP 启用状态。
 - 已执行命令及 pass/fail 状态。

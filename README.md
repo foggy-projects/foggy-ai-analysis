@@ -82,6 +82,8 @@ foggy-ai-analysis-skill-<version>-zh-CN.zip
 
 ## Install Shape
 
+Maintain instructions in the source trees above and commit source changes before preparing a release. Personal `~/.agents/skills` installations are consumer copies; local edits there are not release sources and can be replaced by a later CLI install. The CLI obtains the paired packages from the selected stack/release or explicit local source; Java Runtime startup does not publish these instructions. A source-only update does not advance `stack/stable.json`, release versions, tags, or checksums. Validate the three Skill entrypoints and affected references without packaging unless release preparation is requested.
+
 Download the Skill zip, verify `SHA256SUMS`, then install it with the runtime CLI:
 
 ```powershell
