@@ -1,6 +1,6 @@
 ---
 name: foggy-ai-analysis
-description: 引导 Foggy AI 分析环境安装、Runtime 启动、内嵌 Analytics Console 启用与可选 FAP 集成说明、数据源接入、SQLite fallback、namespace/TM/QM/query model 创建、查询模型 schema 查看、模型 refresh/validate、问题集调优、IDE/MCP 连接、JAR/Docker/Odoo Runtime 部署说明、可选 Spring Boot 内嵌集成，识别并路由已有模型上的 queryModel DSL、composeScript 或受限 Compose/CTE 用法到 foggy-semantic-query，以及问题反馈证据整理。
+description: 接入 Foggy Runtime 与数据源，创建或调整 TM/QM 语义模型。仅构造或调试已有模型查询时使用 foggy-semantic-query。
 ---
 
 # Foggy AI Analysis

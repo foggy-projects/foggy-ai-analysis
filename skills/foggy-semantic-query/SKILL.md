@@ -1,6 +1,6 @@
 ---
 name: foggy-semantic-query
-description: Build and review governed Foggy semantic query payloads for existing models. Use when Codex needs queryModel DSL, composeScript, columns/slice/groupBy/orderBy/pivot/timeWindow/calculatedFields, cross-model semantic joins or unions, restricted Compose/CTE runtime checks, virtual semantic SQL translation, pre-aggregation routing, or query error recovery. Pair with foggy-ai-analysis when runtime setup, datasource onboarding, TM/QM creation, model refresh, or MCP client connection is still needed.
+description: Build, validate and debug queryModel DSL or composeScript for existing Foggy models. Runtime setup and TM/QM authoring use foggy-ai-analysis.
 ---
 
 # Foggy Semantic Query

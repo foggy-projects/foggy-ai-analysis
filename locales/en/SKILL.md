@@ -1,6 +1,6 @@
 ---
 name: foggy-ai-analysis
-description: Guide Foggy AI analysis onboarding and semantic modeling. Use when Codex needs to help a user install or start Foggy Runtime, enable the embedded Analytics Console or explain its optional FAP integration, connect or inspect a datasource, fall back to SQLite, create namespaces/TM/QM/query models, inspect query-model schema, refresh and validate models, run question banks, tune semantic descriptions and prompts, connect an IDE or MCP client, explain JAR/Docker/Odoo runtime deployment, optionally integrate embedded Spring Boot projects, identify and route existing-model queryModel DSL, composeScript, or restricted Compose/CTE usage to foggy-semantic-query, or prepare GitHub bug and optimization feedback for Foggy analysis workflows.
+description: Set up Foggy Runtime and datasources, and create or revise TM/QM semantic models. Existing-model query construction and debugging use foggy-semantic-query.
 ---
 
 # Foggy AI Analysis
