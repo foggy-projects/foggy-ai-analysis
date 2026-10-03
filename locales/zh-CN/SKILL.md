@@ -1,6 +1,6 @@
 ---
 name: foggy-ai-analysis
-description: 引导 Foggy AI 分析环境安装、Runtime 启动、内嵌 Analytics Console 启用与可选 FAP 集成说明、数据源接入、SQLite fallback、namespace/TM/QM/query model 创建、查询模型 schema 查看、模型 refresh/validate、问题集调优、IDE/MCP 连接、JAR/Docker/Odoo Runtime 部署说明、可选 Spring Boot 内嵌集成，识别并路由已有模型上的 queryModel DSL、composeScript 或受限 Compose/CTE 用法到 foggy-semantic-query，以及问题反馈证据整理。
+description: 接入 Foggy Runtime 与数据源，创建或调整 TM/QM 语义模型。仅构造或调试已有模型查询时使用 foggy-semantic-query。
 ---
 
 # Foggy AI Analysis
@@ -31,6 +31,8 @@ Sales-drop 只是内置示例路径。用户想快速演示或没有数据源时
 
 ## 工作流
 
+复用健康的 Runtime 和已有授权的数据源/模型上下文，按用户目标选择所需步骤。模型局部修改或连接问题不重新安装、不重新 seed 示例，也不顺带启用 Console/FAP。只读相关 reference。配套 Skill 不可用时，使用包内命令规则和已 describe 的 schema 继续独立工作；剩余查询语言缺口如实说明，不假称已运行该 Skill。
+
 1. 判断用户状态：全新安装、runtime 已运行、Analytics Console opt-in、FAP 集成、已有数据源、没有数据源、模型迭代、question bank 调优、MCP 连接或反馈问题。
 2. 只读取下方索引中与当前任务相关的 reference。
 3. 执行长流程前，先确定 runtime URL、namespace、datasource mode、SQLite path、model directory 和 evidence directory。
@@ -47,7 +49,7 @@ Runtime API 命令顺序和失败处理详见 `references/runtime-cli-command-ru
 ## Reference 索引
 
 - `references/public-onboarding.md`：正式下载链接、CLI 安装、Java launcher 下载、runtime 启动和首轮 smoke 检查。
-- `references/runtime-cli-command-rules.md`：Runtime CLI JSON 契约、ready/capability gate、datasource/model/query 顺序、exit code 处理和公开包依赖边界。
+- `references/runtime-cli-command-rules.md`：Runtime CLI JSON 契约、ready/capability gate、datasource/model/query 顺序、查询 PNG 导出发现、exit code 处理和公开包依赖边界。
 - `references/datasource-and-semantic-modeling.md`：数据源发现、表检查、SQL 探针、namespace/TM/QM 生成、validate、refresh 和 describe 流程。
 - `references/semantic-layer-publish-runbook.md`：将用户自有 Git 管理的 TM/QM 模型目录发布或更新到 Runtime API bundle registry，refresh 查询模型，并验证 Runtime API/MCP 查询服务。
 - `references/tm-qm-configuration.md`：TM/QM 配置实操规则，覆盖字段、静态字典 code/`$caption`、度量、单列日期自维度、金额单位、查询模型暴露、可选宿主 model-list 注册和验证。
@@ -72,7 +74,9 @@ Runtime API 命令顺序和失败处理详见 `references/runtime-cli-command-ru
 
 ## 输出规则
 
-完成 setup、modeling 或 debugging 后，需要报告：
+验证受影响的模型或合同：模型修改后先 validate，再在已授权范围 refresh，describe 受影响模型并 validate 相关查询。语义变化运行相应题库用例；只有完整题库/发行验证属于请求范围或已有发布门禁时才全量运行。纯文档修改只做本地检查，不要求运行 Runtime。上下文未变时复用已有证据；身份、权限、schema、失败或未解 warning 使证据过期时重新核验。用户目标及相关检查完成后结束；无法执行的检查明确记为缺口。
+
+完成 setup、modeling 或 debugging 后，报告以下适用项；省略与当前任务无关的安装细节：
 
 - Runtime URL、namespace、port、datasource mode、使用到的 SQLite path、model directory，以及相关时的 Console/FAP 启用状态。
 - 已执行命令及 pass/fail 状态。

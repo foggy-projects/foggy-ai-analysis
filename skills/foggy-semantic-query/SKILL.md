@@ -1,6 +1,6 @@
 ---
 name: foggy-semantic-query
-description: Build and review governed Foggy semantic query payloads for existing models. Use when Codex needs queryModel DSL, composeScript, columns/slice/groupBy/orderBy/pivot/timeWindow/calculatedFields, cross-model semantic joins or unions, restricted Compose/CTE runtime checks, virtual semantic SQL translation, pre-aggregation routing, or query error recovery. Pair with foggy-ai-analysis when runtime setup, datasource onboarding, TM/QM creation, model refresh, or MCP client connection is still needed.
+description: Build, validate and debug queryModel DSL or composeScript for existing Foggy models, and export real query results as PNG when supported. Runtime setup and TM/QM authoring use foggy-ai-analysis.
 ---
 
 # Foggy Semantic Query
@@ -36,6 +36,8 @@ without it.
 
 ## Workflow
 
+Reuse the current runtime/model context and select only the reference for the requested query surface. Query construction alone does not require reinstalling Runtime, changing models, or replaying the demo. Reuse a current describe result for the same runtime, namespace, model, and caller; re-describe after schema/identity changes or a relevant validation failure. If setup repair is needed and foggy-ai-analysis is unavailable, report that specific prerequisite and continue independent payload work without inventing schema or bypassing permissions.
+
 1. Identify the target namespace, runtime URL or Function surface, and whether execution evidence
    is required. If the Analytics Function caller does not know a model, list dependencies before
    selecting one.
@@ -57,6 +59,7 @@ without it.
 | User intent | Use | Reference |
 |---|---|---|
 | Single model detail, filter, sort, grouping, aggregation, calculated fields, pivot, or timeWindow | queryModel DSL | `references/query-model-dsl.md` |
+| PNG table, bar chart, or line chart from a real single-model query | CLI `query export-image` / MCP `dataset.export_image` when discovered | `references/query-model-dsl.md`, Query result images |
 | Cross-model join, union, derived plan, time-window output composition, or multiple result plans | composeScript | `references/compose-script.md` |
 | Runtime evidence for restricted Compose/CTE scripts or standalone fsscript orchestration | Runtime CLI checks | `references/restricted-cte-runtime.md` |
 | SQL-like user wording that should stay governed by semantic models | virtual semantic SQL translation | `references/virtual-semantic-sql.md` |
@@ -88,6 +91,8 @@ published Function schema and preserve its validation diagnostics for repair.
 
 ## Output Rules
 
+Finish when the requested payload is constructed and its relevant validation succeeds, plus execution evidence when requested or appropriate under the rules above. Do not run the full question bank or release suite for a local query change. Expand checks only for a new change, failure, or unresolved semantic risk. If Runtime is unavailable, distinguish an unvalidated draft from a validated query and report the missing evidence.
+
 Report:
 
 - Model, namespace, runtime URL, and assumed datasource context.
@@ -95,6 +100,7 @@ Report:
 - Payload or script file path and the generated query content when useful.
 - Validation command/result before execution.
 - Execution result only when requested or appropriate for dev/test evidence.
+- For image export, saved PNG or MCP image, actual row counts and truncation, plus a visual check of captions, units, Chinese glyphs, and layout.
 - Exact unsupported pieces when the semantic model cannot answer the request.
 - Runtime warning codes/actions and semantic impact when validation or execution succeeded with warnings.
 - Whether the model was queried anonymously or with caller-supplied

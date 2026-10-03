@@ -1,6 +1,6 @@
 ---
 name: foggy-ai-analysis
-description: Guide Foggy AI analysis onboarding and semantic modeling. Use when Codex needs to help a user install or start Foggy Runtime, enable the embedded Analytics Console or explain its optional FAP integration, connect or inspect a datasource, fall back to SQLite, create namespaces/TM/QM/query models, inspect query-model schema, refresh and validate models, run question banks, tune semantic descriptions and prompts, connect an IDE or MCP client, explain JAR/Docker/Odoo runtime deployment, optionally integrate embedded Spring Boot projects, identify and route existing-model queryModel DSL, composeScript, or restricted Compose/CTE usage to foggy-semantic-query, or prepare GitHub bug and optimization feedback for Foggy analysis workflows.
+description: Set up Foggy Runtime and datasources, and create or revise TM/QM semantic models. Existing-model query construction and debugging use foggy-semantic-query.
 ---
 
 # Foggy AI Analysis
@@ -33,6 +33,8 @@ Existing-model query-language work is a separate concern. For queryModel DSL pay
 
 ## Workflow
 
+Reuse a healthy Runtime and the existing authorized datasource/model context. Select the steps needed for the requested outcome; a model edit or connection question does not restart installation, reseed the demo, or enable Console/FAP. Read the relevant reference only. If a companion Skill is unavailable, continue independent work using the bundled command rules and described schema; report any remaining query-language gap without claiming that Skill ran.
+
 1. Identify the user's state: fresh install, runtime already running, Analytics Console opt-in, FAP integration, datasource available, no datasource, model iteration, question-bank tuning, MCP connection, or feedback.
 2. Read only the relevant reference from the index below.
 3. Resolve runtime URL, namespace, datasource mode, SQLite path, model directory, and evidence directory before running long operations.
@@ -49,7 +51,7 @@ For detailed Runtime API command sequencing and failure handling, read `referenc
 ## Reference Index
 
 - `references/public-onboarding.md`: formal download links, CLI install, Java launcher download, runtime startup, and first smoke checks.
-- `references/runtime-cli-command-rules.md`: Runtime CLI JSON contract, readiness and capability gates, datasource/model/query sequence, exit-code handling, and public package dependency boundary.
+- `references/runtime-cli-command-rules.md`: Runtime CLI JSON contract, readiness and capability gates, datasource/model/query sequence, query PNG export discovery, exit-code handling, and public package dependency boundary.
 - `references/datasource-and-semantic-modeling.md`: datasource discovery, table inspection, SQL probes, namespace/TM/QM generation, validation, refresh, and describe workflow.
 - `references/semantic-layer-publish-runbook.md`: publish or update user-managed TM/QM model directories into the Runtime API bundle registry, refresh query models, and verify Runtime API/MCP query service.
 - `references/tm-qm-configuration.md`: practical TM/QM configuration rules for fields, static dictionary code/`$caption`, measures, single-column self date dimensions, money units, query model exposure, optional host-specific model-list registration, and validation.
@@ -74,7 +76,9 @@ For detailed Runtime API command sequencing and failure handling, read `referenc
 
 ## Output Rules
 
-When finishing setup, modeling, or debugging, report:
+Verify the affected model or contract: validate changed models before an authorized refresh, describe the affected models, and validate relevant queries. Run targeted question-bank cases when semantics change; use the full bank or release validation only for that requested scope or an existing release gate. Pure documentation edits need local review, not a live Runtime. Reuse evidence for unchanged context, refreshing it when identity, permissions, schema, failures, or unresolved warnings make it stale. Stop when the requested outcome and relevant checks are complete; report unavailable checks as gaps rather than success.
+
+When finishing setup, modeling, or debugging, report the applicable items below; omit setup details unrelated to the task:
 
 - Runtime URL, namespace, port, datasource mode, SQLite path if used, model directory, and Console/FAP activation state when relevant.
 - Commands run and pass/fail status.
