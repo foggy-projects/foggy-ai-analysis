@@ -51,7 +51,7 @@ For detailed Runtime API command sequencing and failure handling, read `referenc
 ## Reference Index
 
 - `references/public-onboarding.md`: formal download links, CLI install, Java launcher download, runtime startup, and first smoke checks.
-- `references/runtime-cli-command-rules.md`: Runtime CLI JSON contract, readiness and capability gates, datasource/model/query sequence, exit-code handling, and public package dependency boundary.
+- `references/runtime-cli-command-rules.md`: Runtime CLI JSON contract, readiness and capability gates, datasource/model/query sequence, query PNG export discovery, exit-code handling, and public package dependency boundary.
 - `references/datasource-and-semantic-modeling.md`: datasource discovery, table inspection, SQL probes, namespace/TM/QM generation, validation, refresh, and describe workflow.
 - `references/semantic-layer-publish-runbook.md`: publish or update user-managed TM/QM model directories into the Runtime API bundle registry, refresh query models, and verify Runtime API/MCP query service.
 - `references/tm-qm-configuration.md`: practical TM/QM configuration rules for fields, static dictionary code/`$caption`, measures, single-column self date dimensions, money units, query model exposure, optional host-specific model-list registration, and validation.

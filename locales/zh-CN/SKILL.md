@@ -49,7 +49,7 @@ Runtime API 命令顺序和失败处理详见 `references/runtime-cli-command-ru
 ## Reference 索引
 
 - `references/public-onboarding.md`：正式下载链接、CLI 安装、Java launcher 下载、runtime 启动和首轮 smoke 检查。
-- `references/runtime-cli-command-rules.md`：Runtime CLI JSON 契约、ready/capability gate、datasource/model/query 顺序、exit code 处理和公开包依赖边界。
+- `references/runtime-cli-command-rules.md`：Runtime CLI JSON 契约、ready/capability gate、datasource/model/query 顺序、查询 PNG 导出发现、exit code 处理和公开包依赖边界。
 - `references/datasource-and-semantic-modeling.md`：数据源发现、表检查、SQL 探针、namespace/TM/QM 生成、validate、refresh 和 describe 流程。
 - `references/semantic-layer-publish-runbook.md`：将用户自有 Git 管理的 TM/QM 模型目录发布或更新到 Runtime API bundle registry，refresh 查询模型，并验证 Runtime API/MCP 查询服务。
 - `references/tm-qm-configuration.md`：TM/QM 配置实操规则，覆盖字段、静态字典 code/`$caption`、度量、单列日期自维度、金额单位、查询模型暴露、可选宿主 model-list 注册和验证。

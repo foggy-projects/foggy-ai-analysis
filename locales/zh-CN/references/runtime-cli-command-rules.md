@@ -210,6 +210,46 @@ validate 和 execute 两阶段的 warning。将 `code`、`path`、`property`、`
 并重新 validate，否则明确报告限制，不要声称结果满足了未受支持的语义。无语义影响的
 信息类 warning 不会把成功请求变成失败。
 
+## 查询 PNG 导出
+
+对已有模型构造 DSL 时，优先使用可用的 `foggy-semantic-query`，再将真实查询结果导出为
+表格、柱状图或折线图。查询和 PNG 渲染都在 Java Runtime 内完成，沿用原有 namespace
+及权限校验，使用随包交付的中文字体，无需 Docker、浏览器、Node、外部渲染服务或 AI 绘画模型。
+
+本功能目前位于 `codex/query-image-export` 开发分支，发布版本尚未确定。不能假定已发布的
+CLI `0.1.24` 包含它，需使用配套新版 CLI 和 Java Runtime。本命令通过 MCP `tools/list`
+发现能力，不依赖 Runtime API capability flag；默认在 `/mcp/analyst/rpc` 查找
+`dataset.export_image`。缺失时返回 `UNSUPPORTED_IMAGE_TOOL` / `image.discovery`，
+exit `3`；检查 Runtime 版本、配置的 endpoint 和 namespace 策略，不走私有 fallback。
+
+复用调用方 namespace，并通过 `FOGGY_RUNTIME_AUTHORIZATION` 传入可选的完整 opaque
+Authorization。凭据、连接信息和运行参数不能进入 DSL、标题或字段 caption。先根据
+describe 字段验证查询。下面的 `monthly-sales.json` 仅包含查询 DSL；`month` 和
+`salesAmount` 是示意结果字段，必须以实际 describe 和查询 alias 为准，不保证 demo 已提供。
+
+```powershell
+foggy-runtime --base-url <runtime-url> --namespace <ns> query export-image <QueryModel> --payload monthly-sales.json --kind table --columns columns.json --title "月度销售明细" --out sales-table.png
+foggy-runtime --base-url <runtime-url> --namespace <ns> query export-image <QueryModel> --payload monthly-sales.json --kind bar --x month --y salesAmount --y-label "销售额" --unit "元" --title "月度销售额" --out sales-bar.png
+foggy-runtime --base-url <runtime-url> --namespace <ns> query export-image <QueryModel> --payload monthly-sales.json --kind line --x month --y salesAmount --y-label "销售额" --unit "元" --title "销售额趋势" --out sales-line.png
+```
+
+- 图表必须提供 `--x` 和 `--y`，使用最终结果字段名，包括聚合 alias。渲染保留查询顺序和
+  数值；排序、聚合和日期补齐由 DSL 完成，折线图的 null 保留空隙。
+- 表格 `--columns <columns.json>` 接受 `{field, caption?, unit?}` 数组。caption 默认取
+  schema 标题或字段名，单位须明确提供，不猜测。
+  执行表格示例前，将 `[{"field":"month","caption":"月份"},{"field":"salesAmount","caption":"销售额","unit":"元"}]` 保存为 `columns.json`。
+- 展示上限为表格 50 行、柱状图 40 点、折线图 100 点、表格 12 列；`--max-rows` 可降低
+  上限。宽度 640–2400 px，默认 1200；请求高度为表格 360–2400 px、图表 520–2400 px，
+  表格自动增高至最多 4096 px。PNG 最多 800 万像素、8 MiB。
+- 空查询、权限拒绝、不支持的字体字符或无法清晰排版时不输出 PNG。目前只支持一个 flat
+  QueryModel 结果和单系列图表，不支持 Compose 多结果和 tree/grid Pivot。
+- 输出目录需已存在。CLI 请求 MCP 原生 inline `image/png` 内容，校验后原子替换 `--out`；
+  失败保留原文件，不下载图片链接。
+
+证据保留 PNG 和 CLI JSON 中的文件、尺寸、大小、`rowsRendered`、`rowsReturned`、
+`truncated`。分页或展示截断会在图片中明确标记。分享前查看实际 PNG 的中文、间距、字号、
+标题、字段名称和单位；不得将 Authorization 或 Base64 写入日志。
+
 ## Exit Code
 
 | Exit | 含义 | 处理 |

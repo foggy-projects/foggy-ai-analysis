@@ -214,6 +214,56 @@ equivalent preserves the user's intent; otherwise report the limitation and do n
 result as matching the unsupported semantics. Informational warnings that do not affect semantics do
 not turn a successful request into a failure.
 
+## Query PNG export
+
+For an existing model, use `foggy-semantic-query` for DSL construction when
+available, then export its real query result as a table, bar chart or line chart.
+The Java Runtime performs the query and PNG rendering in process, using the
+ordinary namespace and permission checks and bundled Chinese fonts. No Docker,
+browser, Node, external render service or AI image model is needed.
+
+This feature is on the `codex/query-image-export` development branches; its
+release version is not yet assigned. Published CLI `0.1.24` must not be assumed
+to include it. A matching new CLI and Java Runtime are required. This command
+uses MCP `tools/list` discovery, rather than a Runtime API capability flag, and
+requires `dataset.export_image` on `/mcp/analyst/rpc` by default. Missing tools
+return `UNSUPPORTED_IMAGE_TOOL` / `image.discovery`, exit `3`; check the Runtime
+version, configured endpoint and namespace policy without using a private fallback.
+
+Reuse the caller's namespace and optional complete opaque Authorization through
+`FOGGY_RUNTIME_AUTHORIZATION`. Do not put credentials or connection/runtime
+parameters in the DSL, title or column captions. Validate the described model's
+query first. `monthly-sales.json` below contains only the query DSL; `month` and
+`salesAmount` are illustrative described result fields, not guaranteed demo fields.
+
+```powershell
+foggy-runtime --base-url <runtime-url> --namespace <ns> query export-image <QueryModel> --payload monthly-sales.json --kind table --columns columns.json --title "月度销售明细" --out sales-table.png
+foggy-runtime --base-url <runtime-url> --namespace <ns> query export-image <QueryModel> --payload monthly-sales.json --kind bar --x month --y salesAmount --y-label "销售额" --unit "元" --title "月度销售额" --out sales-bar.png
+foggy-runtime --base-url <runtime-url> --namespace <ns> query export-image <QueryModel> --payload monthly-sales.json --kind line --x month --y salesAmount --y-label "销售额" --unit "元" --title "销售额趋势" --out sales-line.png
+```
+
+- `--x` and `--y` are required for charts and name final result fields, including
+  aliases. The renderer preserves query order and values; use the DSL for sorting,
+  aggregation and date completion. Line nulls remain gaps.
+- Table `--columns <columns.json>` accepts an array of `{field, caption?, unit?}`.
+  Captions default to schema titles or field names; supply known units explicitly.
+  For the table example, save `[{"field":"month","caption":"月份"},{"field":"salesAmount","caption":"销售额","unit":"元"}]` as `columns.json` first.
+- Display limits are 50 table rows, 40 bars, 100 line points and 12 table columns;
+  `--max-rows` may lower them. Width is 640–2400 px, default 1200. Requested height
+  is 360–2400 px for tables and 520–2400 px for charts; table height grows up to
+  4096 px. PNGs are limited to 8 million pixels and 8 MiB.
+- Empty/denied queries, unsupported font glyphs and unreadable layouts produce no
+  PNG. This is one flat QueryModel result with a single chart series; Compose
+  multi-results and tree/grid Pivot are not supported.
+- The output directory must already exist. The CLI requests native inline MCP
+  `image/png` content, validates it, then atomically replaces `--out`; failures
+  preserve the old file. It does not download image links.
+
+Keep the saved PNG and CLI JSON file/dimensions/bytes/`rowsRendered`/`rowsReturned`/
+`truncated` as evidence. Pagination and display caps visibly mark partial results.
+Inspect the actual PNG for Chinese text, spacing, font sizes, titles, field names
+and units before sharing. Never retain Authorization values or Base64 in logs.
+
 ## Exit Codes
 
 | Exit | Meaning | Handling |

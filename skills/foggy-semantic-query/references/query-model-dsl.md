@@ -25,6 +25,81 @@ file passed with `--payload` contains only the DSL object. When a protected mode
 identity, pass the same opaque data-plane Authorization outside the payload through the supported
 client option or request header.
 
+## Query result images
+
+Use CLI `query export-image` or MCP `dataset.export_image` when the user wants a
+PNG table, bar chart, or line chart from a real query. This is query visualization;
+it does not call an AI image model. The Java Runtime queries once through the
+ordinary governed QueryModel path and renders inside the JVM with bundled Chinese
+fonts. No Docker render service, browser, Node, or font download is required.
+
+Availability is endpoint-specific. This feature is currently on the
+`codex/query-image-export` development branches; its release version is not yet
+assigned. Do not assume published CLI `0.1.24` includes it. Use a matching new CLI
+and Java Runtime, and confirm that `tools/list` advertises `dataset.export_image`.
+The CLI performs this discovery at `/mcp/analyst/rpc` by default. Missing tools
+produce `UNSUPPORTED_IMAGE_TOOL` with exit code `3`; do not substitute raw SQL,
+private endpoints, or caller-invented result rows. This MCP tool is not an
+Analytics Function; do not invent a Function version or argument envelope for it.
+
+Reuse the same namespace and complete opaque `Authorization` as describe and
+query. CLI `FOGGY_RUNTIME_AUTHORIZATION` keeps the value outside the payload and
+command example. Model, row, semantic-field and physical-column permissions still
+apply. An empty or denied query produces no image. Do not put credentials,
+connection strings, or runtime options in titles, captions, or payload files.
+
+After describing and validating the model, save only the DSL object as
+`monthly-sales.json`. The following field names are illustrative: use them only
+if describe exposes them; otherwise use the actual described fields and result
+aliases.
+
+```json
+{
+  "columns": ["month", "salesAmount"],
+  "orderBy": [{"field": "month", "dir": "asc"}],
+  "limit": 40
+}
+```
+
+```powershell
+foggy-runtime --base-url <runtime-url> --namespace <ns> query export-image <QueryModel> --payload monthly-sales.json --kind table --columns columns.json --title "月度销售明细" --out sales-table.png
+foggy-runtime --base-url <runtime-url> --namespace <ns> query export-image <QueryModel> --payload monthly-sales.json --kind bar --x month --y salesAmount --y-label "销售额" --unit "元" --title "月度销售额" --out sales-bar.png
+foggy-runtime --base-url <runtime-url> --namespace <ns> query export-image <QueryModel> --payload monthly-sales.json --kind line --x month --y salesAmount --y-label "销售额" --unit "元" --title "销售额趋势" --out sales-line.png
+```
+
+- `--x`/`--y` must name final query-result fields, including aggregation aliases.
+  `y` must contain finite numbers or null; line nulls leave gaps. Points follow
+  query order; the renderer does not aggregate, sort, fill dates, or rescale units.
+- Before exporting the table, save `[{"field":"month","caption":"月份"},{"field":"salesAmount","caption":"销售额","unit":"元"}]` as `columns.json`.
+  Table `--columns <columns.json>` selects final result fields and their labels.
+  Omitted captions use query schema titles, then field names. Units must be known
+  and explicitly supplied; the renderer does not infer them.
+- Limits are 50 table rows, 40 bars, 100 line points and 12 table columns.
+  `--max-rows` may lower the display limit. Query pagination or rendering limits
+  mark the image and metadata as partial; report `rowsRendered`, `rowsReturned`
+  and `truncated` rather than presenting a partial image as the whole dataset.
+- Width is 640–2400 px (default 1200). Requested height is 360–2400 px for
+  tables and 520–2400 px for charts; tables expand automatically up to 4096 px.
+  PNGs are bounded to 8 million pixels and 8 MiB. Dense labels, unsupported font
+  glyphs or unreadable layouts fail explicitly; never replace real data silently.
+- The output directory must exist. The CLI validates inline PNG content before
+  atomically replacing `--out`; failures preserve an existing file. Its JSON
+  reports file, dimensions, bytes and row metadata without Base64 or credentials.
+
+MCP `tools/call` arguments use `model`, `payload`, `kind`, `xField`, `yField`,
+`title`, `xLabel`, `yLabel`, `unit`, optional `columns`, `maxRows`, `width`,
+`height`, and `delivery`. The default `delivery: "inline"` returns native MCP
+`content` with `type: "image"`, `mimeType: "image/png"`, and Base64 `data`, plus
+safe text/`structuredContent` metadata without duplicate Base64. `delivery: "link"`
+requires the deployment's existing chart storage and a client-accessible URL.
+The CLI requests inline images and does not download URLs.
+
+This MVP supports one flat QueryModel result and one numeric chart series.
+Compose multi-results, tree/grid Pivot, continuous time/numeric axes and report
+designers are outside this surface. After saving, inspect the actual PNG for
+Chinese glyphs, legible font sizes, title/header/axis spacing, units and partial
+result labels before sharing it.
+
 ## Construction rules
 
 - Use `columns`, not `fields`.

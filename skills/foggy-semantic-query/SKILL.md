@@ -1,6 +1,6 @@
 ---
 name: foggy-semantic-query
-description: Build, validate and debug queryModel DSL or composeScript for existing Foggy models. Runtime setup and TM/QM authoring use foggy-ai-analysis.
+description: Build, validate and debug queryModel DSL or composeScript for existing Foggy models, and export real query results as PNG when supported. Runtime setup and TM/QM authoring use foggy-ai-analysis.
 ---
 
 # Foggy Semantic Query
@@ -59,6 +59,7 @@ Reuse the current runtime/model context and select only the reference for the re
 | User intent | Use | Reference |
 |---|---|---|
 | Single model detail, filter, sort, grouping, aggregation, calculated fields, pivot, or timeWindow | queryModel DSL | `references/query-model-dsl.md` |
+| PNG table, bar chart, or line chart from a real single-model query | CLI `query export-image` / MCP `dataset.export_image` when discovered | `references/query-model-dsl.md`, Query result images |
 | Cross-model join, union, derived plan, time-window output composition, or multiple result plans | composeScript | `references/compose-script.md` |
 | Runtime evidence for restricted Compose/CTE scripts or standalone fsscript orchestration | Runtime CLI checks | `references/restricted-cte-runtime.md` |
 | SQL-like user wording that should stay governed by semantic models | virtual semantic SQL translation | `references/virtual-semantic-sql.md` |
@@ -99,6 +100,7 @@ Report:
 - Payload or script file path and the generated query content when useful.
 - Validation command/result before execution.
 - Execution result only when requested or appropriate for dev/test evidence.
+- For image export, saved PNG or MCP image, actual row counts and truncation, plus a visual check of captions, units, Chinese glyphs, and layout.
 - Exact unsupported pieces when the semantic model cannot answer the request.
 - Runtime warning codes/actions and semantic impact when validation or execution succeeded with warnings.
 - Whether the model was queried anonymously or with caller-supplied
